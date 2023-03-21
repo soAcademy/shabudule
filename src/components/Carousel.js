@@ -28,7 +28,7 @@ export const Carousel = ({ slides, auto, interval }) => {
   }, [auto, interval, slides.length]);
 
   return (
-    <div className="max-w-[1200px] h-[500px] w-full m-auto py-16 px-4 relative group">
+    <div className="max-w-[1200px] h-[300px] w-full m-auto py-16 px-4 relative group">
       <div
         style={{
           backgroundImage: `url(${slides[currentIndex].url})`,
@@ -37,14 +37,14 @@ export const Carousel = ({ slides, auto, interval }) => {
         className="w-full h-full rounded-2xl bg-center bg-cover transition-transform duration-500 ease-in-out"
       ></div>
       {/* Left Arrow */}
-      <div className="hidden group-hover:block absolute top-[45%] -translate-x-0 translate-y-[50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
-        <BsChevronCompactLeft onClick={prevSlide} size={30} />
+      <div className="hidden group-hover:block absolute top-[40%] -translate-x-0 translate-y-[50%] left-5 text-xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
+        <BsChevronCompactLeft onClick={prevSlide} size={20} />
       </div>
       {/* Right Arrow */}
-      <div className="hidden group-hover:block absolute top-[45%] -translate-x-0 translate-y-[50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
-        <BsChevronCompactRight onClick={nextSlide} size={30} />
+      <div className="hidden group-hover:block absolute top-[40%] -translate-x-0 translate-y-[50%] right-5 text-xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
+        <BsChevronCompactRight onClick={nextSlide} size={20} />
       </div>
-      <div className="absolute top-[80%] right-0 left-0">
+      <div className="absolute top-[70%] right-0 left-0">
         <div className="flex top-4 justify-center py-2">
           {slides.map((r, idx) => (
             <div
@@ -53,9 +53,9 @@ export const Carousel = ({ slides, auto, interval }) => {
               className="text-2xl cursor-pointer text-white"
             >
               {idx === currentIndex ? (
-                <RxDotFilled className=" text-black/40 animate-pulse" />
+                <RxDotFilled className=" text-black/40 animate-pulse" size={15}/>
               ) : (
-                <RxDotFilled />
+                <RxDotFilled size={15}/>
               )}
             </div>
           ))}

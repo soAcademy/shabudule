@@ -1,14 +1,17 @@
 import React from "react";
-import { MyParty, JoinParty } from "../components";
+import { MyParty, JoinParty, Profile } from "../components";
 
 export const UserProfile = () => {
   return (
-    <div className=" bg-[#F5F5F5] w-full h-screen p-10">
-      <div className="flex w-full space-x-5">
-        <div className="w-6/12">
+    <div className=" bg-[#F5F5F5] w-full px-5 pt-5">
+      <div className="mb-5">
+        <Profile />
+      </div>
+      <div className="space-y-5 md:flex justify-between md:space-x-5 md:space-y-0">
+        <div className="md:w-6/12">
           <MyParty />
         </div>
-        <div className="w-6/12">
+        <div className="md:w-6/12">
           <JoinParty />
         </div>
       </div>
