@@ -17,7 +17,7 @@ function App() {
         {/* <LogIn /> */}
         {/* <Register /> */}
         <Routes>
-          {/* <Route exact path="" element={<Home2 info={info} />} /> */}
+          <Route exact path="" element={<Home />} />
           <Route exact path="shabu">
             <Route exact path="home" element={<Home />} />
             <Route exact path="store" element={<StoreList />} />

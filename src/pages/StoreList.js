@@ -1,47 +1,61 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 const StoreList = () => {
-  const stores = [
-    {
-      restaurant: <>MoMo Paradise</>,
-      image: "/momo_logo.jpg",
-      branches: [
-        { branchImage: "/momo_logo.jpg", branch: "Mo-Mo Paradise: CDC" },
-        {
-          branchImage: "/momo_logo.jpg",
-          branch: "Mo-Mo Paradise: Central World",
-        },
-        { branchImage: "/momo_logo.jpg", branch: "Mo-Mo Paradise: Icon Siam" },
-      ],
-    },
-    {
-      restaurant: <>MK Restaurant</>,
-      image: "/mk_logo.jpg",
-      branches: [
-        { branchImage: "/mk_logo.jpg", branch: "MK Restaurant: Ekkamai" },
-        { branchImage: "/mk_logo.jpg", branch: "MK Restaurant: Emquartier" },
-        { branchImage: "/mk_logo.jpg", branch: "Mo-Mo Paradise: Terminal 21" },
-      ],
-    },
-    {
-      restaurant: <>Shabu Shi</>,
-      image: "/shabushi_logo.jpg",
-      branches: [
-        {
-          branchImage: "/shabushi_logo.jpg",
-          branch: "Shabu Shi: Gateway: Ekkamai",
-        },
-        {
-          branchImage: "/shabushi_logo.jpg",
-          branch: "Shabu Shi: Central World",
-        },
-        { branchImage: "/shabushi_logo.jpg", branch: "Shabu Shi: Thong Lo 18" },
-      ],
-    },
-  ];
+  // const mockShops = [
+  //   {
+  //     name: <>MoMo Paradise</>,
+  //     shopImage: "/momo_logo.jpg",
+  //     shabuShopBranchs: [
+  //       {branchImage: "/momo_logo.jpg", branchName: "Mo-Mo Paradise: CDC" },
+  //       {
+  //         branchImage: "/momo_logo.jpg",
+  //         branchName: "Mo-Mo Paradise: Central World",
+  //       },
+  //       { branchImage: "/momo_logo.jpg", branchName: "Mo-Mo Paradise: Icon Siam" },
+  //     ],
+  //   },
+  //   {
+  //     name: <>MK Restaurant</>,
+  //     shopImage: "/mk_logo.jpg",
+  //     shabuShopBranchs: [
+  //       { branchImage: "/mk_logo.jpg",branchName: "MK Restaurant: Ekkamai" },
+  //       { branchImage: "/mk_logo.jpg", branchName: "MK Restaurant: Emquartier" },
+  //       { branchImage: "/mk_logo.jpg", branchName: "Mo-Mo Paradise: Terminal 21" },
+  //     ],
+  //   },
+  //   {
+  //     name: <>Shabu Shi</>,
+  //     shopImage: "/shabushi_logo.jpg",
+  //     shabuShopBranchs: [
+  //       {
+  //         branchImage: "/shabushi_logo.jpg",
+  //         branchName: "Shabu Shi: Gateway: Ekkamai",
+  //       },
+  //       {
+  //         branchImage: "/shabushi_logo.jpg",
+  //         branchName: "Shabu Shi: Central World",
+  //       },
+  //       { branchImage: "/shabushi_logo.jpg", branchName: "Shabu Shi: Thong Lo 18" },
+  //     ],
+  //   },
+  // ];
+
+  const [shops, setShops] = useState([]);
+
+  const getShops = async () => {
+    const result = await axios.post(
+      "https://shabudule-api.vercel.app/function/getShopShabudule"
+    );
+    console.log("result", result);
+    setShops(result.data);
+  };
+
+  useEffect(() => {
+    getShops();
+  }, []); //empty dependency [] as only render once
 
   const [toggles, setToggles] = useState(
-    [...Array(stores.length)].map(() => false)
+    [...Array(shops.length)].map(() => false)
   );
   const updateToggleIndex = (index) => {
     console.log("toggles", toggles);
@@ -56,33 +70,37 @@ const StoreList = () => {
     //update current toggle state as determined by line 71
   };
 
+  
   return (
     <>
-      
-      <div className="bg-neutral-300 h-screen flex justify-center">
-
-        <div className="bg-neutral-50 m-auto md:w-1/2 w-full  mx-2 border border-4 border-red-700 rounded-lg mt-[70px] overflow-auto">
+      <div className="bg-neutral-300 h-screen flex justify-center overflow-auto">
+        <div className="bg-neutral-50 m-auto w-full h-full mx-2 border border-4 border-red-700 rounded-lg mt-[70px] overflow-auto">
           <div className=" p-2 font-bold text-xl text-red-700">STORE LIST</div>
-          {stores?.map((store, index) => (
+          {shops?.map((shop, index) => (
             <div>
               <div
                 className="p-2 m-2 flex bg-red-700 pointer-cursor border border-3 font-bold text-neutral-50 rounded-lg"
                 key={index}
                 onClick={() => updateToggleIndex(index)}
               >
-                <img src={store.image} className="w-10 h-10 rounded-full" alt="restaurant logo" />
-                <div className="p-2">{store.restaurant}</div>
+                <img
+                  src={shop.shopImage}
+                  className="w-10 h-10 rounded-lg"
+                  alt="restaurant logo"
+                />
+                <div className="p-2">{shop.name}</div>
               </div>
               {toggles[index] && (
                 <div>
-                  {store?.branches?.map((branch, i) => (
+                  {shop?.shabuShopBranchs?.map((branch, i) => (
                     <div className="p-2 my-2 mx-6  bg-neutral-300 hover:bg-neutral-400 active:bg-neutral-500 font-bold button rounded-lg flex">
                       <img
-                        src={branch.branchImage} alt="restaurant logo"
-                        className="w-10 h-10 rounded-full"
+                        src={shop.shopImage}
+                        alt="restaurant logo"
+                        className="w-10 h-10 rounded-lg"
                       />
                       <div className="p-2" key={i}>
-                        {branch.branch}
+                        {branch.branchName}
                       </div>
                     </div>
                   ))}

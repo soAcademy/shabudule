@@ -52,7 +52,7 @@ const NavBar = () => {
               <div>
                 {routes.map((route) => (
                   <Link to={route.url} onClick={handleClick}>
-                    <div className="text-2xl font-bold text-neutral-50 p-6 md:hidden hover:bg-red-800 active:bg-red-500 rounded-full" >
+                    <div className="text-2xl font-bold text-neutral-50 p-6 md:hidden hover:bg-red-800 active:bg-red-500 rounded-full z-50" >
                       {route.name}
                     </div>
                   </Link>
