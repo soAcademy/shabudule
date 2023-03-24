@@ -1,42 +1,61 @@
 // import { Disclosure, Transition } from "@headlessui/react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import { BsChevronUp } from "react-icons/bs";
 import axios from "axios";
 
 const PartyList = () => {
-  const parties = [
-    {
-      title: <>หาเพื่อนมาช่วยหาร โปร มา 4 จ่าย 3</>,
-      branch: "Mo-Mo Paradise: Central Rama 3",
-      time: new Date().toLocaleString("GB"),
-      amount: "3/4",
-      image: "/shabu.jpg",
-      info: "dafdfdfbdfbdfbdfbdfbdfrgergeggrger rgwrgergvergvre dsfgsdgsdgsgergergergergrreg",
-    },
-    {
-      title: <>หาเพื่อนกิน MK</>,
-      branch: "MK Restautant: Major Ratchayothin",
-      time: new Date().toLocaleString("GB"),
-      amount: "3/4",
-      image: "/shabu.jpg",
-      info: "dbdfbdfbdf dfbdfbdfb dfbdfbf gfbgfbgfbgf gfbgfb sdsfaefew",
-    },
-  ];
+  // const mockParties = [
+  //   {
+  //     title: <>หาเพื่อนมาช่วยหาร โปร มา 4 จ่าย 3</>,
+  //     branch: "Mo-Mo Paradise: Central Rama 3",
+  //     time: new Date().toLocaleString("GB"),
+  //     amount: "3/4",
+  //     image: "/shabu.jpg",
+  //     info: "dafdfdfbdfbdfbdfbdfbdfrgergeggrger rgwrgergvergvre dsfgsdgsdgsgergergergergrreg",
+  //   },
+  //   {
+  //     title: <>หาเพื่อนกิน MK</>,
+  //     branch: "MK Restautant: Major Ratchayothin",
+  //     time: new Date().toLocaleString("GB"),
+  //     amount: "3/4",
+  //     image: "/shabu.jpg",
+  //     info: "dbdfbdfbdf dfbdfbdfb dfbdfbf gfbgfbgfbgf gfbgfb sdsfaefew",
+  //   },
+  // ];
+
+  const [parties, setParties] = useState([]);
+
+  const getParties = async (userId) => {
+    const result = await axios.post(
+      "https://shabudule-api.vercel.app/function/getMyPartyShabudule",
+      {
+        userId: userId,
+      }
+    );
+    console.log("result", result);
+    setParties(result.data);
+  };
+
+  useEffect(() => {
+    getParties(1);
+  }, []); //empty dependency [] as only render once
 
   const addPartyMember = async (userId, partyId) => {
     console.log("userId", userId);
     console.log("partyId", partyId);
     const result = await axios
-      .post(
-        "https://shabudule-api.vercel.app/function/addPartyMemberShabudule",
-        {
-          userId: userId,
-          partyId: partyId,
-        }
-      )
+      .post("https://shabudule-api.vercel.app/function/createUserShabudule", {
+        userId: userId,
+        partyId: partyId,
+      })
       .catch((error) => console.log(error));
     console.log("result.data:", result.data);
   };
+
+  const acceptedMembersCount = (party) =>
+    party?.partyMembers?.filter((member) => member.status === "accept").length;
+
+  console.log("acceptedMembersCount", acceptedMembersCount);
 
   const [toggles, setToggles] = useState(
     [...Array(parties.length)].map(() => false)
@@ -62,32 +81,32 @@ const PartyList = () => {
           {parties?.map((party, index) => (
             <div>
               <div
-                className="p-2 m-2 flex bg-red-700 pointer-cursor border border-3 font-bold text-neutral-50 rounded-lg "
+                className="p-2 m-2 flex bg-red-700 pointer-cursor border border-3 font-bold text-neutral-50 rounded-lg md:relative z-0 "
                 key={index}
                 onClick={() => updateToggleIndex(index)}
               >
                 <img
-                  src={party.image}
-                  className="w-16 h-16 md:w-20 md:h-20 rounded-lg m-2 mt-4"
+                  src="/shabu.jpg"
+                  className="w-16 h-16 md:w-20 md:h-20 rounded-lg m-2 mt-4  "
                   alt="restaurant logo"
                 />
                 <div className="md:flex">
                   <div className="p-2 md:text-2xl md:items-center md:flex">
-                    {party.title}
+                    {party.name}
                   </div>
-                  <div className="md:items-center md:flex">
-                    <div className="text-xs text-red-700 bg-neutral-50  rounded-full md:h-12 md:w-60 p-2 flex justify-center items-center ">
-                      {party.branch}
+                  <div className="md:items-center md:flex ">
+                    <div className="text-xs text-red-700 bg-neutral-50  rounded-full md:h-12 md:w-60 p-2 flex justify-center items-center text-center  md:mx-2 md:right-96 md:absolute ">
+                      MK Restautant: Major Ratchayothin
                     </div>
                   </div>
                   <div className="md:items-center md:flex">
-                  <div className="text-xs text-red-700 bg-neutral-50 text-center rounded-full mt-2 md:mt-0 md:mx-8 md:h-12 md:w-60 flex justify-center items-center ">
-                    {party.time}
-                  </div>
+                    <div className="text-xs text-red-700 bg-neutral-50 text-center rounded-full mt-2 md:mt-0 md:mx-8 md:h-12 md:w-60 flex justify-center items-center md:mx-2 md:right-28 md:absolute ">
+                      {party.startDateTime}
+                    </div>
                   </div>
                 </div>
-                <div className="p-2 text-center bg-yellow-600 my-8 rounded-lg ml-1">
-                  {party.amount}
+                <div className="p-2 text-center bg-yellow-600 my-8 rounded-lg ml-1 md:mx-2  md:right-10 md:absolute ">
+                  {acceptedMembersCount(party)}/{party.partyMembers?.length}
                 </div>
               </div>
               {toggles[index] && (
@@ -95,7 +114,7 @@ const PartyList = () => {
                   <div className="p-2 mx-2 mb-2 mt-0  bg-neutral-300 rounded-lg ">
                     <div className=" flex">
                       <img
-                        src={party.image}
+                        src="/shabu.jpg"
                         alt="restaurant logo"
                         className="w-20 h-20 rounded-lg mt-2"
                       />
@@ -103,7 +122,7 @@ const PartyList = () => {
                         className="pl-2 pt-2 w-full text-xs text-justify font-bold mx-2"
                         style={{ wordWrap: "break-word" }}
                       >
-                        {party.info}
+                        {party.partyDetail}
                       </div>
                     </div>
                     <div className="text-center">
