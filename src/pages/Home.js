@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Carousel } from "../components/Carousel";
 import { ToggleParty } from "../components/ToggleParty";
+import { PopularParty } from "../components/PopularParty";
 
 const restaurants = [
   { image: "/momo_logo.jpg" },
@@ -63,16 +64,56 @@ const restaurants = [
 //   },
 // ];
 
+const restaurantBranches = [
+  {
+    shopName: "Mo-Mo Paradise",
+    branchNames: [
+      {
+        branch: "Central World",
+      },
+      {
+        branch: "central Rama-3",
+      },
+      {
+        branch: "CDC",
+      },
+    ],
+  },
+  {
+    shopName: "MK Restaurant",
+    branchNames: [
+      {
+        branch: "Central World",
+      },
+      {
+        branch: "Siam Paragon",
+      },
+      {
+        branch: "Emquatier",
+      },
+    ],
+  },
+];
+
 const Home = () => {
   const [togglePartyPopUp, setTogglePartyPopup] = useState(false);
   const [currentParty, setCurrentParty] = useState(null);
-
   const [parties, setParties] = useState([]);
+  const [search, setSearch] = useState();
+  const [searchDatas, setSearchDatas] = useState([]);
 
-  const handlePartyClick = (party) => {
-    setCurrentParty(party);
-    setTogglePartyPopup(true);
-  };
+  useEffect(() => {
+    const searchDatas = restaurantBranches?.filter((data) => {
+      const hasMatchingShop = String(data?.shopName)
+        ?.toLowerCase()
+        .includes(search?.toLowerCase());
+      const hasMatchingBranch = data?.branchNames?.some((branch) =>
+        String(branch?.branch)?.toLowerCase().includes(search?.toLowerCase())
+      );
+      return hasMatchingShop || hasMatchingBranch;
+    });
+    setSearchDatas(searchDatas);
+  }, [search]);
 
   const getParties = async (userId) => {
     const result = await axios.post(
@@ -89,8 +130,6 @@ const Home = () => {
     getParties(1);
   }, []); //empty dependency [] as only render once
 
- 
-
   const [shops, setShops] = useState([]);
 
   const getShops = async () => {
@@ -104,8 +143,6 @@ const Home = () => {
   useEffect(() => {
     getShops();
   }, []); //empty dependency [] as only render once
-
-  
 
   const [promotion, setPromotion] = useState();
   console.log("test", promotion?.length);
@@ -123,35 +160,33 @@ const Home = () => {
 
   console.log("currentParty", currentParty);
 
-  const acceptedMembersCount = (party) =>
-  party?.partyMembers?.filter((member) => member.status === "accept").length;
-
-console.log("acceptedMembersCount", acceptedMembersCount);
-
   const shuffle = (array) => {
     let currentIndex = array.length;
     let temporaryValue, randomIndex;
-  
+
     // While there remain elements to shuffle...
     while (0 !== currentIndex) {
-  
       // Pick a remaining element...
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex -= 1;
-  
+
       // And swap it with the current element.
       temporaryValue = array[currentIndex];
       array[currentIndex] = array[randomIndex];
       array[randomIndex] = temporaryValue;
     }
-  
+
     return array;
-  }
-  
-  
+  };
+
   return (
     <>
-      <ToggleParty togglePartyPopUp={togglePartyPopUp} setTogglePartyPopup={setTogglePartyPopup} currentParty={currentParty} setCurrentParty={setCurrentParty} />
+      <ToggleParty
+        togglePartyPopUp={togglePartyPopUp}
+        setTogglePartyPopup={setTogglePartyPopup}
+        currentParty={currentParty}
+        setCurrentParty={setCurrentParty}
+      />
       <div className="bg-neutral-300 h-screen flex justify-center overflow-auto">
         <div className="bg-neutral-50 m-auto w-full h-full mx-2 border border-4 border-red-700 rounded-lg mt-[70px] overflow-auto">
           <div className="text-center">
@@ -159,8 +194,49 @@ console.log("acceptedMembersCount", acceptedMembersCount);
               type="text"
               className="w-1/2 m-auto bg-neutral-200 rounded-lg my-2 text-center"
               placeholder="search here"
+              onChange={(e) => setSearch(e.target.value)}
             />
           </div>
+          {search !== undefined && search.length >= 2 && (
+            <div className="w-2/4 mx-auto bg-white shadow-lg top-0 overflow-auto relative">
+              <div className="w-full h-64 top-0">
+                <div>
+                  {searchDatas.map((data, index) => (
+                    <div key={index} className="text-center">
+                      {String(data?.shopName)
+                        ?.toLowerCase()
+                        .includes(search?.toLowerCase()) && (
+                        <div>
+                          {data.branchNames.map((branch, index) => (
+                            <div key={index} className="text-center">
+                              <div className="px-1 hover:bg-sky-300 text-sky-600 font-bold active:bg-teal-500 cursor-pointer">
+                                {data.shopName}: {branch.branch}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      { (
+                        <div className="px-1 hover:bg-sky-300 text-sky-600 font-bold active:bg-teal-500 cursor-pointer">
+                          {data.branchNames
+                            .filter((branch) =>
+                              String(branch?.branch)
+                                ?.toLowerCase()
+                                .includes(search?.toLowerCase())
+                            )
+                            .map((branch, index) => (
+                              <div key={index}>
+                                {data.shopName}: {branch.branch}
+                              </div>
+                            ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
           <div className="text-red-700 text-4xl text-center m-2 font-bold">
             สร้างปาร์ตี้ชาบูกินกับเพื่อนได้แล้ววันนี้! ที่ SHABUDULE
           </div>
@@ -190,34 +266,11 @@ console.log("acceptedMembersCount", acceptedMembersCount);
           <div className="m-2 font-bold text-red-700 text-xl md:text-2xl">
             popular party
           </div>
-          <div className="flex m-2 overflow-auto">
-            {parties?.map((party) => (
-              <div key={party.id}>
-                <div
-                  className="bg-neutral-200 h-44 w-44 rounded-lg button m-2 "
-                  onClick={() => handlePartyClick(party)}
-                >
-                  <img
-                    src="/shabu.jpg"
-                    alt="party"
-                    className="h-1/2 w-full rounded-lg"
-                  />
-                  <div className="flex">
-                    <div className="font-bold">
-                      Mo-Mo Paradise: Central Rama 3
-                    </div>
-                    <div className="m-1 font-bold">
-                      {" "}
-                      {acceptedMembersCount(party)}/{party.partyMembers?.length}
-                    </div>
-                  </div>
-                  <div className="text-xs font-bold m-1">
-                    Date: {party.startDateTime}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <PopularParty
+            parties={parties}
+            setTogglePartyPopup={setTogglePartyPopup}
+            setCurrentParty={setCurrentParty}
+          />
           <div className="m-2 font-bold text-red-700 text-xl md:text-2xl">
             popular Store
           </div>
@@ -256,3 +309,29 @@ console.log("acceptedMembersCount", acceptedMembersCount);
 };
 
 export default Home;
+
+// {searchDatas.map((data, index) => (
+//   <div key={index} className="text-center">
+//     {data.branchNames
+//       .filter((branch) =>
+//         String(branch?.branch)
+//           ?.toLowerCase()
+//           .includes(search?.toLowerCase())
+//       )
+//       .map((branch, index) => (
+//         <div
+//           className="px-1 hover:bg-sky-300 text-sky-600 font-bold active:bg-teal-500 cursor-pointer"
+//           key={index}
+//         >
+//           {data.shopName}: {branch.branch}
+//         </div>
+//       ))}
+//     {String(data?.shopName)
+//       ?.toLowerCase()
+//       .includes(search?.toLowerCase()) && (
+//       <div className="px-1 hover:bg-sky-300 text-sky-600 font-bold active:bg-teal-500 cursor-pointer">
+//         {data.shopName}
+//       </div>
+//     )}
+//   </div>
+// ))}
