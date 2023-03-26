@@ -25,19 +25,16 @@ const PartyList = () => {
 
   const [parties, setParties] = useState([]);
 
-  const getParties = async (userId) => {
+  const getParties = async () => {
     const result = await axios.post(
-      "https://shabudule-api.vercel.app/function/getMyPartyShabudule",
-      {
-        userId: userId,
-      }
+      "https://shabudule-api.vercel.app/function/getPartyShabudule",
     );
     console.log("result", result);
     setParties(result.data);
   };
 
   useEffect(() => {
-    getParties(1);
+    getParties();
   }, []); //empty dependency [] as only render once
 
   const addPartyMember = async (userId, partyId) => {
