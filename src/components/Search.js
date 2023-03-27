@@ -51,7 +51,7 @@ export const Search = ({
                     </div>
                   )}
                   {
-                    <div className="px-1 hover:bg-red-500 hover:text-neutral-50 text-red-700 font-bold active:bg-red-900 cursor-pointer">
+                    <div >
                       {data?.shabuShopBranchs
                         .filter((branch) =>
                           String(branch?.branchName)
@@ -59,7 +59,7 @@ export const Search = ({
                             .includes(search?.toLowerCase())
                         )
                         .map((branch, index) => (
-                          <div key={index}>
+                          <div key={index} className="px-1 hover:bg-red-500 hover:text-neutral-50 text-red-700 font-bold active:bg-red-900 cursor-pointer">
                             {data.name}: {branch.branchName}
                           </div>
                         ))}

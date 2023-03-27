@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 // import { BsChevronUp } from "react-icons/bs";
 import axios from "axios";
+import Fade from "@mui/material/Fade";
+import Button from "@mui/material/Button";
 
 const PartyList = () => {
   // const mockParties = [
@@ -24,10 +26,17 @@ const PartyList = () => {
   // ];
 
   const [parties, setParties] = useState([]);
+  const [toggleConfirmationPopup, setToggleConfirmationPopup] = useState(false);
+  const [currentParty, setCurrentParty] = useState(null);
+
+  const handlePartyClick = (party) => {
+    setCurrentParty(party);
+    setToggleConfirmationPopup(true);
+  };
 
   const getParties = async () => {
     const result = await axios.post(
-      "https://shabudule-api.vercel.app/function/getPartyShabudule",
+      "https://shabudule-api.vercel.app/function/getPartyShabudule"
     );
     console.log("result", result);
     setParties(result.data);
@@ -41,10 +50,13 @@ const PartyList = () => {
     console.log("userId", userId);
     console.log("partyId", partyId);
     const result = await axios
-      .post("https://shabudule-api.vercel.app/function/createUserShabudule", {
-        userId: userId,
-        partyId: partyId,
-      })
+      .post(
+        "https://shabudule-api.vercel.app/function/addPartyMemberShabudule",
+        {
+          userId: userId,
+          partyId: partyId,
+        }
+      )
       .catch((error) => console.log(error));
     console.log("result.data:", result.data);
   };
@@ -72,6 +84,45 @@ const PartyList = () => {
 
   return (
     <>
+      {toggleConfirmationPopup && currentParty && (
+        <Fade in={toggleConfirmationPopup}>
+        <div className="w-full h-screen fixed flex bg-gray-500/30 backdrop-blur-sm">
+          <div className="bg-neutral-200 rounded-lg w-80 h-84 m-auto px-4 py-4 items-center">
+            <div className="text-base mb-1 text-red-700 text-center font-bold flex-auto my-auto">
+              Confirmation
+            </div>
+            <div className="text-red-700 font-bold ml-1 p-2"key={currentParty.id}>Join "{currentParty.name}"?</div>
+            <form
+              onSubmit={() => {
+                setToggleConfirmationPopup(false);
+              }}
+              className="flex flex-col m-auto"
+            >
+              <div className="flex">
+                <Button
+                  type="submit"
+                  className="px-4 py-2 mx-2 mt-2 mb-1 bg-red-700 w-1/2 rounded text-white "
+                  onClick={() => addPartyMember(4, currentParty.id)}
+                  variant="contained"
+                >
+                  confirm
+                </Button>
+                <Button
+                  className="px-4 py-2 mx-2 mt-2 mb-1 bg-neutral-800 rounded text-white w-1/2 "
+                  onClick={() => {
+                    setCurrentParty(null);
+                    setToggleConfirmationPopup(false);
+                  }}
+                  variant="contained"
+                >
+                  Cancel
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+        </Fade>
+      )}
       <div className="bg-neutral-300 h-screen flex justify-center overflow-auto">
         <div className="bg-neutral-50 m-auto  w-full  mx-2 border border-4 border-red-700 rounded-lg mt-[70px] overflow-auto">
           <div className=" p-2 font-bold text-xl text-red-700">PARTY LIST</div>
@@ -83,8 +134,8 @@ const PartyList = () => {
                 onClick={() => updateToggleIndex(index)}
               >
                 <img
-                  src="/shabu.jpg"
-                  className="w-16 h-16 md:w-20 md:h-20 rounded-lg m-2 mt-4  "
+                  src={party.table.branch.shabuShop.shopImage}
+                  className="w-16 h-16 md:w-20 md:h-20 rounded-lg m-2 mt-4"
                   alt="restaurant logo"
                 />
                 <div className="md:flex">
@@ -107,31 +158,58 @@ const PartyList = () => {
                 </div>
               </div>
               {toggles[index] && (
-                <div className="z-10 transition-opacity duration-5000 ease-in-out opacity-0 opacity-100">
+                <Fade in={toggles}>
+                <div className="z-10">
                   <div className="p-2 mx-2 mb-2 mt-0  bg-neutral-300 rounded-lg ">
                     <div className=" flex">
                       <img
-                        src="/shabu.jpg"
+                        src={party.table.branch.shabuShop.shopImage}
                         alt="restaurant logo"
-                        className="w-20 h-20 rounded-lg mt-2"
+                        className="w-20 h-20 md:w-28 md:h-28 rounded-lg mt-2"
                       />
-                      <div
-                        className="pl-2 pt-2 w-full text-xs text-justify font-bold mx-2"
-                        style={{ wordWrap: "break-word" }}
-                      >
-                        {party.partyDetail}
+
+                      <div className="w-5/6 ml-12">
+                        <div className="flex text-red-700 font-bold ml-1 m-2 bg-neutral-50 p-2 rounded-lg">
+                          <div className="w-1/3">Name:</div>
+                          <div className="w-2/3">{party.name}</div>
+                        </div>
+                        <div className="flex text-red-700 font-bold ml-1 m-2 bg-neutral-50 p-2 rounded-lg">
+                          <div className="w-1/3">detail:</div>
+                          <div className="w-2/3">{party.partyDetail}</div>
+                        </div>
+                        <div className="flex text-red-700 font-bold ml-1 m-2 bg-neutral-50 p-2 rounded-lg">
+                          <div className="w-1/3">type:</div>
+                          <div className="w-2/3">{party.type}</div>
+                        </div>
+                        <div className="flex text-red-700 font-bold ml-1 m-2 bg-neutral-50 p-2 rounded-lg">
+                          <div className="w-1/3">branch:</div>
+                          <div className="w-2/3">
+                            {party.table.branch.shabuShop.name}{" "}
+                            {party.table.branch.branchName}
+                          </div>
+                        </div>
+                        <div className="flex text-red-700 font-bold ml-1 m-2 bg-neutral-50 p-2 rounded-lg">
+                          <div className="w-1/3">time:</div>
+                          <div className="w-2/3">{party.startDateTime}</div>
+                        </div>
+                        <div className="flex text-red-700 font-bold ml-1 m-2 bg-neutral-50 p-2 rounded-lg">
+                          <div className="w-1/3">createdBy:</div>
+                          <div className="w-2/3">Teak</div>
+                        </div>
                       </div>
                     </div>
                     <div className="text-center">
-                      <button
+                      <Button
                         className="button bg-red-700 hover:bg-red-900 text-neutral-50 font-bold md:w-1/3 w-3/4 p-3 mt-4 rounded-full mx-auto mb-2 md:text-base"
-                        onClick={() => addPartyMember(2, 3)}
+                        onClick={() => handlePartyClick(party)}
+                        variant="contained"
                       >
                         Join
-                      </button>
+                      </Button>
                     </div>
                   </div>
                 </div>
+                </Fade>
               )}
             </div>
           ))}

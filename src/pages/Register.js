@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Button from "@mui/material/Button";
+import { fire } from "../fire";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -12,6 +15,20 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
+
+  const auth = getAuth(fire);
+  const registerPage = (e) => {
+    e.preventDefault();
+    console.log("auth", auth);
+
+    createUserWithEmailAndPassword(auth, username, password)
+      .then((u) => {
+        console.log(u);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const checkUsername = () => {
     if (username === "") {
@@ -49,20 +66,20 @@ const Register = () => {
     }
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const isPasswordMatch = checkPassword();
-    const isUsernameEmpty = checkUsername();
-    const isEmailEmpty = checkEmail();
-    if (
-      isPasswordMatch === true &&
-      isUsernameEmpty === false &&
-      isEmailEmpty === false
-    ) {
-      const form = document.getElementById("register-form");
-      form.submit();
-    }
-  };
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const isPasswordMatch = checkPassword();
+  //   const isUsernameEmpty = checkUsername();
+  //   const isEmailEmpty = checkEmail();
+  //   if (
+  //     isPasswordMatch === true &&
+  //     isUsernameEmpty === false &&
+  //     isEmailEmpty === false
+  //   ) {
+  //     const form = document.getElementById("register-form");
+  //     form.submit();
+  //   }
+  // };
 
   const usernameClassName = usernameError
     ? "w-3/4 m-auto bg-neutral-300 rounded-sm border border-red-500"
@@ -82,8 +99,8 @@ const Register = () => {
 
   return (
     <>
-      <div className="bg-neutral-300 h-screen flex justify-center">
-        <div className="bg-neutral-50 m-auto md:w-1/2 w-full h-[500px] mx-2 border border-4 border-red-700 rounded-lg mt-[70px]">
+      <div className="bg-neutral-300 h-screen flex justify-center overflow-auto">
+        <div className="bg-neutral-50 m-auto md:w-10/12 w-full h-[500px] mx-2 border border-4 border-red-700 rounded-lg mt-[70px]">
           <h1 className="text-center p-4 text-xl font-bold ">Registration</h1>
           <div className="py-2">
             <div className="flex">
@@ -175,15 +192,18 @@ const Register = () => {
               </div>
             </div>
           </div>
-          <form onSubmit={handleSubmit} id="register-form">
+          <form onClick={registerPage} id="register-form">
+          <Link to="/shabu/Home">
             <div className="text-center">
-              <button
-                className="button bg-red-700 hover:bg-red-900 text-neutral-50 font-bold md:w-1/3 w-3/4 p-2 mt-4 rounded-lg mx-auto mb-4 active:translate-y-1 md:text-base text-sm"
+              <Button
+                className=" bg-red-700 mb-2 text-neutral-50 font-bold md:w-1/3 w-3/4 p-2 mt-4 rounded-lg mx-auto mb-4  md:text-base text-sm"
                 type="submit"
+                variant="contained"
               >
                 Register
-              </button>
+              </Button>
             </div>
+            </Link>
           </form>
         </div>
       </div>

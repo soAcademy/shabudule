@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { Carousel } from "../components/Carousel";
 import { ToggleParty } from "../components/ToggleParty";
 import { PopularParty } from "../components/PopularParty";
 import { Search } from "../components/Search";
 import { PopularStore } from "../components/PopularStore";
+import Button from "@mui/material/Button";
 
 // const restaurants = [
 //   { image: "/momo_logo.jpg" },
@@ -181,11 +183,13 @@ const Home = () => {
           <div className="text-center text-red-700 font-bold my-2 md:text-2xl">
             จอง/สร้าง Party ตอนนี้
           </div>
-          <div className="justify-center flex">
-            <div className="text-center bg-red-700 text-neutral-50 w-1/3 p-2 rounded-lg button font-bold">
-              เริ่มต้นใช้งานฟรี
+          <Link to="/shabu/register">
+            <div className="justify-center flex">
+              <Button className="text-center bg-red-700 text-neutral-50 w-1/3 p-2 rounded-lg button font-bold hover:bg-red-800 active:bg-red-900" variant="contained">
+                เริ่มต้นใช้งานฟรี
+              </Button>
             </div>
-          </div>
+          </Link>
           <div className="m-2 font-bold text-red-700 text-xl md:text-2xl">
             popular party
           </div>

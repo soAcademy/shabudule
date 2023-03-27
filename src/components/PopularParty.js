@@ -23,13 +23,13 @@ export const PopularParty = ({
               onClick={() => handlePartyClick(party)}
             >
               <img
-                src="/shabu.jpg"
+                src={party.table.branch.shabuShop.shopImage}
                 alt="party"
                 className="h-1/2 w-full rounded-lg"
               />
               <div className="flex">
-                <div className="font-bold">Mo-Mo Paradise: Central Rama 3</div>
-                <div className="m-1 font-bold">
+                <div className=" ml-1 font-bold">{party.name}</div>
+                <div className="ml-10 font-bold">
                   {" "}
                   {acceptedMembersCount(party)}/{party.partyMembers?.length}
                 </div>

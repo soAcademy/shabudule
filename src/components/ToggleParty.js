@@ -1,5 +1,8 @@
 import React from "react";
 import axios from "axios";
+import Fade from "@mui/material/Fade";
+import Button from "@mui/material/Button";
+
 
 export const ToggleParty = ({
   togglePartyPopUp,
@@ -25,8 +28,9 @@ export const ToggleParty = ({
   return (
     <>
       {togglePartyPopUp && currentParty && (
-        <div className="w-full h-screen fixed flex bg-gray-500/30 backdrop-blur-sm">
-          <div className="bg-neutral-200 rounded-lg w-80 h-84 m-auto px-4 py-4 items-center">
+        <Fade in={togglePartyPopUp}>
+        <div className="w-full z-10 h-screen fixed flex bg-gray-500/30 backdrop-blur-sm">
+          <div className="bg-neutral-200 rounded-lg w-80 h-84 m-auto px-4 py-4 items-center mt-16">
             <div className="text-base mb-1 text-red-700 text-center font-bold flex-auto my-auto">
               Confirmation
             </div>
@@ -46,7 +50,7 @@ export const ToggleParty = ({
               </div>
               <div className="flex text-red-700 font-bold ml-1 m-2 bg-neutral-50 p-2 rounded-lg">
                 <div className="w-1/3">branch:</div>
-                <div className="w-2/3">Mo-Mo Paradise: Central Rama 3</div>
+                <div className="w-2/3">{currentParty.table.branch.shabuShop.name} {currentParty.table.branch.branchName}</div>
               </div>
               <div className="flex text-red-700 font-bold ml-1 m-2 bg-neutral-50 p-2 rounded-lg">
                 <div className="w-1/3">time:</div>
@@ -65,26 +69,29 @@ export const ToggleParty = ({
               className="flex flex-col m-auto"
             >
               <div className="flex">
-                <button
+                <Button
                   type="submit"
                   className="px-4 py-2 mx-2 mt-2 mb-1 bg-red-700 w-1/2 rounded text-white "
                   onClick={() => addPartyMember(4, 5)}
+                  variant="contained"
                 >
                   Join
-                </button>
-                <button
+                </Button>
+                <Button
                   className="px-4 py-2 mx-2 mt-2 mb-1 bg-neutral-800 rounded text-white w-1/2 "
                   onClick={() => {
                     setCurrentParty(null);
                     setTogglePartyPopup(false);
                   }}
+                  variant="contained"
                 >
                   Cancel
-                </button>
+                </Button>
               </div>
             </form>
           </div>
         </div>
+        </Fade>
       )}
     </>
   );

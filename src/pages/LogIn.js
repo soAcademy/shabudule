@@ -1,33 +1,60 @@
 import React, { useState } from "react";
-import Button from '@mui/material/Button';
-
+import Button from "@mui/material/Button";
+import { fire } from "../fire";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 const LogIn = () => {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [formErrors, setFormErrors] = useState({ username: "", password: "" });
+  // const [email, setEmail]= useState('')
+  // const [password, setPassword] = useState('')
+  const auth = getAuth(fire);
+  const logInPage = (e) => {
+    e.preventDefault();
+    console.log("auth", auth);
+
+    signInWithEmailAndPassword(auth, formData.username, formData.password)
+      .then((u) => {
+        console.log(u);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const user = auth.currentUser;
+
+if (user) {
+  user.getIdToken().then((token) => {
+    console.log(`User token ID: ${token}`);
+  }).catch((error) => {
+    console.log(error.message);
+  });
+} else {
+  console.log('No user currently signed in.');
+}
 
   const handleInputChange = (event) => {
     const { id, value } = event.target;
     setFormData({ ...formData, [id]: value });
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
 
-    const errors = {};
-    if (formData.username.trim() === "") {
-      errors.username = "required";
-    }
-    if (formData.password.trim() === "") {
-      errors.password = "required";
-    }
+  //   const errors = {};
+  //   if (formData.username.trim() === "") {
+  //     errors.username = "required";
+  //   }
+  //   if (formData.password.trim() === "") {
+  //     errors.password = "required";
+  //   }
 
-    setFormErrors(errors);
+  //   setFormErrors(errors);
 
-    if (Object.keys(errors).length === 0) {
-      const form = document.getElementById("logIn-form");
-      form.submit();
-    }
-  };
+  //   if (Object.keys(errors).length === 0) {
+  //     const form = document.getElementById("logIn-form");
+  //     form.submit();
+  //   }
+  // };
 
   const inputClassName = (id) => {
     return formErrors[id]
@@ -92,7 +119,7 @@ const LogIn = () => {
               </button>
             </div>
           </div>
-          <form onSubmit={handleSubmit} id="logIn-form">
+          <form onClick={logInPage} id="logIn-form">
             <div className="text-center">
               <Button
                 className=" bg-red-700 mb-2 text-neutral-50 font-bold md:w-1/3 w-3/4 p-2 mt-4 rounded-lg mx-auto mb-4  md:text-base text-sm"
