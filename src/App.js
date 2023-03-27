@@ -6,12 +6,19 @@ export const BranchContext = createContext();
 
 function App() {
   const [branchId, setBranchId] = useState();
-  // const []
+  const [createPartyByDate, setCreatePartyByDate] = useState();
 
   return (
     <div className="App">
       <BrowserRouter>
-        <BranchContext.Provider value={{ branchId, setBranchId }}>
+        <BranchContext.Provider
+          value={{
+            branchId,
+            setBranchId,
+            createPartyByDate,
+            setCreatePartyByDate,
+          }}
+        >
           <Routes>
             <Route exact path="/storeList" element={<StoreList />} />
             <Route exact path="/shopBranch" element={<ShopBranch />} />

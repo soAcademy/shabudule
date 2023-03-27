@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 
-export const TimeAndTable = ({ selectDate }) => {
+export const TimeAndTable = ({
+  tableAndTime,
+  createPartyByDate,
+  selectDate,
+}) => {
   const mockData = [
     {
       username: "Soma Yukihira",
@@ -10,7 +14,7 @@ export const TimeAndTable = ({ selectDate }) => {
       storeName: "Mo-mo Paradise",
       branch: "Central RAMA III",
       type: "Public",
-      date: selectDate,
+      date: selectDate ?? createPartyByDate,
       time: "01 : 00 PM - 2:30 PM",
       table: 4,
     },
@@ -21,10 +25,29 @@ export const TimeAndTable = ({ selectDate }) => {
   const [partyName, setPartyName] = useState("");
   const [desc, setDesc] = useState("");
   const [partyType, setPartyType] = useState("public");
+  const [tableId, setTableId] = useState();
 
-  console.log("party name :", partyName);
-  console.log("desc :", desc);
-  console.log("type :", partyType);
+  // console.log("party name :", partyName);
+  // console.log("desc :", desc);
+  // console.log("type :", partyType);
+  console.log("tableId :", tableId);
+
+  const table4 = tableAndTime?.filter((r) => r.seatPerDesk === 4);
+  const table2 = tableAndTime?.filter((r) => r.seatPerDesk === 2);
+  const sortedTableAndTime = [...tableAndTime]?.sort(
+    (a, b) => a.tableId - b.tableId
+  );
+  const tableAndTimeUniqueSlots = sortedTableAndTime.map((table) => {
+    return {
+      ...table,
+      availableSlot: [...new Set(table.availableSlot)],
+    };
+  });
+
+  console.log("test 1", sortedTableAndTime);
+  console.log("test 2", tableAndTimeUniqueSlots);
+  console.log("table4", table4);
+  console.log("table2", table2);
 
   return (
     <div>
@@ -139,21 +162,80 @@ export const TimeAndTable = ({ selectDate }) => {
       <div className="bg-white rounded-md">
         <div className="p-3">
           <p>AVAILALE TIME</p>
+
           <div className="mt-10">
             <p>โต๊ะ 4 ที่นั่ง</p>
-            <div className="flex flex-col space-y-3 mt-3 bg-background rounded-md">
-              <button className="p-3" onClick={() => setFillOutToggle(true)}>
-                01 : 00 PM - 2:30 PM
-              </button>
-            </div>
+            {/* {table4?.map((r, idx) => (
+              <div className="grid grid-cols-1 space-y-3 mt-3" key={idx}>
+                {r.availableSlot.map((j, i) => (
+                  <button
+                    className="p-3 border-2 bg-background rounded-md"
+                    onClick={() => {
+                      setFillOutToggle(true);
+                      setTableId(r.tableId);
+                    }}
+                    key={i}
+                  >
+                    {j} : 00 - {j + 1} : 00
+                  </button>
+                ))}
+              </div>
+            ))} */}
+
+            {table4?.map((r, idx) => (
+              <div className="grid grid-cols-1 space-y-3 mt-3" key={idx}>
+                {r.availableSlot.map((j, i) => {
+                  const currentItem = tableAndTimeUniqueSlots.find(
+                    (item) =>
+                      item.seatPerDesk === r.seatPerDesk &&
+                      item.availableSlot.includes(j)
+                  );
+                  const previousItem =
+                    tableAndTimeUniqueSlots[
+                      tableAndTimeUniqueSlots.indexOf(currentItem) - 1
+                    ];
+                  const tableIdToDisplay =
+                    previousItem &&
+                    previousItem.availableSlot.join() ===
+                      currentItem.availableSlot.join()
+                      ? previousItem.tableId
+                      : currentItem.tableId;
+
+                  return (
+                    <button
+                      className="p-3 border-2 bg-background rounded-md"
+                      onClick={() => {
+                        setFillOutToggle(true);
+                        setTableId(tableIdToDisplay);
+                      }}
+                      key={i}
+                    >
+                      {j} : 00 - {j + 1} : 00
+                    </button>
+                  );
+                })}
+              </div>
+            ))}
           </div>
+
           <div>
             <p className="mt-5">โต๊ะ 2 ที่นั่ง</p>
-            <div className="flex  flex-col  space-y-3 mt-3 bg-background rounded-md">
-              <button className="p-3" onClick={() => setFillOutToggle(true)}>
-                01 : 00 PM - 2:30 PM
-              </button>
-            </div>
+            {table2?.map((r, idx) => (
+              <div className="grid grid-cols-1 space-y-3 mt-3" key={idx}>
+                {r.availableSlot.map((j, i) => (
+                  <button
+                    className="p-3 border-2 bg-background rounded-md"
+                    onClick={() => {
+                      setFillOutToggle(true);
+                      setTableId(r.tableId);
+                    }}
+                    key={i}
+                  >
+                    {j} : 00 - {j + 1} : 00
+                  </button>
+                ))}
+              </div>
+            ))}
           </div>
         </div>
       </div>

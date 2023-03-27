@@ -68,12 +68,11 @@ export const ShopBranch = () => {
   console.log("format cd", dayjs().locale(localeDe).format());
 
   const { branchId } = useContext(BranchContext);
+  const { setCreatePartyByDate } = useContext(BranchContext);
   const [today, setToday] = useState(currentDate);
   const [selectDate, setSelectDate] = useState(currentDate);
   const [branch, setBranch] = useState();
-  const [createParty, setCreateParty] = useState();
 
-  console.log("createParty By Date", createParty);
   console.log("branchId", branchId);
 
   useEffect(() => {
@@ -98,7 +97,7 @@ export const ShopBranch = () => {
           <button
             className="bg-primary text-white rounded-md p-2 font-semibold text-sm"
             onClick={() => {
-              setCreateParty(selectDate.locale(localeDe).format());
+              setCreatePartyByDate(selectDate.locale(localeDe).format());
             }}
           >
             <Link to="/reservation">สร้างปาร์ตี้ !</Link>
