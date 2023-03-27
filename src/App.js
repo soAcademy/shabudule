@@ -1,6 +1,6 @@
 import React, { useState, createContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ShopBranch, Reservation, StoreList } from "./pages";
+import { ShopBranch, Reservation, StoreList, Home, UserProfile } from "./pages";
 
 export const BranchContext = createContext();
 
@@ -20,6 +20,8 @@ function App() {
           }}
         >
           <Routes>
+            <Route exact path="/" element={<Home />} />
+            <Route exact path="/userProfile" element={<UserProfile />} />
             <Route exact path="/storeList" element={<StoreList />} />
             <Route exact path="/shopBranch" element={<ShopBranch />} />
             <Route exact path="/reservation" element={<Reservation />} />
