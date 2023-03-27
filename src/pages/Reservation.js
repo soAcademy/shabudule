@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Calendar, TimeAndTable } from "../components";
 import dayjs from "dayjs";
+import { BranchContext } from "../App";
 
 export const Reservation = () => {
   const currentDate = dayjs();
 
+  const { branchId } = useContext(BranchContext);
   const [today, setToday] = useState(currentDate);
   const [selectDate, setSelectDate] = useState(currentDate);
   console.log("setSelectDate", selectDate);
@@ -23,7 +25,7 @@ export const Reservation = () => {
           />
         </div>
         <div className="mt-10">
-          <TimeAndTable  selectDate={selectDate}/>
+          <TimeAndTable selectDate={selectDate} branchId={branchId} />
         </div>
       </div>
     </div>

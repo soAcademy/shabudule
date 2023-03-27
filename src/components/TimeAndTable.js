@@ -15,20 +15,100 @@ export const TimeAndTable = ({ selectDate }) => {
       table: 4,
     },
   ];
-  
+
   const [confirmToggle, setConfirmToggle] = useState(false);
+  const [fillOutToggle, setFillOutToggle] = useState(false);
+  const [partyName, setPartyName] = useState("");
+  const [desc, setDesc] = useState("");
+  const [partyType, setPartyType] = useState("public");
+
+  console.log("party name :", partyName);
+  console.log("desc :", desc);
+  console.log("type :", partyType);
 
   return (
     <div>
+      {fillOutToggle && (
+        <div className="w-full h-screen left-0 top-0 z-50 fixed flex bg-gray-500/30 backdrop-blur-sm">
+          <div className="flex flex-col m-auto bg-background p-5 w-4/5 rounded-md">
+            <div className="mb-4 text-center">
+              <p className="font-bold">กรอกข้อมูลสำหรับสร้าง Party!</p>
+              <div className="text-left text-sm mt-5">
+                <form className="space-y-2">
+                  <p>ชื่อ Party : </p>
+                  <input
+                    type="text"
+                    placeholder="party name..."
+                    name="party"
+                    maxlength="30"
+                    className="border-2 placeholder:text-slate-400 bg-white rounded-md pl-2 w-full"
+                    onChange={(e) => setPartyName(e.target.value)}
+                  />
+                  <p>description : </p>
+                  <textarea
+                    name="description"
+                    placeholder="description..."
+                    className="border-2 placeholder:text-slate-400 bg-white rounded-md pl-2 w-full"
+                    onChange={(e) => setDesc(e.target.value)}
+                  />
+                  <p>ประเภท : </p>
+                  <div className="flex justify-between">
+                    <div className="w-6/12 flex space-x-2">
+                      <input
+                        type="radio"
+                        name="type"
+                        id="public"
+                        value="public"
+                        checked={partyType === "public"}
+                        onChange={(e) => setPartyType(e.target.value)}
+                      />
+                      <label htmlFor="public">Public Party</label>
+                    </div>
+                    <div className="w-6/12 flex space-x-2">
+                      <input
+                        type="radio"
+                        name="type"
+                        id="private"
+                        value="private"
+                        checked={partyType === "private"}
+                        onChange={(e) => setPartyType(e.target.value)}
+                      />
+                      <label htmlFor="private">Private Party</label>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div className="flex justify-between ">
+              <button
+                className="bg-[#B1454A] text-white text-xs rounded-md p-1 mr-2"
+                onClick={() => setFillOutToggle(false)}
+              >
+                decline
+              </button>
+              <button
+                className="bg-[#B1454A] text-white text-xs rounded-md p-1"
+                onClick={() => {
+                  setFillOutToggle(false);
+                  setConfirmToggle(true);
+                }}
+              >
+                accept
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {confirmToggle && (
         <div className="w-full h-screen left-0 top-0 fixed flex bg-gray-500/30 backdrop-blur-sm">
           <div className="flex flex-col m-auto bg-background p-5 w-4/5 rounded-md">
             <div className="mb-4 text-center">
               <p className="font-bold">CONFIRMATION</p>
               <div className="text-left text-sm mt-5 space-y-2">
-                <p>party : {mockData[0]?.partyName}</p>
-                <p>description : {mockData[0]?.description}</p>
-                <p>ประเภท : {mockData[0]?.type}</p>
+                <p>party : {partyName}</p>
+                <p>description : {desc}</p>
+                <p>ประเภท : {partyType}</p>
                 <p>
                   ร้าน : {mockData[0]?.storeName} : {mockData[0]?.branch}
                 </p>
@@ -62,7 +142,7 @@ export const TimeAndTable = ({ selectDate }) => {
           <div className="mt-10">
             <p>โต๊ะ 4 ที่นั่ง</p>
             <div className="flex flex-col space-y-3 mt-3 bg-background rounded-md">
-              <button className="p-3" onClick={() => setConfirmToggle(true)}>
+              <button className="p-3" onClick={() => setFillOutToggle(true)}>
                 01 : 00 PM - 2:30 PM
               </button>
             </div>
@@ -70,7 +150,7 @@ export const TimeAndTable = ({ selectDate }) => {
           <div>
             <p className="mt-5">โต๊ะ 2 ที่นั่ง</p>
             <div className="flex  flex-col  space-y-3 mt-3 bg-background rounded-md">
-              <button className="p-3" onClick={() => setConfirmToggle(true)}>
+              <button className="p-3" onClick={() => setFillOutToggle(true)}>
                 01 : 00 PM - 2:30 PM
               </button>
             </div>
