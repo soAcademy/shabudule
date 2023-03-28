@@ -30,7 +30,7 @@ export const ToggleParty = ({
       {togglePartyPopUp && currentParty && (
         <Fade in={togglePartyPopUp}>
         <div className="w-full z-10 h-screen fixed flex bg-gray-500/30 backdrop-blur-sm">
-          <div className="bg-neutral-200 rounded-lg w-80 h-84 m-auto px-4 py-4 items-center mt-16">
+          <div className="bg-neutral-200 rounded-lg w-80 h-84 m-auto px-4 py-4 items-center md:mt-16">
             <div className="text-base mb-1 text-red-700 text-center font-bold flex-auto my-auto">
               Confirmation
             </div>
@@ -58,7 +58,7 @@ export const ToggleParty = ({
               </div>
               <div className="flex text-red-700 font-bold ml-1 m-2 bg-neutral-50 p-2 rounded-lg">
                 <div className="w-1/3">createdBy:</div>
-                <div className="w-2/3">Teak</div>
+                <div className="w-2/3">{currentParty.createByUserId.name}</div>
               </div>
             </div>
 

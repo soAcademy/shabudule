@@ -1,53 +1,67 @@
 import React from "react";
 
 export const PopularStore = ({shops}) => {
-  const shuffle = (array) => {
-    let currentIndex = array.length;
-    let temporaryValue, randomIndex;
-
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-
-      // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
+  const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
     }
-
     return array;
-  };
+  }
+  
+  const shuffledShops = shuffleArray(shops);
+  console.log("shuffleArrayShops", shuffleArray(shops))
+
+  
+  let combinations = [];
+
+  for (let i = 0; i < shuffledShops.length; i++) {
+    let shop = shuffledShops[i];
+    for (let j = 0; j < shop.shabuShopBranchs.length; j++) {
+      let branch = shop.shabuShopBranchs[j];
+      combinations.push({
+        name: shop.name,
+        branchName: branch.branchName,
+      });
+    }
+  }
+  // Shuffle the array
+  shuffleArray(combinations);
+  console.log("shuffleArrayComm", shuffleArray(combinations))
+  console.log("combinations", combinations)
+
   return (
     <>
       <div className="flex overflow-x-auto overflow-y-hidden m-2">
-        {shuffle(shops)?.map((shop) => (
-          <div key={shop.id} className="flex">
-            {shuffle(shop?.shabuShopBranchs)?.map((branch) => (
-              <div
-                key={branch.id}
-                className="bg-neutral-200 h-56 w-44 rounded-lg m-2"
-              >
-                <img
-                  src={shop.shopImage}
-                  alt="branch"
-                  className=" w-full rounded-lg h-1/2 "
-                />
-                <div className="h-full">
-                  <div className="m-1 font-bold text-center h-1/4">
-                    {shop.name} {branch.branchName}
-                  </div>
-                  <div className="">
-                    <button className="text-xs font-bold ml-1 button hover:text-red-500 active:text-red-700 h-1/3 mt-4">
-                      see more details
-                    </button>
-                  </div>
+        {combinations.map((combination) => {
+          let shop = shops.find((shop) => shop.name === combination.name);
+          let branch = shop.shabuShopBranchs.find(
+            (branch) => branch.branchName === combination.branchName
+          );
+
+          return (
+            <div
+              key={`${shop.id}-${branch.id}`}
+              className="bg-neutral-200 h-56 w-44 rounded-lg m-2"
+            >
+              <img
+                src={shop.shopImage}
+                alt="branch"
+                className=" w-full rounded-lg h-1/2 "
+              />
+              <div className="h-full">
+                <div className="m-1 font-bold text-center h-1/4">
+                  {shop.name} {branch.branchName}
+                </div>
+                <div className="">
+                  <button className="text-xs font-bold ml-1 button hover:text-red-500 active:text-red-700 h-1/3 mt-4">
+                    see more details
+                  </button>
                 </div>
               </div>
-            ))}
-          </div>
-        ))}
+            </div>
+          );
+        })}
       </div>
     </>
   );

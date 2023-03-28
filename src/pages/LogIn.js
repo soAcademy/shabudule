@@ -1,60 +1,75 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { ShabuContext } from "../App";
+import { LoggedInNavBarContext } from "../App";
 import Button from "@mui/material/Button";
 import { fire } from "../fire";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 const LogIn = () => {
   const [formData, setFormData] = useState({ username: "", password: "" });
+  const { setTokenId } = useContext(ShabuContext);
+  const { setLoggedIn } = useContext(LoggedInNavBarContext);
   const [formErrors, setFormErrors] = useState({ username: "", password: "" });
-  // const [email, setEmail]= useState('')
-  // const [password, setPassword] = useState('')
+  const [passwordError, setPasswordError] = useState("");
+
+  const navigate = useNavigate();
+
   const auth = getAuth(fire);
   const logInPage = (e) => {
     e.preventDefault();
     console.log("auth", auth);
 
-    signInWithEmailAndPassword(auth, formData.username, formData.password)
-      .then((u) => {
-        console.log(u);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const errors = {};
+    if (formData.username.trim() === "") {
+      errors.username = "required";
+    }
+    if (formData.password.trim() === "") {
+      errors.password = "required";
+      setPasswordError("")
+    }
+
+    setFormErrors(errors);
+
+    if (Object.keys(errors).length === 0) {
+      signInWithEmailAndPassword(auth, formData.username, formData.password)
+        .then((u) => {
+          console.log(u);
+          console.log("accessToken", u.user.accessToken);
+          setTokenId(u.user.accessToken);
+          setLoggedIn(true);
+          setFormData({ username: "", password: "" });
+          setPasswordError("");
+          navigate("/shabu/home");
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.code === "auth/wrong-password") {
+            setPasswordError("Incorrect password. Please try again.");
+          } else {
+            setPasswordError("An error occurred. Please try again later.");
+          }
+        });
+    }
   };
   const user = auth.currentUser;
 
-if (user) {
-  user.getIdToken().then((token) => {
-    console.log(`User token ID: ${token}`);
-  }).catch((error) => {
-    console.log(error.message);
-  });
-} else {
-  console.log('No user currently signed in.');
-}
+  if (user) {
+    user
+      .getIdToken()
+      .then((token) => {
+        console.log(`User token ID: ${token}`);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  } else {
+    console.log("No user currently signed in.");
+  }
 
   const handleInputChange = (event) => {
     const { id, value } = event.target;
     setFormData({ ...formData, [id]: value });
   };
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-
-  //   const errors = {};
-  //   if (formData.username.trim() === "") {
-  //     errors.username = "required";
-  //   }
-  //   if (formData.password.trim() === "") {
-  //     errors.password = "required";
-  //   }
-
-  //   setFormErrors(errors);
-
-  //   if (Object.keys(errors).length === 0) {
-  //     const form = document.getElementById("logIn-form");
-  //     form.submit();
-  //   }
-  // };
 
   const inputClassName = (id) => {
     return formErrors[id]
@@ -84,7 +99,7 @@ if (user) {
             </div>
             <div
               id="username-error"
-              className="text-red-700 ml-12 font-bold text-sm"
+              className="text-red-700 md:ml-16 ml-12 font-bold text-sm"
               style={{ display: formErrors.username ? "block" : "none" }}
             >
               {formErrors.username}
@@ -107,10 +122,17 @@ if (user) {
             </div>
             <div
               id="password-error"
-              className="text-red-700 ml-12 font-bold text-sm"
+              className="text-red-700 md:ml-16 ml-12 font-bold text-sm"
               style={{ display: formErrors.password ? "block" : "none" }}
             >
               {formErrors.password}
+            </div>
+            <div
+              id="password-error"
+              className="text-red-700 md:ml-16 ml-12 font-bold text-sm"
+              style={{ display: passwordError ? "block" : "none" }}
+            >
+              {passwordError}
             </div>
             <div className="flex">
               <h1 className="text-neutral-50 ml-1 md:ml-3 lg:ml-5">.</h1>
@@ -120,15 +142,17 @@ if (user) {
             </div>
           </div>
           <form onClick={logInPage} id="logIn-form">
-            <div className="text-center">
-              <Button
-                className=" bg-red-700 mb-2 text-neutral-50 font-bold md:w-1/3 w-3/4 p-2 mt-4 rounded-lg mx-auto mb-4  md:text-base text-sm"
-                type="submit"
-                variant="contained"
-              >
-                Log In
-              </Button>
-            </div>
+            
+              <div className="text-center">
+                <Button
+                  className=" bg-red-700 mb-2 text-neutral-50 font-bold md:w-1/3 w-3/4 p-2 mt-4 rounded-lg mx-auto mb-4  md:text-base text-sm"
+                  type="submit"
+                  variant="contained"
+                >
+                  Log In
+                </Button>
+              </div>
+            
           </form>
         </div>
       </div>

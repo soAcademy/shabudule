@@ -144,7 +144,7 @@ const PartyList = () => {
                   </div>
                   <div className="md:items-center md:flex ">
                     <div className="text-xs text-red-700 bg-neutral-50  rounded-full md:h-12 md:w-60 p-2 flex justify-center items-center text-center  md:mx-2 md:right-96 md:absolute ">
-                      MK Restautant: Major Ratchayothin
+                    {party.table.branch.shabuShop.name} {party.table.branch.branchName}
                     </div>
                   </div>
                   <div className="md:items-center md:flex">
@@ -153,7 +153,7 @@ const PartyList = () => {
                     </div>
                   </div>
                 </div>
-                <div className="p-2 text-center bg-yellow-600 my-8 rounded-lg ml-1 md:mx-2  md:right-10 md:absolute ">
+                <div className="p-2 text-center bg-yellow-600 md:my-8 my-9 rounded-lg ml-1 md:mx-2 md:right-10 md:absolute">
                   {acceptedMembersCount(party)}/{party.partyMembers?.length}
                 </div>
               </div>
@@ -165,10 +165,10 @@ const PartyList = () => {
                       <img
                         src={party.table.branch.shabuShop.shopImage}
                         alt="restaurant logo"
-                        className="w-20 h-20 md:w-28 md:h-28 rounded-lg mt-2"
+                        className="md:block hidden md:w-28 md:h-28 rounded-lg mt-2"
                       />
 
-                      <div className="w-5/6 ml-12">
+                      <div className="md:w-5/6 md:ml-12">
                         <div className="flex text-red-700 font-bold ml-1 m-2 bg-neutral-50 p-2 rounded-lg">
                           <div className="w-1/3">Name:</div>
                           <div className="w-2/3">{party.name}</div>
@@ -194,7 +194,7 @@ const PartyList = () => {
                         </div>
                         <div className="flex text-red-700 font-bold ml-1 m-2 bg-neutral-50 p-2 rounded-lg">
                           <div className="w-1/3">createdBy:</div>
-                          <div className="w-2/3">Teak</div>
+                          <div className="w-2/3">{party.createByUserId.name}</div>
                         </div>
                       </div>
                     </div>
