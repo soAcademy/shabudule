@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { fire } from "../fire";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { LoggedInNavBarContext } from "../App";
 
 const Register = () => {
   const [passwordMatch, setPasswordMatch] = useState(true);
   const [passwordMatchError, setPasswordMatchError] = useState("");
+  const { setLoggedIn } = useContext(LoggedInNavBarContext);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -19,6 +22,8 @@ const Register = () => {
     confirmPassword: "",
     email: "",
   });
+
+  const navigate = useNavigate();
 
   const checkPassword = () => {
     if (formData.password !== formData.confirmPassword) {
@@ -59,6 +64,10 @@ const Register = () => {
       createUserWithEmailAndPassword(auth, formData.username, formData.password)
         .then((u) => {
           console.log(u);
+          setFormData({ username: "", password: "",confirmPassword: "",
+          email: ""});
+          setLoggedIn(true);
+          navigate("/shabu/home");
         })
         .catch((err) => {
           console.log(err);
@@ -79,12 +88,12 @@ const Register = () => {
   return (
     <>
       <div className="bg-neutral-300 h-screen flex justify-center overflow-auto">
-        <div className="bg-neutral-50 m-auto md:w-10/12 w-full h-[500px] mx-2 border border-4 border-red-700 rounded-lg mt-[70px]">
+        <div className="bg-[#F5F5F5] m-auto md:w-9/12 w-full h-[500px] mx-2 border border-4 border-[#B1454A] rounded-lg mt-[70px]">
           <h1 className="text-center p-4 text-xl font-bold ">Registration</h1>
           <div className="py-2">
             <div className="flex">
-              <h1 className="text-neutral-50 ml-1 md:ml-3 lg:ml-5">.</h1>
-              <h1 className="lg:ml-12 ml-9 md:ml-8">Username</h1>
+              <h1 className="text-[#F5F5F5] ml-1 md:ml-3 lg:ml-5">.</h1>
+              <h1 className="lg:ml-20 ml-9 md:ml-8">Username</h1>
             </div>
             <div className="text-center">
               <input
@@ -97,7 +106,7 @@ const Register = () => {
             </div>
             <div
               id="username-error"
-              className="text-red-700 ml-12 font-bold text-sm"
+              className="text-[#B1454A] ml-12 md:ml-28 font-bold text-sm"
               style={{ display: formErrors.username ? "block" : "none" }}
             >
               {formErrors.username}
@@ -105,8 +114,8 @@ const Register = () => {
           </div>
           <div className="py-2">
             <div className="flex">
-              <h1 className="text-neutral-50 ml-1 md:ml-3 lg:ml-5">.</h1>
-              <h1 className="lg:ml-12 ml-9 md:ml-8">Password</h1>
+              <h1 className="text-[#F5F5F5] ml-1 md:ml-3 lg:ml-5">.</h1>
+              <h1 className="lg:ml-20 ml-9 md:ml-8">Password</h1>
             </div>
             <div className="text-center">
               <input
@@ -118,7 +127,7 @@ const Register = () => {
             </div>
             <div
               id="password-error"
-              className="text-red-700 ml-12 font-bold text-sm"
+              className="text-[#B1454A] ml-12 md:ml-28 font-bold text-sm"
               style={{ display: formErrors.password ? "block" : "none" }}
             >
               {formErrors.password}
@@ -126,8 +135,8 @@ const Register = () => {
           </div>
           <div className="py-2">
             <div className="flex">
-              <h1 className="text-neutral-50 ml-1 md:ml-3 lg:ml-5">.</h1>
-              <h1 className="lg:ml-12 ml-9 md:ml-8">Confirm Password</h1>
+              <h1 className="text-[#F5F5F5] ml-1 md:ml-3 lg:ml-5">.</h1>
+              <h1 className="lg:ml-20 ml-9 md:ml-8">Confirm Password</h1>
             </div>
             <div className="text-center">
               <input
@@ -139,7 +148,7 @@ const Register = () => {
             </div>
             <div
               id="confirmPassword-error"
-              className="text-red-700 ml-12 font-bold text-sm"
+              className="text-[#B1454A] ml-12 md:ml-28 font-bold text-sm"
               style={{ display: formErrors.confirmPassword ? "block" : "none" }}
             >
               {formErrors.confirmPassword}
@@ -147,7 +156,7 @@ const Register = () => {
 
             <div
               id="password-match-error"
-              className="text-red-700 text-center font-bold text-sm"
+              className="text-[#B1454A] ml-12 md:ml-28 font-bold text-sm"
               style={{ display: passwordMatchError ? "block" : "none" }}
             >
               {passwordMatchError}
@@ -155,8 +164,8 @@ const Register = () => {
           </div>
           <div className="py-2">
             <div className="flex">
-              <h1 className="text-neutral-50 ml-1 md:ml-3 lg:ml-5">.</h1>
-              <h1 className="lg:ml-12 ml-9 md:ml-8">Email</h1>
+              <h1 className="text-[#F5F5F5] ml-1 md:ml-3 lg:ml-5">.</h1>
+              <h1 className="lg:ml-20 ml-9 md:ml-8">Email</h1>
             </div>
             <div className="text-center">
               <input
@@ -168,14 +177,14 @@ const Register = () => {
             </div>
             <div
               id="email-error"
-              className="text-red-700 ml-12 font-bold text-sm"
+              className="text-[#B1454A] ml-12 md:ml-28 font-bold text-sm"
               style={{ display: formErrors.email ? "block" : "none" }}
             >
               {formErrors.email}
             </div>
             <div className="flex">
-              <div className="text-neutral-50 ml-1 md:ml-3 lg:ml-5">.</div>
-              <div className="text-xs mt-2 lg:ml-12 ml-9 md:ml-8">
+              <div className="text-[#F5F5F5] ml-1 md:ml-3 lg:ml-5">.</div>
+              <div className="text-xs mt-2 lg:ml-20 ml-9 md:ml-8">
                 already have an account?
               </div>
               <div>
@@ -190,7 +199,7 @@ const Register = () => {
           <form onClick={registerPage} id="register-form">
             <div className="text-center">
               <Button
-                className=" bg-red-700 mb-2 text-neutral-50 font-bold md:w-1/3 w-3/4 p-2 mt-4 rounded-lg mx-auto mb-4  md:text-base text-sm"
+                className=" bg-[#B1454A] mb-2 text-[#F5F5F5] font-bold md:w-1/3 w-3/4 p-2 mt-4 rounded-lg mx-auto mb-4  md:text-base text-sm"
                 type="submit"
                 variant="contained"
               >

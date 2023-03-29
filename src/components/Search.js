@@ -43,7 +43,7 @@ export const Search = ({
                     <div>
                       {data?.shabuShopBranchs?.map((branch, index) => (
                         <div key={index} className="text-center">
-                          <div className="px-1 hover:bg-red-500 hover:text-neutral-50 text-red-700 font-bold active:bg-red-900 cursor-pointer">
+                          <div className="px-1 hover:bg-red-500 hover:text-[#F5F5F5] text-[#B1454A] font-bold active:bg-[#c95f64] cursor-pointer">
                             {data?.name}: {branch?.branchName}
                           </div>
                         </div>
@@ -59,7 +59,7 @@ export const Search = ({
                             .includes(search?.toLowerCase())
                         )
                         .map((branch, index) => (
-                          <div key={index} className="px-1 hover:bg-red-500 hover:text-neutral-50 text-red-700 font-bold active:bg-red-900 cursor-pointer">
+                          <div key={index} className="px-1 hover:bg-red-500 hover:text-[#F5F5F5] text-[#B1454A] font-bold active:bg-[#c95f64] cursor-pointer">
                             {data.name}: {branch.branchName}
                           </div>
                         ))}

@@ -88,10 +88,10 @@ const PartyList = () => {
         <Fade in={toggleConfirmationPopup}>
         <div className="w-full h-screen fixed flex bg-gray-500/30 backdrop-blur-sm">
           <div className="bg-neutral-200 rounded-lg w-80 h-84 m-auto px-4 py-4 items-center">
-            <div className="text-base mb-1 text-red-700 text-center font-bold flex-auto my-auto">
+            <div className="text-base mb-1 text-[#B1454A] text-center font-bold flex-auto my-auto">
               Confirmation
             </div>
-            <div className="text-red-700 font-bold ml-1 p-2"key={currentParty.id}>Join "{currentParty.name}"?</div>
+            <div className="text-[#B1454A] font-bold ml-1 p-2"key={currentParty.id}>Join "{currentParty.name}"?</div>
             <form
               onSubmit={() => {
                 setToggleConfirmationPopup(false);
@@ -101,7 +101,7 @@ const PartyList = () => {
               <div className="flex">
                 <Button
                   type="submit"
-                  className="px-4 py-2 mx-2 mt-2 mb-1 bg-red-700 w-1/2 rounded text-white "
+                  className="px-4 py-2 mx-2 mt-2 mb-1 bg-[#B1454A] w-1/2 rounded text-white "
                   onClick={() => addPartyMember(4, currentParty.id)}
                   variant="contained"
                 >
@@ -124,12 +124,12 @@ const PartyList = () => {
         </Fade>
       )}
       <div className="bg-neutral-300 h-screen flex justify-center overflow-auto">
-        <div className="bg-neutral-50 m-auto  w-full  mx-2 border border-4 border-red-700 rounded-lg mt-[70px] overflow-auto">
-          <div className=" p-2 font-bold text-xl text-red-700">PARTY LIST</div>
+        <div className="bg-[#F5F5F5] m-auto  w-full  mx-2 border border-4 border-[#B1454A] rounded-lg mt-[70px] overflow-auto">
+          <div className=" p-2 font-bold text-xl text-[#B1454A]">PARTY LIST</div>
           {parties?.map((party, index) => (
             <div>
               <div
-                className="p-2 m-2 flex bg-red-700 pointer-cursor border border-3 font-bold text-neutral-50 rounded-lg md:relative z-0 "
+                className="p-2 m-2 flex bg-[#B1454A] pointer-cursor border border-3 font-bold text-[#F5F5F5] rounded-lg md:relative z-0 "
                 key={index}
                 onClick={() => updateToggleIndex(index)}
               >
@@ -143,12 +143,12 @@ const PartyList = () => {
                     {party.name}
                   </div>
                   <div className="md:items-center md:flex ">
-                    <div className="text-xs text-red-700 bg-neutral-50  rounded-full md:h-12 md:w-60 p-2 flex justify-center items-center text-center  md:mx-2 md:right-96 md:absolute ">
+                    <div className="text-xs text-[#B1454A] bg-[#F5F5F5]  rounded-full md:h-12 md:w-60 p-2 flex justify-center items-center text-center  md:mx-2 md:right-96 md:absolute ">
                     {party.table.branch.shabuShop.name} {party.table.branch.branchName}
                     </div>
                   </div>
                   <div className="md:items-center md:flex">
-                    <div className="text-xs text-red-700 bg-neutral-50 text-center rounded-full mt-2 md:mt-0 md:mx-8 md:h-12 md:w-60 flex justify-center items-center md:mx-2 md:right-28 md:absolute ">
+                    <div className="text-xs text-[#B1454A] bg-[#F5F5F5] text-center rounded-full mt-2 md:mt-0 md:mx-8 md:h-12 md:w-60 flex justify-center items-center md:mx-2 md:right-28 md:absolute ">
                       {party.startDateTime}
                     </div>
                   </div>
@@ -169,30 +169,30 @@ const PartyList = () => {
                       />
 
                       <div className="md:w-5/6 md:ml-12">
-                        <div className="flex text-red-700 font-bold ml-1 m-2 bg-neutral-50 p-2 rounded-lg">
+                        <div className="flex text-[#B1454A] font-bold ml-1 m-2 bg-[#F5F5F5] p-2 rounded-lg">
                           <div className="w-1/3">Name:</div>
                           <div className="w-2/3">{party.name}</div>
                         </div>
-                        <div className="flex text-red-700 font-bold ml-1 m-2 bg-neutral-50 p-2 rounded-lg">
+                        <div className="flex text-[#B1454A] font-bold ml-1 m-2 bg-[#F5F5F5] p-2 rounded-lg">
                           <div className="w-1/3">detail:</div>
                           <div className="w-2/3">{party.partyDetail}</div>
                         </div>
-                        <div className="flex text-red-700 font-bold ml-1 m-2 bg-neutral-50 p-2 rounded-lg">
+                        <div className="flex text-[#B1454A] font-bold ml-1 m-2 bg-[#F5F5F5] p-2 rounded-lg">
                           <div className="w-1/3">type:</div>
                           <div className="w-2/3">{party.type}</div>
                         </div>
-                        <div className="flex text-red-700 font-bold ml-1 m-2 bg-neutral-50 p-2 rounded-lg">
+                        <div className="flex text-[#B1454A] font-bold ml-1 m-2 bg-[#F5F5F5] p-2 rounded-lg">
                           <div className="w-1/3">branch:</div>
                           <div className="w-2/3">
                             {party.table.branch.shabuShop.name}{" "}
                             {party.table.branch.branchName}
                           </div>
                         </div>
-                        <div className="flex text-red-700 font-bold ml-1 m-2 bg-neutral-50 p-2 rounded-lg">
+                        <div className="flex text-[#B1454A] font-bold ml-1 m-2 bg-[#F5F5F5] p-2 rounded-lg">
                           <div className="w-1/3">time:</div>
                           <div className="w-2/3">{party.startDateTime}</div>
                         </div>
-                        <div className="flex text-red-700 font-bold ml-1 m-2 bg-neutral-50 p-2 rounded-lg">
+                        <div className="flex text-[#B1454A] font-bold ml-1 m-2 bg-[#F5F5F5] p-2 rounded-lg">
                           <div className="w-1/3">createdBy:</div>
                           <div className="w-2/3">{party.createByUserId.name}</div>
                         </div>
@@ -200,7 +200,7 @@ const PartyList = () => {
                     </div>
                     <div className="text-center">
                       <Button
-                        className="button bg-red-700 hover:bg-red-900 text-neutral-50 font-bold md:w-1/3 w-3/4 p-3 mt-4 rounded-full mx-auto mb-2 md:text-base"
+                        className="button bg-[#B1454A] hover:bg-[#c95f64]  text-[#F5F5F5] font-bold md:w-1/3 w-3/4 p-3 mt-4 rounded-full mx-auto mb-2 md:text-base"
                         onClick={() => handlePartyClick(party)}
                         variant="contained"
                       >
@@ -224,7 +224,7 @@ export default PartyList;
 /* <div>
             <Disclosure>
               <Disclosure.Button>
-                <div className="p-2 m-2 flex bg-red-700 pointer-cursor border border-3 font-bold text-neutral-50 rounded-lg"
+                <div className="p-2 m-2 flex bg-[#B1454A] pointer-cursor border border-3 font-bold text-[#F5F5F5] rounded-lg"
                 key={index}
                 // onClick={() => updateToggleIndex(index)}
               >
@@ -235,10 +235,10 @@ export default PartyList;
                 />
                 <div>
                   <div className="p-2">{party.title}</div>
-                  <div className="text-xs text-red-700 bg-neutral-50 text-center rounded-full">
+                  <div className="text-xs text-[#B1454A] bg-[#F5F5F5] text-center rounded-full">
                     {party.branch}
                   </div>
-                  <div className="text-xs text-red-700 bg-neutral-50 text-center rounded-full mt-2">
+                  <div className="text-xs text-[#B1454A] bg-[#F5F5F5] text-center rounded-full mt-2">
                     {party.time}
                   </div>
                 </div>
@@ -276,7 +276,7 @@ export default PartyList;
 //               </div>
 //             </div>
 //             <div className="text-center">
-//               <button className="button bg-red-700 hover:bg-red-900 text-neutral-50 font-bold md:w-1/3 w-3/4 p-3 mt-4 rounded-full mx-auto mb-2 md:text-base">
+//               <button className="button bg-[#B1454A] hover:bg-[#c95f64]  text-[#F5F5F5] font-bold md:w-1/3 w-3/4 p-3 mt-4 rounded-full mx-auto mb-2 md:text-base">
 //                 Join
 //               </button>
 //             </div>

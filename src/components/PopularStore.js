@@ -54,7 +54,7 @@ export const PopularStore = ({shops}) => {
                   {shop.name} {branch.branchName}
                 </div>
                 <div className="">
-                  <button className="text-xs font-bold ml-1 button hover:text-red-500 active:text-red-700 h-1/3 mt-4">
+                  <button className="text-xs font-bold ml-1 button hover:text-[#B1454A] active:text-[#c95f64] h-1/3 mt-4">
                     see more details
                   </button>
                 </div>

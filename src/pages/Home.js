@@ -154,7 +154,7 @@ const Home = () => {
         setCurrentParty={setCurrentParty}
       />
       <div className="bg-neutral-300 h-screen flex justify-center overflow-auto">
-        <div className="bg-neutral-50 m-auto w-full h-full mx-2 border border-4 border-red-700 rounded-lg mt-[70px] overflow-auto">
+        <div className="bg-[#F5F5F5] m-auto w-full h-full mx-2 border border-4 border-[#B1454A] rounded-lg mt-[70px] overflow-auto">
           <Search
             search={search}
             setSearch={setSearch}
@@ -162,13 +162,13 @@ const Home = () => {
             setSearchDatas={setSearchDatas}
             shops={shops}
           />
-          <div className="text-red-700 text-4xl text-center m-2 font-bold">
+          <div className="text-[#B1454A] text-4xl text-center m-2 font-bold">
             สร้างปาร์ตี้ชาบูกินกับเพื่อนได้แล้ววันนี้! ที่ SHABUDULE
           </div>
           <div>
             <Carousel promotion={promotion} auto={true} interval={3000} />
           </div>
-          <div className="text-center text-red-700 font-bold md:text-4xl">
+          <div className="text-center text-[#B1454A] font-bold md:text-4xl">
             กว่า 100 ร้านชาบูที่ร่วมกับเรา
           </div>
           <div className="flex p-2 justify-center">
@@ -180,17 +180,17 @@ const Home = () => {
               />
             ))}
           </div>
-          <div className="text-center text-red-700 font-bold my-2 md:text-2xl">
+          <div className="text-center text-[#B1454A] font-bold my-2 md:text-2xl">
             จอง/สร้าง Party ตอนนี้
           </div>
           <Link to="/shabu/register">
             <div className="justify-center flex">
-              <Button className="text-center bg-red-700 text-neutral-50 w-1/3 p-2 rounded-lg button font-bold hover:bg-red-800 active:bg-red-900" variant="contained">
+              <Button className="text-center bg-[#B1454A] text-[#F5F5F5] w-1/3 p-2 rounded-lg button font-bold hover:bg-[#c95f64]" variant="contained">
                 เริ่มต้นใช้งานฟรี
               </Button>
             </div>
           </Link>
-          <div className="m-2 font-bold text-red-700 text-xl md:text-2xl">
+          <div className="m-2 font-bold text-[#B1454A] text-xl md:text-2xl">
             popular party
           </div>
           <PopularParty
@@ -198,7 +198,7 @@ const Home = () => {
             setTogglePartyPopup={setTogglePartyPopup}
             setCurrentParty={setCurrentParty}
           />
-          <div className="m-2 font-bold text-red-700 text-xl md:text-2xl">
+          <div className="m-2 font-bold text-[#B1454A] text-xl md:text-2xl">
             popular Store
           </div>
           <PopularStore shops={shops} />

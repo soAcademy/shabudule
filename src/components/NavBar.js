@@ -26,12 +26,12 @@ const NavBar = () => {
   return (
     <>
       <div className="w-full fixed top-0 z-50">
-        <nav className="bg-red-700 shadow-lg md:flex md:items-center md:justify-between p-1">
+        <nav className="bg-[#B1454A] shadow-lg md:flex md:items-center md:justify-between p-1">
           <div className="md:flex">
-            <h1 className="text-neutral-50 text-3xl -mt-1 float-left font-bold hidden md:block">
+            <h1 className="text-[#F5F5F5] text-3xl -mt-1 float-left font-bold hidden md:block">
               <MdOutlineFoodBank />
             </h1>
-            <h1 className="align-left font-bold text-neutral-50 hidden md:block">
+            <h1 className="align-left font-bold text-[#F5F5F5] hidden md:block">
               SHABUDULE
             </h1>
           </div>
@@ -39,17 +39,17 @@ const NavBar = () => {
           <div>
             <div className="flex">
               <IconButton
-                className="text-3xl cursor-pointer  md:hidden text-neutral-50"
+                className="text-3xl cursor-pointer  md:hidden text-[#F5F5F5]"
                 onClick={() => setToggle(!toggle)}
               >
                 <GiHamburgerMenu />
               </IconButton>
 
               <div className="flex">
-                <h1 className="text-neutral-50 text-4xl -mt-1 float-left ml-2 font-bold md:hidden">
+                <h1 className="text-[#F5F5F5] text-4xl -mt-1 float-left ml-2 font-bold md:hidden">
                   <MdOutlineFoodBank />
                 </h1>
-                <h1 className="ml-1 font-bold text-xl mt-1 text-neutral-50 md:hidden">
+                <h1 className="ml-1 font-bold text-xl mt-1 text-[#F5F5F5] md:hidden">
                   SHABUDULE
                 </h1>
               </div>
@@ -59,7 +59,7 @@ const NavBar = () => {
                 {routes?.map((route) => (
                   <Link to={route.url} onClick={handleClick}>
                     <Fade in={toggle}>
-                      <MenuItem className="text-2xl font-bold text-neutral-50 p-6 md:hidden hover:bg-red-800 active:bg-red-500 rounded-full z-50">
+                      <MenuItem className="text-2xl font-bold text-[#F5F5F5] p-6 md:hidden hover:bg-[#c95f64]  rounded-full z-50">
                         {route.name}
                       </MenuItem>
                     </Fade>
@@ -72,7 +72,7 @@ const NavBar = () => {
           <Box className=" md:flex md:items-center">
             {routes.map((route) => (
               <Link to={route.url}>
-                <Button className="text-base font-bold text-neutral-50  md:mx-6  hidden md:block hover:bg-red-800 active:bg-red-900 rounded-lg p-3">
+                <Button className="text-base font-bold text-[#F5F5F5]  md:mx-6  hidden md:block  hover:bg-[#c95f64] rounded-lg p-3">
                   {route.name}
                 </Button>
               </Link>
