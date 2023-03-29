@@ -31,32 +31,32 @@ export const ToggleParty = ({
         <Fade in={togglePartyPopUp}>
         <div className="w-full z-10 h-screen fixed flex bg-gray-500/30 backdrop-blur-sm">
           <div className="bg-neutral-200 rounded-lg w-80 h-84 m-auto px-4 py-4 items-center md:mt-16">
-            <div className="text-base mb-1 text-red-700 text-center font-bold flex-auto my-auto">
+            <div className="text-base mb-1 text-[#B1454A] text-center font-bold flex-auto my-auto">
               Confirmation
             </div>
 
             <div>
-              <div className="flex text-red-700 font-bold ml-1 m-2 bg-neutral-50 p-2 rounded-lg">
+              <div className="flex text-[#B1454A]font-bold ml-1 m-2 bg-[#F5F5F5] p-2 rounded-lg">
                 <div className="w-1/3">Name:</div>
                 <div className="w-2/3">{currentParty.name}</div>
               </div>
-              <div className="flex text-red-700 font-bold ml-1 m-2 bg-neutral-50 p-2 rounded-lg">
+              <div className="flex text-[#B1454A] font-bold ml-1 m-2 bg-[#F5F5F5] p-2 rounded-lg">
                 <div className="w-1/3">detail:</div>
                 <div className="w-2/3">{currentParty.partyDetail}</div>
               </div>
-              <div className="flex text-red-700 font-bold ml-1 m-2 bg-neutral-50 p-2 rounded-lg">
+              <div className="flex text-[#B1454A] font-bold ml-1 m-2 bg-[#F5F5F5] p-2 rounded-lg">
                 <div className="w-1/3">type:</div>
                 <div className="w-2/3">{currentParty.type}</div>
               </div>
-              <div className="flex text-red-700 font-bold ml-1 m-2 bg-neutral-50 p-2 rounded-lg">
+              <div className="flex text-[#B1454A] font-bold ml-1 m-2 bg-[#F5F5F5] p-2 rounded-lg">
                 <div className="w-1/3">branch:</div>
                 <div className="w-2/3">{currentParty.table.branch.shabuShop.name} {currentParty.table.branch.branchName}</div>
               </div>
-              <div className="flex text-red-700 font-bold ml-1 m-2 bg-neutral-50 p-2 rounded-lg">
+              <div className="flex text-[#B1454A] font-bold ml-1 m-2 bg-[#F5F5F5] p-2 rounded-lg">
                 <div className="w-1/3">time:</div>
                 <div className="w-2/3">{currentParty.startDateTime}</div>
               </div>
-              <div className="flex text-red-700 font-bold ml-1 m-2 bg-neutral-50 p-2 rounded-lg">
+              <div className="flex text-[#B1454A] font-bold ml-1 m-2 bg-[#F5F5F5] p-2 rounded-lg">
                 <div className="w-1/3">createdBy:</div>
                 <div className="w-2/3">{currentParty.createByUserId.name}</div>
               </div>
@@ -71,7 +71,7 @@ export const ToggleParty = ({
               <div className="flex">
                 <Button
                   type="submit"
-                  className="px-4 py-2 mx-2 mt-2 mb-1 bg-red-700 w-1/2 rounded text-white "
+                  className="px-4 py-2 mx-2 mt-2 mb-1 bg-[#B1454A] w-1/2 rounded text-white"
                   onClick={() => addPartyMember(4, 5)}
                   variant="contained"
                 >
