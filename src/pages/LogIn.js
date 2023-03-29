@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ShabuContext } from "../App";
 import { LoggedInNavBarContext } from "../App";
@@ -25,7 +26,7 @@ const LogIn = () => {
     }
     if (formData.password.trim() === "") {
       errors.password = "required";
-      setPasswordError("")
+      setPasswordError("");
     }
 
     setFormErrors(errors);
@@ -35,7 +36,8 @@ const LogIn = () => {
         .then((u) => {
           console.log(u);
           console.log("accessToken", u.user.accessToken);
-          setTokenId(u.user.accessToken);
+          localStorage.setItem("SavedToken", 'Bearer ' + u.user.accessToken);  //save token is the key, bearer is the type of token used, u.user.token is athe value
+          axios.defaults.headers.common['Authorization'] = 'Bearer ' + u.user.accessToken; //sets a default value for the "Authorization" header for all Axios HTTP requests.
           setLoggedIn(true);
           setFormData({ username: "", password: "" });
           setPasswordError("");
@@ -142,17 +144,15 @@ const LogIn = () => {
             </div>
           </div>
           <form onClick={logInPage} id="logIn-form">
-            
-              <div className="text-center">
-                <Button
-                  className=" bg-[#B1454A] mb-2 text-[#F5F5F5] font-bold md:w-1/3 w-3/4 p-2 mt-4 rounded-lg mx-auto mb-4  md:text-base text-sm"
-                  type="submit"
-                  variant="contained"
-                >
-                  Log In
-                </Button>
-              </div>
-            
+            <div className="text-center">
+              <Button
+                className=" bg-[#B1454A] mb-2 text-[#F5F5F5] font-bold md:w-1/3 w-3/4 p-2 mt-4 rounded-lg mx-auto mb-4  md:text-base text-sm"
+                type="submit"
+                variant="contained"
+              >
+                Log In
+              </Button>
+            </div>
           </form>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { fire } from "../fire";
@@ -38,6 +39,20 @@ const Register = () => {
   };
 
   const auth = getAuth(fire);
+
+  const createUser = async (accessToken) => {
+    console.log("accessToken", accessToken);
+    const result = await axios
+      .post(
+        "https://shabudule-api.vercel.app/function/createUserAuthShabudule",
+        {
+          idToken: accessToken,
+        }
+      )
+      .catch((error) => console.log(error));
+    console.log("result.data.token:", result.data);
+  };
+
   const registerPage = (e) => {
     e.preventDefault();
     console.log("auth", auth);
@@ -64,6 +79,10 @@ const Register = () => {
       createUserWithEmailAndPassword(auth, formData.username, formData.password)
         .then((u) => {
           console.log(u);
+          createUser(u.user.accessToken)
+          console.log("accessTokenu", u.user.accessToken)
+          localStorage.setItem("SavedToken", 'Bearer ' + u.user.accessToken);  //save token is the key, bearer is the type of token used, u.user.token is athe value
+          axios.defaults.headers.common['Authorization'] = 'Bearer ' + u.user.accessToken; //sets a default value for the "Authorization" header for all Axios HTTP requests.
           setFormData({ username: "", password: "",confirmPassword: "",
           email: ""});
           setLoggedIn(true);

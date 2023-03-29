@@ -166,7 +166,7 @@ const Home = () => {
             สร้างปาร์ตี้ชาบูกินกับเพื่อนได้แล้ววันนี้! ที่ SHABUDULE
           </div>
           <div>
-            <Carousel promotion={promotion} auto={true} interval={3000} />
+            {/* <Carousel promotion={promotion} auto={true} interval={3000} /> */}
           </div>
           <div className="text-center text-[#B1454A] font-bold md:text-4xl">
             กว่า 100 ร้านชาบูที่ร่วมกับเรา

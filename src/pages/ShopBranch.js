@@ -9,7 +9,7 @@ import axios from "axios";
 import "dayjs/locale/pt";
 import localeDe from "dayjs/locale/de"; // With a custom alias for the locale object
 
-export const ShopBranch = () => {
+const ShopBranch = () => {
   // const mockStore = [
   //   {
   //     logo: "https://www.mkrestaurant.com/public/assets/img/icon/logo__mk-2.png",
@@ -100,7 +100,7 @@ export const ShopBranch = () => {
               setCreatePartyByDate(selectDate.locale(localeDe).format());
             }}
           >
-            <Link to="/reservation">สร้างปาร์ตี้ !</Link>
+            <Link to="/shabu/reservation">สร้างปาร์ตี้ !</Link>
           </button>
         </div>
         <div className="lg:flex lg:justify-between lg:w-full lg:space-x-2">
@@ -121,3 +121,5 @@ export const ShopBranch = () => {
     </div>
   );
 };
+
+export default ShopBranch;

@@ -23,6 +23,12 @@ const NavBarLoggedIn = () => {
     { name: "Store", url: "shabu/store" },
     { name: "Group List", url: "shabu/party" },
   ];
+
+  const loggedOut = () => {
+    localStorage.removeItem("SavedToken")
+    setLoggedIn(false);
+  }
+
   return (
     <>
       {toggleProfilePopup && (
@@ -37,7 +43,7 @@ const NavBarLoggedIn = () => {
             <Link to="/shabu/Home">
               <Button
                 className="text-base font-bold text-neutral-800 hover:bg-[#B1454A] button w-full hover:text-[#F5F5F5]  py-2 flex items-center justify-center"
-                onClick={() => setLoggedIn(false)}
+                onClick={loggedOut}
               >
                 <div className=" md:ml-3 md:w-1/4 font-bold  text-xl">
                   <MdOutlineLogout />
