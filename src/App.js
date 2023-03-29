@@ -8,14 +8,28 @@ import Register from "./pages/Register";
 import Home from "./pages/Home";
 import StoreList from "./pages/StoreList";
 import PartyList from "./pages/PartyList";
+// import ShopBranch from "./pages/ShopBranch";
+
 export const ShabuContext = createContext();
 export const LoggedInNavBarContext = createContext();
+export const BranchContext = createContext();
 function App() {
   const [tokenId, setTokenId] = useState("");
   const [loggedIn, setLoggedIn] = useState(false)
+  const [branchId, setBranchId] = useState();
+  const [createPartyByDate, setCreatePartyByDate] = useState();
+
   return (
     <>
       <BrowserRouter>
+      <BranchContext.Provider
+          value={{
+            branchId,
+            setBranchId,
+            createPartyByDate,
+            setCreatePartyByDate,
+          }}
+        >
         <ShabuContext.Provider value={{ tokenId, setTokenId }}>
         <LoggedInNavBarContext.Provider value={{ loggedIn, setLoggedIn }}>
         {loggedIn ? <NavBarLoggedIn /> : <NavBar />}
@@ -31,6 +45,7 @@ function App() {
               <Route exact path="party" element={<PartyList />} />
               <Route exact path="login" element={<LogIn />} />
               <Route exact path="register" element={<Register />} />
+              {/* <Route exact path="shopBranch" element={<ShopBranch />} /> */}
             </Route>
             <Route
               className="bg-red-200 rounded-lg m-2 mt-12 p-2 w-[100px] font-bold"
@@ -41,7 +56,7 @@ function App() {
           </Routes>
           </LoggedInNavBarContext.Provider>
         </ShabuContext.Provider >
-        
+        </BranchContext.Provider>
       </BrowserRouter>
     </>
   );
