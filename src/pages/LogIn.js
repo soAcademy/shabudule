@@ -7,10 +7,9 @@ import Button from "@mui/material/Button";
 import { fire } from "../fire";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 const LogIn = () => {
-  const [formData, setFormData] = useState({ username: "", password: "" });
-  const { setTokenId } = useContext(ShabuContext);
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const { setLoggedIn } = useContext(LoggedInNavBarContext);
-  const [formErrors, setFormErrors] = useState({ username: "", password: "" });
+  const [formErrors, setFormErrors] = useState({ email: "", password: "" });
   const [passwordError, setPasswordError] = useState("");
 
   const navigate = useNavigate();
@@ -21,8 +20,8 @@ const LogIn = () => {
     console.log("auth", auth);
 
     const errors = {};
-    if (formData.username.trim() === "") {
-      errors.username = "required";
+    if (formData.email.trim() === "") {
+      errors.email = "required";
     }
     if (formData.password.trim() === "") {
       errors.password = "required";
@@ -32,14 +31,14 @@ const LogIn = () => {
     setFormErrors(errors);
 
     if (Object.keys(errors).length === 0) {
-      signInWithEmailAndPassword(auth, formData.username, formData.password)
+      signInWithEmailAndPassword(auth, formData.email, formData.password)
         .then((u) => {
           console.log(u);
           console.log("accessToken", u.user.accessToken);
           localStorage.setItem("SavedToken", 'Bearer ' + u.user.accessToken);  //save token is the key, bearer is the type of token used, u.user.token is athe value
           axios.defaults.headers.common['Authorization'] = 'Bearer ' + u.user.accessToken; //sets a default value for the "Authorization" header for all Axios HTTP requests.
           setLoggedIn(true);
-          setFormData({ username: "", password: "" });
+          setFormData({ email: "", password: "" });
           setPasswordError("");
           navigate("/shabu/home");
         })
@@ -87,24 +86,24 @@ const LogIn = () => {
           <div className="py-2">
             <div className="flex">
               <h1 className="text-[#F5F5F5] ml-1 md:ml-3 lg:ml-5">.</h1>
-              <h1 className="lg:ml-12 ml-8 md:ml-8">Username</h1>
+              <h1 className="lg:ml-12 ml-8 md:ml-8">Email</h1>
             </div>
             <div className="text-center">
               <input
                 type="text"
-                id="username"
-                value={formData.username}
+                id="email"
+                value={formData.email}
                 onChange={handleInputChange}
                 required
-                className={inputClassName("username")}
+                className={inputClassName("email")}
               />
             </div>
             <div
-              id="username-error"
+              id="email-error"
               className="text-[#B1454A] md:ml-16 ml-12 font-bold text-sm"
-              style={{ display: formErrors.username ? "block" : "none" }}
+              style={{ display: formErrors.email ? "block" : "none" }}
             >
-              {formErrors.username}
+              {formErrors.email}
             </div>
           </div>
           <div className="py-2">
@@ -146,7 +145,7 @@ const LogIn = () => {
           <form onClick={logInPage} id="logIn-form">
             <div className="text-center">
               <Button
-                className=" bg-[#B1454A] mb-2 text-[#F5F5F5] font-bold md:w-1/3 w-3/4 p-2 mt-4 rounded-lg mx-auto mb-4  md:text-base text-sm"
+                className=" bg-[#B1454A] text-[#F5F5F5] font-bold md:w-1/3 w-3/4 p-2 mt-4 rounded-lg mx-auto mb-4  md:text-base text-sm"
                 type="submit"
                 variant="contained"
               >

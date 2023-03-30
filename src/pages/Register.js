@@ -10,18 +10,17 @@ import { LoggedInNavBarContext } from "../App";
 const Register = () => {
   const [passwordMatch, setPasswordMatch] = useState(true);
   const [passwordMatchError, setPasswordMatchError] = useState("");
+  const [registerError, setRegisterError] = useState("");
   const { setLoggedIn } = useContext(LoggedInNavBarContext);
   const [formData, setFormData] = useState({
-    username: "",
+    email: "",
     password: "",
     confirmPassword: "",
-    email: "",
   });
   const [formErrors, setFormErrors] = useState({
-    username: "",
+    email: "",
     password: "",
     confirmPassword: "",
-    email: "",
   });
 
   const navigate = useNavigate();
@@ -60,8 +59,8 @@ const Register = () => {
     const isPasswordMatch = checkPassword();
 
     const errors = {};
-    if (formData.username.trim() === "") {
-      errors.username = "required";
+    if (formData.email.trim() === "") {
+      errors.email = "required";
     }
     if (formData.password.trim() === "") {
       errors.password = "required";
@@ -69,26 +68,24 @@ const Register = () => {
     if (formData.confirmPassword.trim() === "") {
       errors.confirmPassword = "required";
     }
-    if (formData.email.trim() === "") {
-      errors.email = "required";
-    }
 
     setFormErrors(errors);
 
     if (Object.keys(errors).length === 0 && isPasswordMatch === true) {
-      createUserWithEmailAndPassword(auth, formData.username, formData.password)
+      createUserWithEmailAndPassword(auth, formData.email, formData.password)
         .then((u) => {
           console.log(u);
-          createUser(u.user.accessToken)
-          console.log("accessTokenu", u.user.accessToken)
-          localStorage.setItem("SavedToken", 'Bearer ' + u.user.accessToken);  //save token is the key, bearer is the type of token used, u.user.token is athe value
-          axios.defaults.headers.common['Authorization'] = 'Bearer ' + u.user.accessToken; //sets a default value for the "Authorization" header for all Axios HTTP requests.
-          setFormData({ username: "", password: "",confirmPassword: "",
-          email: ""});
+          createUser(u.user.accessToken);
+          console.log("accessTokenu", u.user.accessToken);
+          localStorage.setItem("SavedToken", "Bearer " + u.user.accessToken); //save token is the key, bearer is the type of token used, u.user.token is athe value
+          axios.defaults.headers.common["Authorization"] =
+            "Bearer " + u.user.accessToken; //sets a default value for the "Authorization" header for all Axios HTTP requests.
+          setFormData({ email: "", password: "", confirmPassword: "" });
           setLoggedIn(true);
           navigate("/shabu/home");
         })
         .catch((err) => {
+          setRegisterError("This email has already been registered")
           console.log(err);
         });
     }
@@ -112,23 +109,30 @@ const Register = () => {
           <div className="py-2">
             <div className="flex">
               <h1 className="text-[#F5F5F5] ml-1 md:ml-3 lg:ml-5">.</h1>
-              <h1 className="lg:ml-20 ml-9 md:ml-8">Username</h1>
+              <h1 className="lg:ml-20 ml-9 md:ml-8">Email</h1>
             </div>
             <div className="text-center">
               <input
                 type="text"
-                id="username"
+                id="email"
                 onChange={handleInputChange}
                 required
-                className={inputClassName("username")}
+                className={inputClassName("email")}
               />
             </div>
             <div
-              id="username-error"
+              id="email-error"
               className="text-[#B1454A] ml-12 md:ml-28 font-bold text-sm"
-              style={{ display: formErrors.username ? "block" : "none" }}
+              style={{ display: formErrors.email ? "block" : "none" }}
             >
-              {formErrors.username}
+              {formErrors.email}
+            </div>
+            <div
+              id="register-error"
+              className="text-[#B1454A] ml-12 md:ml-28 font-bold text-sm"
+              style={{ display:registerError ? "block" : "none" }}
+            >
+              {registerError}
             </div>
           </div>
           <div className="py-2">
@@ -182,25 +186,6 @@ const Register = () => {
             </div>
           </div>
           <div className="py-2">
-            <div className="flex">
-              <h1 className="text-[#F5F5F5] ml-1 md:ml-3 lg:ml-5">.</h1>
-              <h1 className="lg:ml-20 ml-9 md:ml-8">Email</h1>
-            </div>
-            <div className="text-center">
-              <input
-                type="email"
-                id="email"
-                onChange={handleInputChange}
-                className={inputClassName("email")}
-              />
-            </div>
-            <div
-              id="email-error"
-              className="text-[#B1454A] ml-12 md:ml-28 font-bold text-sm"
-              style={{ display: formErrors.email ? "block" : "none" }}
-            >
-              {formErrors.email}
-            </div>
             <div className="flex">
               <div className="text-[#F5F5F5] ml-1 md:ml-3 lg:ml-5">.</div>
               <div className="text-xs mt-2 lg:ml-20 ml-9 md:ml-8">

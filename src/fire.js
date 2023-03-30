@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBg-DD1oa-bRrVnwleYywZztV9cOmcZNyg",
-  authDomain: "sprinttech-shabudule-login.firebaseapp.com",
-  projectId: "sprinttech-shabudule-login",
-  storageBucket: "sprinttech-shabudule-login.appspot.com",
-  messagingSenderId: "425189549913",
-  appId: "1:425189549913:web:f614e51c520c0f62230e48",
-  measurementId: "G-2CWGYJB8RY",
+  apiKey: "AIzaSyCzOS6r6x_nrvqnBM-pXLvttv9aKLnFVlw",
+  authDomain: "shabudule.firebaseapp.com",
+  projectId: "shabudule",
+  storageBucket: "shabudule.appspot.com",
+  messagingSenderId: "458585135469",
+  appId: "1:458585135469:web:d755d27d544e2b24db6264",
+  measurementId: "G-W660MCEFWK",
 };
 
 export const fire = initializeApp(firebaseConfig);

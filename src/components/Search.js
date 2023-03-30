@@ -1,4 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
+import { BranchContext } from "../App";
+import { Link } from "react-router-dom";
 
 export const Search = ({
   search,
@@ -7,6 +9,7 @@ export const Search = ({
   setSearchDatas,
   shops,
 }) => {
+  const { setBranchId } = useContext(BranchContext);
   useEffect(() => {
     const searchDatas = shops?.filter((data) => {
       const hasMatchingShop = String(data?.name)
@@ -21,6 +24,7 @@ export const Search = ({
     });
     setSearchDatas(searchDatas);
   }, [search]);
+  console.log("searchDatas", searchDatas);
   return (
     <>
       <div className="text-center">
@@ -37,34 +41,44 @@ export const Search = ({
             <div>
               {searchDatas?.map((data, index) => (
                 <div key={index} className="text-center">
-                  {String(data?.name)
-                    ?.toLowerCase()
-                    .includes(search?.toLowerCase()) && (
-                    <div>
-                      {data?.shabuShopBranchs?.map((branch, index) => (
-                        <div key={index} className="text-center">
-                          <div className="px-1 hover:bg-red-500 hover:text-[#F5F5F5] text-[#B1454A] font-bold active:bg-[#c95f64] cursor-pointer">
-                            {data?.name}: {branch?.branchName}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                  {
-                    <div >
-                      {data?.shabuShopBranchs
-                        .filter((branch) =>
-                          String(branch?.branchName)
-                            ?.toLowerCase()
-                            .includes(search?.toLowerCase())
-                        )
-                        .map((branch, index) => (
-                          <div key={index} className="px-1 hover:bg-red-500 hover:text-[#F5F5F5] text-[#B1454A] font-bold active:bg-[#c95f64] cursor-pointer">
-                            {data.name}: {branch.branchName}
+                  <Link
+                    to="/shabu/shopBranch"
+                    onClick={() => {
+                      setBranchId(data.shabuShopBranchs[0].id);
+                      console.log("branchId2", data.shabuShopBranchs[0].id);}} //need [0] as it is an array of objects (check console)
+                  >
+                    {String(data?.name)
+                      ?.toLowerCase()
+                      .includes(search?.toLowerCase()) && (
+                      <div>
+                        {data?.shabuShopBranchs?.map((branch, index) => (
+                          <div key={index} className="text-center">
+                            <div className="px-1 hover:bg-red-500 hover:text-[#F5F5F5] text-[#B1454A] font-bold active:bg-[#c95f64] cursor-pointer">
+                              {data?.name}: {branch?.branchName}
+                            </div>
                           </div>
                         ))}
-                    </div>
-                  }
+                      </div>
+                    )}
+                    {
+                      <div>
+                        {data?.shabuShopBranchs
+                          .filter((branch) =>
+                            String(branch?.branchName)
+                              ?.toLowerCase()
+                              .includes(search?.toLowerCase())
+                          )
+                          .map((branch, index) => (
+                            <div
+                              key={index}
+                              className="px-1 hover:bg-red-500 hover:text-[#F5F5F5] text-[#B1454A] font-bold active:bg-[#c95f64] cursor-pointer"
+                            >
+                              {data.name}:{branch.branchName}
+                            </div>
+                          ))}
+                      </div>
+                    }
+                  </Link>
                 </div>
               ))}
             </div>
