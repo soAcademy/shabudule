@@ -34,18 +34,19 @@ export const TimeAndTable = ({
 
   const table4 = tableAndTime?.filter((r) => r.seatPerDesk === 4);
   const table2 = tableAndTime?.filter((r) => r.seatPerDesk === 2);
-  const sortedTableAndTime = [...tableAndTime]?.sort(
-    (a, b) => a.tableId - b.tableId
-  );
-  const tableAndTimeUniqueSlots = sortedTableAndTime.map((table) => {
-    return {
-      ...table,
-      availableSlot: [...new Set(table.availableSlot)],
-    };
-  });
+  // const sortedTableAndTime = [...tableAndTime]?.sort(
+  //   (a, b) => a.tableId - b.tableId
+  // );
 
-  console.log("test 1", sortedTableAndTime);
-  console.log("test 2", tableAndTimeUniqueSlots);
+  // const tableAndTimeUniqueSlots = sortedTableAndTime.map((table) => {
+  //   return {
+  //     ...table,
+  //     availableSlot: [...new Set(table.availableSlot)],
+  //   };
+  // });
+
+  // console.log("test 1", sortedTableAndTime);
+  // console.log("test 2", tableAndTimeUniqueSlots);
   console.log("table4", table4);
   console.log("table2", table2);
 
@@ -63,7 +64,7 @@ export const TimeAndTable = ({
                     type="text"
                     placeholder="party name..."
                     name="party"
-                    maxlength="30"
+                    maxLength="30"
                     className="border-2 placeholder:text-slate-400 bg-white rounded-md pl-2 w-full"
                     onChange={(e) => setPartyName(e.target.value)}
                   />
@@ -165,7 +166,7 @@ export const TimeAndTable = ({
 
           <div className="mt-10">
             <p>โต๊ะ 4 ที่นั่ง</p>
-            {/* {table4?.map((r, idx) => (
+            {table4?.map((r, idx) => (
               <div className="grid grid-cols-1 space-y-3 mt-3" key={idx}>
                 {r.availableSlot.map((j, i) => (
                   <button
@@ -180,9 +181,9 @@ export const TimeAndTable = ({
                   </button>
                 ))}
               </div>
-            ))} */}
+            ))}
 
-            {table4?.map((r, idx) => (
+            {/* {table4?.map((r, idx) => (
               <div className="grid grid-cols-1 space-y-3 mt-3" key={idx}>
                 {r.availableSlot.map((j, i) => {
                   const currentItem = tableAndTimeUniqueSlots.find(
@@ -215,7 +216,7 @@ export const TimeAndTable = ({
                   );
                 })}
               </div>
-            ))}
+            ))} */}
           </div>
 
           <div>

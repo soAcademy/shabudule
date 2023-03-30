@@ -5,3 +5,5 @@ export * from "./TimeAndTable";
 export * from "./JoinParty";
 export * from "./MyParty";
 export * from "./Profile";
+export * from "./Carousel";
+export * from "./cn";

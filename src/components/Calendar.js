@@ -75,7 +75,7 @@ export const Calendar = ({
     "December",
   ];
 
-  console.log("selectDate", selectDate.locale(localeDe).format());
+  // console.log("selectDate", selectDate.toISOString());
 
   return (
     <div>
