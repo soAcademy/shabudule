@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { RxDotFilled } from "react-icons/rx";
 
-export const Carousel = ({ promotion, slides, auto, interval }) => {
+export const Carousel = ({ promotion, auto, interval }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  // console.log("test 2", promotion?.length);
+  console.log("Banner Length", promotion?.length);
+  console.log("current index", currentIndex);
 
   const prevSlide = () => {
     setCurrentIndex((prev) => (prev === 0 ? promotion?.length - 1 : prev - 1));
@@ -32,10 +33,10 @@ export const Carousel = ({ promotion, slides, auto, interval }) => {
 
   return (
     <div className="max-w-[1200px] h-[350px] md:h-[500px] w-full m-auto py-16 px-4 relative group">
-      {currentIndex > 0 && (
+      {currentIndex >= 0 && (
         <div
           style={{
-            backgroundImage: `url(${promotion[currentIndex]?.image})`,
+            backgroundImage: `url(${promotion?.[currentIndex]?.image})`,
             transition: "background-image 0.5s ease-in-out",
           }}
           className="w-full h-full rounded-2xl bg-center bg-cover transition-transform duration-500 ease-in-out"
