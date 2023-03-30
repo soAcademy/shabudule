@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { MyParty, JoinParty, Profile } from "../components";
+import { Search } from "../components/Search";
 import axios from "axios";
 
-export const UserProfile = () => {
+const UserProfile = () => {
   const [myParty, setMyParty] = useState();
   const [joinParty, setJoinParty] = useState();
   const [memberId, setMemberId] = useState();
@@ -10,10 +11,25 @@ export const UserProfile = () => {
   const [partyId, setPartyId] = useState();
   const [user, setUser] = useState("");
   const [searchToggle, setSearchToggle] = useState(false);
+  const [search, setSearch] = useState();
+  const [searchDatas, setSearchDatas] = useState([]);
+  const [shops, setShops] = useState([]);
 
   console.log("memId :", memberId);
   console.log("status :", status);
   console.log("partyId :", partyId);
+
+  const getShops = async () => {
+    const result = await axios.post(
+      "https://shabudule-api.vercel.app/function/getShopShabudule"
+    );
+    console.log("result", result);
+    setShops(result.data);
+  };
+
+  useEffect(() => {
+    getShops();
+  }, []); //empty dependency [] as only render once
 
   const getUserProfile = async () => {
     const result = await axios.post(
@@ -130,10 +146,18 @@ export const UserProfile = () => {
                 Close
               </button>
             </div>
-            <input className="w-full rounded-md p-1" />
+            <Search
+              search={search}
+              setSearch={setSearch}
+              searchDatas={searchDatas}
+              setSearchDatas={setSearchDatas}
+              shops={shops}
+            />
           </div>
         </div>
       )}
     </div>
   );
 };
+
+export default UserProfile;

@@ -54,7 +54,7 @@ export const PopularStore = ({ shops }) => {
                   className=" w-full rounded-lg h-1/2 "
                 />
                 <div className="h-full">
-                  <div className="m-1 font-bold text-center h-1/4">
+                  <div className="m-2 font-bold md:text-sm text-center h-1/4">
                     {shop.name} {branch.branchName}
                   </div>
                   <div className="">

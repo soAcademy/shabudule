@@ -78,7 +78,7 @@ const NavBarLoggedIn = () => {
           </button>
         </div>
       )}
-      <div className="w-full fixed top-0">
+      <div className="w-full fixed top-0 z-50">
         <nav className="bg-[#B1454A] shadow-lg md:flex md:items-center md:justify-between p-1">
           <div className="md:flex">
             <div className="text-[#F5F5F5] text-3xl -mt-1 float-left font-bold hidden md:block">

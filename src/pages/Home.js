@@ -165,7 +165,7 @@ const Home = () => {
           <div className="text-[#B1454A] text-4xl text-center m-2 font-bold">
             สร้างปาร์ตี้ชาบูกินกับเพื่อนได้แล้ววันนี้! ที่ SHABUDULE
           </div>
-          <div>
+          <div className="w-full md:h-22">
             <Carousel promotion={promotion} auto={true} interval={3000} />
           </div>
           <div className="text-center text-[#B1454A] font-bold md:text-4xl">

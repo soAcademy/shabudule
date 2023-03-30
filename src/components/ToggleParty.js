@@ -10,19 +10,22 @@ export const ToggleParty = ({
   currentParty,
   setCurrentParty,
 }) => {
-  const addPartyMember = async (userId, partyId) => {
-    console.log("userId", userId);
+
+  const savedToken = localStorage.getItem("SavedToken");
+  console.log("savedToken", savedToken);
+  const addPartyMember = async (idToken, partyId) => {
     console.log("partyId", partyId);
     const result = await axios
       .post(
-        "https://shabudule-api.vercel.app/function/addPartyMemberShabudule",
+        "https://shabudule-api.vercel.app/function/addPartyMemberAuthShabudule",
         {
-          userId: userId,
-          partyId: partyId,
+          idToken: idToken,
+          partyId: partyId
         }
       )
-      .catch((error) => console.log(error));
-    console.log("result.data:", result.data);
+      .catch((error) =>console.log("Error adding party member:", error.message));
+      
+    console.log("result:", result);
   };
 
   return (
@@ -30,13 +33,13 @@ export const ToggleParty = ({
       {togglePartyPopUp && currentParty && (
         <Fade in={togglePartyPopUp}>
         <div className="w-full z-10 h-screen fixed flex bg-gray-500/30 backdrop-blur-sm">
-          <div className="bg-neutral-200 rounded-lg w-80 h-84 m-auto px-4 py-4 items-center md:mt-16">
+          <div className="bg-neutral-200 rounded-lg w-80 md:w-[700px] h-84 m-auto px-4 py-4 items-center md:mt-24">
             <div className="text-base mb-1 text-[#B1454A] text-center font-bold flex-auto my-auto">
               Confirmation
             </div>
 
             <div>
-              <div className="flex text-[#B1454A]font-bold ml-1 m-2 bg-[#F5F5F5] p-2 rounded-lg">
+              <div className="flex text-[#B1454A] font-bold ml-1 m-2 bg-[#F5F5F5] p-2 rounded-lg">
                 <div className="w-1/3">Name:</div>
                 <div className="w-2/3">{currentParty.name}</div>
               </div>
@@ -58,7 +61,7 @@ export const ToggleParty = ({
               </div>
               <div className="flex text-[#B1454A] font-bold ml-1 m-2 bg-[#F5F5F5] p-2 rounded-lg">
                 <div className="w-1/3">createdBy:</div>
-                <div className="w-2/3">{currentParty.createByUserId.name}</div>
+                <div className="w-2/3">Teak</div>
               </div>
             </div>
 
@@ -72,7 +75,7 @@ export const ToggleParty = ({
                 <Button
                   type="submit"
                   className="px-4 py-2 mx-2 mt-2 mb-1 bg-[#B1454A] w-1/2 rounded text-white"
-                  onClick={() => addPartyMember(4, 5)}
+                  onClick={() => {addPartyMember(savedToken, currentParty.id); console.log("currentParty.id", currentParty.id)}}
                   variant="contained"
                 >
                   Join
