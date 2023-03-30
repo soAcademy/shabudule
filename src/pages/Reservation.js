@@ -17,7 +17,7 @@ export const Reservation = () => {
 
   console.log("Mem Branch ID", memoizedBranchId);
   console.log("createParty By Date", createPartyByDate);
-  console.log("select date", selectDate);
+  console.log("select date", selectDate.toISOString());
 
   useEffect(() => {
     const getTimeAndTable = async () => {
@@ -26,7 +26,7 @@ export const Reservation = () => {
           "https://shabudule-api.vercel.app/function/getAvailableSlotsShabudule",
           {
             branchId: memoizedBranchId,
-            date: createPartyByDate ?? selectDate,
+            date: createPartyByDate ?? selectDate.toISOString(),
           }
         );
         console.log("get time and table :", result.data);
