@@ -38,7 +38,7 @@ export const Search = ({
       </div>
       {search !== undefined && search.length >= 2 && (
         <div className="w-2/4 mx-auto bg-white shadow-lg top-0 overflow-auto relative">
-          <div className="w-full h-44 top-0">
+          <div className={`w-full top-0 ${searchDatas.length > 5 ? "h-44 overflow-auto" : ""}`}>
             <div>
               {searchDatas?.map((data, index) => (
                 <div key={index} className="text-center">
@@ -82,6 +82,17 @@ export const Search = ({
                   </Link>
                 </div>
               ))}
+              {searchDatas
+          .filter((data) =>
+            String(data?.name)
+              ?.toLowerCase()
+              .includes(search?.toLowerCase())
+          )
+          .length === 0 && searchDatas.length === 0 && (
+          <div className="text-center font-bold">
+            No results found for "{search}".
+          </div>
+        )}
             </div>
           </div>
         </div>

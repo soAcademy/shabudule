@@ -21,25 +21,33 @@ const NavBarLoggedIn = () => {
   const routes = [
     { name: "Home", url: "shabu/home" },
     { name: "Store", url: "shabu/store" },
-    { name: "Group List", url: "shabu/party" },
+    { name: "Party List", url: "shabu/party" },
   ];
 
   const loggedOut = () => {
-    localStorage.removeItem("SavedToken")
+    localStorage.removeItem("SavedToken");
     setLoggedIn(false);
-  }
+  };
+
+  const handleClick = () => {
+    setTimeout(() => {
+      setToggle(false);
+    }, 500); // delay in milliseconds
+  };
 
   return (
     <>
       {toggleProfilePopup && (
         <Fade in={toggleProfilePopup}>
           <div className="absolute md:right-7 mt-14 w-full bg-white rounded-lg md:w-40 shadow-lg py-2 z-10">
-            <Button className="text-base font-bold text-neutral-800 hover:bg-[#B1454A] button w-full hover:text-[#F5F5F5]  px-4 py-2 flex items-center justify-center">
-              <div className="mr-2 md:w-1/4 font-bold text-xl">
-                <CgProfile />
-              </div>
-              <div className="md:w-3/4">Edit Profile</div>
-            </Button>
+            <Link to="/shabu/edituserprofile">
+              <Button className="text-base font-bold text-neutral-800 hover:bg-[#B1454A] button w-full hover:text-[#F5F5F5]  px-4 py-2 flex items-center justify-center" onClick={(() => setToggleProfilePopup(false))}>
+                <div className="mr-2 md:w-1/4 font-bold text-xl">
+                  <CgProfile />
+                </div>
+                <div className="md:w-3/4">Edit Profile</div>
+              </Button>
+            </Link>
             <Link to="/shabu/Home">
               <Button
                 className="text-base font-bold text-neutral-800 hover:bg-[#B1454A] button w-full hover:text-[#F5F5F5]  py-2 flex items-center justify-center"
@@ -91,7 +99,7 @@ const NavBarLoggedIn = () => {
             <div>
               <div className="flex">
                 <IconButton
-                  className="text-xl cursor-pointer justify-right md:hidden text-[#F5F5F5]"
+                  className="text-3xl cursor-pointer  md:hidden text-[#F5F5F5]"
                   onClick={() => {
                     setToggle(!toggle);
                     setToggleProfilePopup(false);
@@ -101,10 +109,10 @@ const NavBarLoggedIn = () => {
                   <GiHamburgerMenu />
                 </IconButton>
                 {/* <div className="flex"> */}
-                <h1 className="text-[#F5F5F5] text-3xl mt-1 float-left ml-2 font-bold md:hidden">
+                <h1 className="text-[#F5F5F5] text-4xl mt-1 float-left ml-2 font-bold md:hidden">
                   <MdOutlineFoodBank />
                 </h1>
-                <h1 className="ml-1 font-bold text-[#F5F5F5] p-2 md:hidden">
+                <h1 className="ml-1 font-bold text-[#F5F5F5] p-2 md:hidden text-xl">
                   SHABUDULE
                 </h1>
                 {/* </div> */}
@@ -120,23 +128,23 @@ const NavBarLoggedIn = () => {
                   <AiOutlineBell />
                 </button> */}
 
-                <button
-                  className=" text-2xl font-bold p-2 text-[#F5F5F5] button  md:mx-6 md:hidden bg-[#B1454A] hover:bg-[#c95f64]  cursor-pointer rounded-lg right-2 absolute mb-1"
+                <Button
+                  className=" text-3xl font-bold p-2 text-[#F5F5F5] button  md:mx-6 md:hidden bg-[#B1454A] hover:bg-[#c95f64]  cursor-pointer rounded-lg right-2 absolute mb-1"
                   onClick={() => {
                     setToggleProfilePopup(!toggleProfilePopup);
                     setToggle(false);
                   }}
                 >
                   <CgProfile />
-                </button>
+                </Button>
               </div>
             </div>
             {toggle && (
               <div>
                 {routes.map((route) => (
                   <Fade in={toggle}>
-                    <Link to={route.url}>
-                      <MenuItem className="text-base font-bold md:hidden text-[#F5F5F5] hover:bg-[#c95f64] ">
+                    <Link to={route.url} onClick={handleClick}>
+                      <MenuItem className="text-2xl font-bold text-[#F5F5F5] p-6 md:hidden hover:bg-[#c95f64] z-50">
                         {route.name}
                       </MenuItem>
                     </Link>

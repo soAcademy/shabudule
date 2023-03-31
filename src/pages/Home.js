@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Carousel } from "../components/Carousel";
@@ -6,6 +6,7 @@ import { ToggleParty } from "../components/ToggleParty";
 import { PopularParty } from "../components/PopularParty";
 import { Search } from "../components/Search";
 import { PopularStore } from "../components/PopularStore";
+import { LoggedInNavBarContext } from "../App";
 import Button from "@mui/material/Button";
 
 // const restaurants = [
@@ -107,6 +108,7 @@ const Home = () => {
   const [search, setSearch] = useState();
   const [searchDatas, setSearchDatas] = useState([]);
   const [shops, setShops] = useState([]);
+  const { loggedIn } = useContext(LoggedInNavBarContext);
 
   const getParties = async () => {
     const result = await axios.post(
@@ -180,16 +182,23 @@ const Home = () => {
               />
             ))}
           </div>
-          <div className="text-center text-[#B1454A] font-bold my-2 md:text-2xl">
-            จอง/สร้าง Party ตอนนี้
-          </div>
-          <Link to="/shabu/register">
-            <div className="justify-center flex">
-              <Button className="text-center bg-[#B1454A] text-[#F5F5F5] w-1/3 p-2 rounded-lg button font-bold hover:bg-[#c95f64]" variant="contained">
-                เริ่มต้นใช้งานฟรี
-              </Button>
-            </div>
-          </Link>
+          {!loggedIn && (
+            <>
+              <div className="text-center text-[#B1454A] font-bold my-2 md:text-2xl">
+                จอง/สร้าง Party ตอนนี้
+              </div>
+              <Link to="/shabu/register">
+                <div className="justify-center flex">
+                  <Button
+                    className="text-center bg-[#B1454A] text-[#F5F5F5] w-1/3 p-2 rounded-lg button font-bold hover:bg-[#c95f64]"
+                    variant="contained"
+                  >
+                    เริ่มต้นใช้งานฟรี
+                  </Button>
+                </div>
+              </Link>
+            </>
+          )}
           <div className="m-2 font-bold text-[#B1454A] text-xl md:text-2xl">
             popular party
           </div>

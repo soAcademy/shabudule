@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { BranchContext } from "../App";
+import { Link } from "react-router-dom";
 const StoreList = () => {
   // const mockShops = [
   //   {
@@ -41,6 +43,7 @@ const StoreList = () => {
   // ];
 
   const [shops, setShops] = useState([]);
+  const { setBranchId } = useContext(BranchContext);
 
   const getShops = async () => {
     const result = await axios.post(
@@ -93,7 +96,8 @@ const StoreList = () => {
               {toggles[index] && (
                 <div>
                   {shop?.shabuShopBranchs?.map((branch, i) => (
-                    <div className="p-2 my-2 mx-6  bg-neutral-300 hover:bg-neutral-400 active:bg-neutral-500 font-bold button rounded-lg flex">
+                    <Link to="/shabu/shopBranch">
+                    <div className="p-2 my-2 mx-6  bg-neutral-300 hover:bg-neutral-400 active:bg-neutral-500 font-bold button rounded-lg flex" onClick={() => setBranchId(branch.id)}>
                       <img
                         src={shop.shopImage}
                         alt="restaurant logo"
@@ -103,6 +107,7 @@ const StoreList = () => {
                         {branch.branchName}
                       </div>
                     </div>
+                    </Link>
                   ))}
                 </div>
               )}

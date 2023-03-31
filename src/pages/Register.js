@@ -82,7 +82,7 @@ const Register = () => {
             "Bearer " + u.user.accessToken; //sets a default value for the "Authorization" header for all Axios HTTP requests.
           setFormData({ email: "", password: "", confirmPassword: "" });
           setLoggedIn(true);
-          navigate("/shabu/home");
+          navigate("/shabu/createuserprofile");
         })
         .catch((err) => {
           setRegisterError("This email has already been registered")

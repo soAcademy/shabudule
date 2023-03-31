@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import dayjs from "dayjs";
 import { Calendar, BranchInfo, MapLocation } from "../components";
-import { Link } from "react-router-dom";
 import { BranchContext } from "../App";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 // Locales
@@ -75,6 +75,9 @@ const ShopBranch = () => {
 
   console.log("branchId", branchId);
 
+  const navigate = useNavigate();
+
+
   useEffect(() => {
     const getBranch = async () => {
       const result = await axios.post(
@@ -87,6 +90,17 @@ const ShopBranch = () => {
     getBranch();
   }, [branchId]);
 
+  const savedToken = localStorage.getItem("SavedToken");
+
+  const createParty = () => {
+    if (savedToken) {
+      setCreatePartyByDate(selectDate.locale(localeDe).format())
+      navigate("/shabu/reservation");
+    } else {
+      navigate("/shabu/register");
+    }
+  };
+
   return (
     <div className="bg-background">
       <div className="p-3">
@@ -96,11 +110,9 @@ const ShopBranch = () => {
         <div className="flex w-full justify-end mt-3">
           <button
             className="bg-primary text-white rounded-md p-2 font-semibold text-sm"
-            onClick={() => {
-              setCreatePartyByDate(selectDate.locale(localeDe).format());
-            }}
+            onClick={createParty}
           >
-            <Link to="/shabu/reservation">สร้างปาร์ตี้ !</Link>
+            สร้างปาร์ตี้ !
           </button>
         </div>
         <div className="lg:flex lg:justify-between lg:w-full lg:space-x-2">

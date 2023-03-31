@@ -11,6 +11,8 @@ import StoreList from "./pages/StoreList";
 import PartyList from "./pages/PartyList";
 import ShopBranch from "./pages/ShopBranch";
 import UserProfile from "./pages/UserProfile";
+import CreateUserProfile from "./pages/CreateUserProfile";
+import EditUserProfile from "./pages/EditUserProfile";
 import { Reservation } from "./pages/Reservation";
 
 
@@ -63,6 +65,8 @@ function App() {
               <Route exact path="shopbranch" element={<ShopBranch />} />
               <Route exact path="reservation" element={<Reservation />} />
               <Route exact path="userprofile" element={<UserProfile />} />
+              <Route exact path="createuserprofile" element={<CreateUserProfile />} />
+              <Route exact path="edituserprofile" element={<EditUserProfile />} />
             </Route>
             <Route
               className="bg-red-200 rounded-lg m-2 mt-12 p-2 w-[100px] font-bold"

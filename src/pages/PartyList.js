@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 
 const PartyList = () => {
   // const mockParties = [
@@ -33,6 +34,7 @@ const PartyList = () => {
     setCurrentParty(party);
     setToggleConfirmationPopup(true);
   };
+  
 
   const getParties = async () => {
     const result = await axios.post(
@@ -45,6 +47,8 @@ const PartyList = () => {
   useEffect(() => {
     getParties();
   }, []); //empty dependency [] as only render once
+
+const navigate = useNavigate();
 
   const savedToken = localStorage.getItem("SavedToken");
   console.log("savedToken", savedToken);
@@ -61,6 +65,14 @@ const PartyList = () => {
       .catch((error) =>console.log("Error adding party member:", error.message));
       
     console.log("result:", result);
+  };
+
+  const joinParty = () => {
+    if (savedToken) {
+      addPartyMember(savedToken, currentParty.id);
+    } else {
+      navigate("/shabu/register");
+    }
   };
 
   const acceptedMembersCount = (party) =>
@@ -88,7 +100,7 @@ const PartyList = () => {
     <>
       {toggleConfirmationPopup && currentParty && (
         <Fade in={toggleConfirmationPopup}>
-        <div className="w-full h-screen fixed flex bg-gray-500/30 backdrop-blur-sm">
+        <div className="w-full h-screen fixed flex bg-gray-500/30 backdrop-blur-sm z-50">
           <div className="bg-neutral-200 rounded-lg w-80 h-84 m-auto px-4 py-4 items-center">
             <div className="text-base mb-1 text-[#B1454A] text-center font-bold flex-auto my-auto">
               Confirmation
@@ -104,7 +116,7 @@ const PartyList = () => {
                 <Button
                   type="submit"
                   className="px-4 py-2 mx-2 mt-2 mb-1 bg-[#B1454A] w-1/2 rounded text-white "
-                  onClick={() => addPartyMember(savedToken, currentParty.id)}
+                  onClick={joinParty}
                   variant="contained"
                 >
                   confirm
@@ -141,7 +153,7 @@ const PartyList = () => {
                   alt="restaurant logo"
                 />
                 <div className="md:flex">
-                  <div className="p-2 md:text-2xl md:items-center md:flex">
+                  <div className="p-2 md:text-2xl md:items-center md:flex md:w-80">
                     {party.name}
                   </div>
                   <div className="md:items-center md:flex ">
@@ -151,11 +163,11 @@ const PartyList = () => {
                   </div>
                   <div className="md:items-center md:flex">
                     <div className="text-xs text-[#B1454A] bg-[#F5F5F5] text-center rounded-full mt-2 md:mt-0 md:mx-8 md:h-12 md:w-60 flex justify-center items-center md:mx-2 md:right-28 md:absolute ">
-                      {party.startDateTime}
+                    {new Date(party.startDateTime).toLocaleString('en-US', {dateStyle: 'short', timeStyle: 'short', hour12: true})}
                     </div>
                   </div>
                 </div>
-                <div className="p-2 text-center bg-yellow-600 md:my-8 my-9 rounded-lg ml-1 md:mx-2 md:right-10 md:absolute">
+                <div className="p-2 text-center bg-yellow-600 md:my-8 my-12 rounded-lg ml-1 md:mx-2 md:right-10 md:absolute">
                   {acceptedMembersCount(party)}/{party.partyMembers?.length}
                 </div>
               </div>
@@ -192,7 +204,7 @@ const PartyList = () => {
                         </div>
                         <div className="flex text-[#B1454A] font-bold ml-1 m-2 bg-[#F5F5F5] p-2 rounded-lg">
                           <div className="w-1/3">time:</div>
-                          <div className="w-2/3">{party.startDateTime}</div>
+                          <div className="w-2/3">{new Date(party.startDateTime).toLocaleString('en-US', {dateStyle: 'short', timeStyle: 'short', hour12: true})}</div>
                         </div>
                         <div className="flex text-[#B1454A] font-bold ml-1 m-2 bg-[#F5F5F5] p-2 rounded-lg">
                           <div className="w-1/3">createdBy:</div>

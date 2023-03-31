@@ -13,7 +13,7 @@ const NavBar = () => {
   const routes = [
     { name: "Home", url: "shabu/home" },
     { name: "Store", url: "shabu/store" },
-    { name: "Group List", url: "shabu/party" },
+    { name: "Party List", url: "shabu/party" },
     { name: "Register", url: "shabu/register" },
     { name: "Log In", url: "shabu/login" },
   ];
@@ -21,7 +21,7 @@ const NavBar = () => {
   const handleClick = () => {
     setTimeout(() => {
       setToggle(false);
-    }, 100); // delay in milliseconds
+    }, 500); // delay in milliseconds
   };
   return (
     <>
@@ -46,10 +46,10 @@ const NavBar = () => {
               </IconButton>
 
               <div className="flex">
-                <h1 className="text-[#F5F5F5] text-4xl -mt-1 float-left ml-2 font-bold md:hidden">
+                <h1 className="text-[#F5F5F5] text-4xl mt-1 float-left ml-2 font-bold md:hidden">
                   <MdOutlineFoodBank />
                 </h1>
-                <h1 className="ml-1 font-bold text-xl mt-1 text-[#F5F5F5] md:hidden">
+                <h1 className="ml-1 font-bold text-[#F5F5F5] p-2 md:hidden">
                   SHABUDULE
                 </h1>
               </div>
@@ -59,7 +59,7 @@ const NavBar = () => {
                 {routes?.map((route) => (
                   <Link to={route.url} onClick={handleClick}>
                     <Fade in={toggle}>
-                      <MenuItem className="text-2xl font-bold text-[#F5F5F5] p-6 md:hidden hover:bg-[#c95f64]  rounded-full z-50">
+                      <MenuItem className="text-2xl font-bold text-[#F5F5F5] p-6 md:hidden hover:bg-[#c95f64] z-50">
                         {route.name}
                       </MenuItem>
                     </Fade>
