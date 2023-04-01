@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { ShabuContext } from "../App";
+import { BranchContext } from "../App";
 import { LoggedInNavBarContext } from "../App";
 import Button from "@mui/material/Button";
 import { fire } from "../fire";
@@ -9,6 +9,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 const LogIn = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const { setLoggedIn } = useContext(LoggedInNavBarContext);
+  const { setToken } = useContext(BranchContext);
   const [formErrors, setFormErrors] = useState({ email: "", password: "" });
   const [passwordError, setPasswordError] = useState("");
 
@@ -17,7 +18,7 @@ const LogIn = () => {
   const auth = getAuth(fire);
   const logInPage = (e) => {
     e.preventDefault();
-    console.log("auth", auth);
+    // console.log("auth", auth);
 
     const errors = {};
     if (formData.email.trim() === "") {
@@ -33,14 +34,17 @@ const LogIn = () => {
     if (Object.keys(errors).length === 0) {
       signInWithEmailAndPassword(auth, formData.email, formData.password)
         .then((u) => {
+          const accessToken = u.user.accessToken;
           console.log(u);
           console.log("accessToken", u.user.accessToken);
-          localStorage.setItem("SavedToken", 'Bearer ' + u.user.accessToken);  //save token is the key, bearer is the type of token used, u.user.token is athe value
-          axios.defaults.headers.common['Authorization'] = 'Bearer ' + u.user.accessToken; //sets a default value for the "Authorization" header for all Axios HTTP requests.
+          localStorage.setItem("SavedToken", "Bearer " + u.user.accessToken); //save token is the key, bearer is the type of token used, u.user.token is athe value
+          axios.defaults.headers.common["Authorization"] =
+            "Bearer " + u.user.accessToken; //sets a default value for the "Authorization" header for all Axios HTTP requests.
           setLoggedIn(true);
           setFormData({ email: "", password: "" });
           setPasswordError("");
           navigate("/shabu/home");
+          setToken(accessToken);
         })
         .catch((err) => {
           console.log(err);
@@ -58,7 +62,7 @@ const LogIn = () => {
     user
       .getIdToken()
       .then((token) => {
-        console.log(`User token ID: ${token}`);
+        // console.log(`User token ID: ${token}`);
       })
       .catch((error) => {
         console.log(error.message);
@@ -81,7 +85,7 @@ const LogIn = () => {
   return (
     <>
       <div className="bg-neutral-300 h-screen flex justify-center">
-        <div className="bg-[#F5F5F5] m-auto md:w-1/2 w-full mx-2 border border-4 border-[#B1454A] rounded-lg mt-[70px]">
+        <div className="bg-[#F5F5F5] m-auto md:w-1/2 w-full mx-2 border-4 border-[#B1454A] rounded-lg mt-[70px]">
           <h1 className="text-center p-4 text-xl font-bold">Log In</h1>
           <div className="py-2">
             <div className="flex">

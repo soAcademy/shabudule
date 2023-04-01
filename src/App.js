@@ -24,6 +24,8 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false)
   const [branchId, setBranchId] = useState();
   const [createPartyByDate, setCreatePartyByDate] = useState();
+  const [user, setUser] = useState([]);
+  const [token, setToken] = useState("");
 
   useEffect(() => {
     const savedToken = localStorage.getItem("SavedToken");
@@ -45,6 +47,10 @@ function App() {
             setBranchId,
             createPartyByDate,
             setCreatePartyByDate,
+            user,
+            setUser,
+            token,
+            setToken,
           }}
         >
         <ShabuContext.Provider value={{ tokenId, setTokenId }}>

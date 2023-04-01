@@ -24,6 +24,12 @@ export const JoinParty = ({ joinParty, user }) => {
   const userEmail = user[0]?.userFirebaseEmail;
 
   console.log("user", userEmail);
+  // console.log(
+  //   "test filter",
+  //   joinParty
+  //     ?.map((r) => r.partyMembers)
+  //     .filter((j) => j.status === "accept" && j.userFirebaseEmail === userEmail)
+  // );
 
   return (
     <div>
