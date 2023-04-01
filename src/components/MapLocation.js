@@ -15,7 +15,7 @@ export const MapLocation = ({ branch }) => {
           <div className="w-full mt-2 flex justify-center">
             <Map
               initialViewState={{
-                longitude: branch?.longtitude,
+                longitude: branch?.longitude,
                 latitude: branch?.latitude,
                 zoom: 10,
                 bearing: 0,
@@ -28,7 +28,7 @@ export const MapLocation = ({ branch }) => {
             >
               <ScaleControl />
               <Marker
-                longitude={branch?.longtitude}
+                longitude={branch?.longitude}
                 latitude={branch?.latitude}
               >
                 <HiMapPin size={30} className="text-primary" />

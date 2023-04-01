@@ -1,13 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import dayjs from "dayjs";
 import { Calendar, BranchInfo, MapLocation } from "../components";
 import { Link } from "react-router-dom";
 import { BranchContext } from "../App";
-import axios from "axios";
-
 // Locales
-import "dayjs/locale/pt";
-import localeDe from "dayjs/locale/de"; // With a custom alias for the locale object
+// import "dayjs/locale/pt";
+// import localeDe from "dayjs/locale/de"; // With a custom alias for the locale object
+import { useFetchBranch } from "../hooks";
 
 export const ShopBranch = () => {
   // const mockStore = [
@@ -64,28 +63,13 @@ export const ShopBranch = () => {
   // ];
 
   const currentDate = dayjs();
-  console.log("cd", currentDate);
-  console.log("format cd", dayjs().locale(localeDe).format());
+  // console.log("cd", currentDate);
+  // console.log("format cd", dayjs().toISOString());
 
-  const { branchId } = useContext(BranchContext);
   const { setCreatePartyByDate } = useContext(BranchContext);
   const [today, setToday] = useState(currentDate);
   const [selectDate, setSelectDate] = useState(currentDate);
-  const [branch, setBranch] = useState();
-
-  console.log("branchId", branchId);
-
-  useEffect(() => {
-    const getBranch = async () => {
-      const result = await axios.post(
-        "https://shabudule-api.vercel.app/function/getBranchShabudule",
-        { branchId: branchId }
-      );
-      console.log("getBranch", result.data);
-      setBranch(result.data);
-    };
-    getBranch();
-  }, [branchId]);
+  const { branch } = useFetchBranch();
 
   return (
     <div className="bg-background">
@@ -97,7 +81,7 @@ export const ShopBranch = () => {
           <button
             className="bg-primary text-white rounded-md p-2 font-semibold text-sm"
             onClick={() => {
-              setCreatePartyByDate(selectDate.locale(localeDe).format());
+              setCreatePartyByDate(selectDate.toISOString());
             }}
           >
             <Link to="/reservation">สร้างปาร์ตี้ !</Link>

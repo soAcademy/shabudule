@@ -6,7 +6,7 @@ import {
   StoreList,
   Home,
   UserProfile,
-  LogIn
+  LogIn,
 } from "./pages";
 
 export const BranchContext = createContext();
@@ -14,6 +14,8 @@ export const BranchContext = createContext();
 function App() {
   const [branchId, setBranchId] = useState();
   const [createPartyByDate, setCreatePartyByDate] = useState();
+  const [user, setUser] = useState([]);
+  const [token, setToken] = useState("");
 
   return (
     <div className="App">
@@ -24,6 +26,10 @@ function App() {
             setBranchId,
             createPartyByDate,
             setCreatePartyByDate,
+            user,
+            setUser,
+            token,
+            setToken,
           }}
         >
           <Routes>

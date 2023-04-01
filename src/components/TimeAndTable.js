@@ -2,53 +2,58 @@ import React, { useState } from "react";
 
 export const TimeAndTable = ({
   tableAndTime,
-  createPartyByDate,
-  selectDate,
+  user,
+  branch,
+  partyName,
+  setPartyName,
+  desc,
+  setDesc,
+  partyType,
+  setPartyType,
+  tableId,
+  setTableId,
+  time,
+  setTime,
+  setButtonClicked,
 }) => {
-  const mockData = [
-    {
-      username: "Soma Yukihira",
-      partyName: "หาเพื่อนมาช่วยหาร โปร มา 4 จ่าย 3 !!",
-      description:
-        "หาเพื่อนไปกิน Mo-mo สาขา พระราม 3 ขอสายเนื้อจะดีมาก โปร 599 เจอกันที่ starbucks ชั้น 1 หน้าทางเข้านะครับ",
-      storeName: "Mo-mo Paradise",
-      branch: "Central RAMA III",
-      type: "Public",
-      date: selectDate ?? createPartyByDate,
-      time: "01 : 00 PM - 2:30 PM",
-      table: 4,
-    },
-  ];
+  console.log("test2 :", tableAndTime);
 
   const [confirmToggle, setConfirmToggle] = useState(false);
   const [fillOutToggle, setFillOutToggle] = useState(false);
-  const [partyName, setPartyName] = useState("");
-  const [desc, setDesc] = useState("");
-  const [partyType, setPartyType] = useState("public");
-  const [tableId, setTableId] = useState();
+  const [selectTime4Toggle, setSelectTime4Toggle] = useState(
+    [...Array(tableAndTime?.length)].map(() => false)
+  );
+  const [selectTime2Toggle, setSelectTime2Toggle] = useState(
+    [...Array(tableAndTime?.length)].map(() => false)
+  );
+  const [quantityTables, setQuantityTables] = useState();
 
   // console.log("party name :", partyName);
   // console.log("desc :", desc);
   // console.log("type :", partyType);
   console.log("tableId :", tableId);
+  // console.log("Time Toggle :", selectTimeToggle);
+  console.log("Time :", time);
+  console.log("branch :", branch);
+  console.log("user :", user);
 
   const table4 = tableAndTime?.filter((r) => r.seatPerDesk === 4);
   const table2 = tableAndTime?.filter((r) => r.seatPerDesk === 2);
-  // const sortedTableAndTime = [...tableAndTime]?.sort(
-  //   (a, b) => a.tableId - b.tableId
-  // );
 
-  // const tableAndTimeUniqueSlots = sortedTableAndTime.map((table) => {
-  //   return {
-  //     ...table,
-  //     availableSlot: [...new Set(table.availableSlot)],
-  //   };
-  // });
-
-  // console.log("test 1", sortedTableAndTime);
-  // console.log("test 2", tableAndTimeUniqueSlots);
   console.log("table4", table4);
   console.log("table2", table2);
+
+  const openToggleTime4Table = (idx) => {
+    const newToggles = [...selectTime4Toggle];
+    newToggles[idx] = !newToggles[idx];
+    setSelectTime4Toggle(newToggles);
+  };
+
+  const openToggleTime2Table = (idx) => {
+    const newToggles = [...selectTime2Toggle];
+    newToggles[idx] = !newToggles[idx];
+    setSelectTime2Toggle(newToggles);
+  };
 
   return (
     <div>
@@ -134,12 +139,13 @@ export const TimeAndTable = ({
                 <p>description : {desc}</p>
                 <p>ประเภท : {partyType}</p>
                 <p>
-                  ร้าน : {mockData[0]?.storeName} : {mockData[0]?.branch}
+                  ร้าน : {branch?.shabuShop.name} : {branch?.branchName}
                 </p>
                 <p>
-                  เวลา : {mockData[0]?.time} จำนวน {mockData[0]?.table} ที่นั่ง
+                  เวลา : {time}:00 - {time + 1}:00 จำนวน {quantityTables}{" "}
+                  ที่นั่ง
                 </p>
-                <p>สร้างโดย : {mockData[0]?.username}</p>
+                <p>สร้างโดย : {user[0]?.name} </p>
               </div>
             </div>
             <div className="flex justify-between ">
@@ -151,7 +157,10 @@ export const TimeAndTable = ({
               </button>
               <button
                 className="bg-[#B1454A] text-white text-xs rounded-md p-1"
-                onClick={() => setConfirmToggle(false)}
+                onClick={() => {
+                  setConfirmToggle(false);
+                  setButtonClicked(true);
+                }}
               >
                 accept
               </button>
@@ -167,74 +176,79 @@ export const TimeAndTable = ({
           <div className="mt-10">
             <p>โต๊ะ 4 ที่นั่ง</p>
             {table4?.map((r, idx) => (
-              <div className="grid grid-cols-1 space-y-3 mt-3" key={idx}>
-                {r.availableSlot.map((j, i) => (
+              <div className="grid grid-cols-1 space-y-3 mt-3">
+                <div>
                   <button
-                    className="p-3 border-2 bg-background rounded-md"
+                    className={`p-3 border-2 ${
+                      selectTime4Toggle[idx] ? "bg-[#B1454A]" : " bg-background"
+                    } rounded-md w-full`}
                     onClick={() => {
-                      setFillOutToggle(true);
                       setTableId(r.tableId);
+                      openToggleTime4Table(idx);
+                      setQuantityTables(r.seatPerDesk);
                     }}
-                    key={i}
+                    key={idx}
                   >
-                    {j} : 00 - {j + 1} : 00
+                    Table {idx + 1}
                   </button>
-                ))}
+
+                  {selectTime4Toggle[idx] && (
+                    <div className="-mt-1 py-2 grid grid-cols-1 space-y-2 border-2 rounded-md">
+                      {r.availableSlot.map((slot, i) => (
+                        <button
+                          key={i}
+                          className="border mx-5 py-1 shadow-sm"
+                          onClick={() => {
+                            setFillOutToggle(true);
+                            setTime(slot);
+                          }}
+                        >
+                          {slot} : 00 - {slot + 1} : 00
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             ))}
-
-            {/* {table4?.map((r, idx) => (
-              <div className="grid grid-cols-1 space-y-3 mt-3" key={idx}>
-                {r.availableSlot.map((j, i) => {
-                  const currentItem = tableAndTimeUniqueSlots.find(
-                    (item) =>
-                      item.seatPerDesk === r.seatPerDesk &&
-                      item.availableSlot.includes(j)
-                  );
-                  const previousItem =
-                    tableAndTimeUniqueSlots[
-                      tableAndTimeUniqueSlots.indexOf(currentItem) - 1
-                    ];
-                  const tableIdToDisplay =
-                    previousItem &&
-                    previousItem.availableSlot.join() ===
-                      currentItem.availableSlot.join()
-                      ? previousItem.tableId
-                      : currentItem.tableId;
-
-                  return (
-                    <button
-                      className="p-3 border-2 bg-background rounded-md"
-                      onClick={() => {
-                        setFillOutToggle(true);
-                        setTableId(tableIdToDisplay);
-                      }}
-                      key={i}
-                    >
-                      {j} : 00 - {j + 1} : 00
-                    </button>
-                  );
-                })}
-              </div>
-            ))} */}
           </div>
 
           <div>
             <p className="mt-5">โต๊ะ 2 ที่นั่ง</p>
             {table2?.map((r, idx) => (
-              <div className="grid grid-cols-1 space-y-3 mt-3" key={idx}>
-                {r.availableSlot.map((j, i) => (
+              <div className="grid grid-cols-1 space-y-3 mt-3">
+                <div>
                   <button
-                    className="p-3 border-2 bg-background rounded-md"
+                    className={`p-3 border-2 ${
+                      selectTime2Toggle[idx] ? "bg-[#B1454A]" : " bg-background"
+                    } rounded-md w-full`}
                     onClick={() => {
-                      setFillOutToggle(true);
                       setTableId(r.tableId);
+                      openToggleTime2Table(idx);
+                      setQuantityTables(r.seatPerDesk);
                     }}
-                    key={i}
+                    key={idx}
                   >
-                    {j} : 00 - {j + 1} : 00
+                    Table {idx + 1}
                   </button>
-                ))}
+
+                  {selectTime2Toggle[idx] && (
+                    <div className="-mt-1 py-2 grid grid-cols-1 space-y-2 border-2 rounded-md">
+                      {r.availableSlot.map((slot, i) => (
+                        <button
+                          key={i}
+                          className="border mx-5 py-1 shadow-sm"
+                          onClick={() => {
+                            setFillOutToggle(true);
+                            setTime(slot);
+                          }}
+                        >
+                          {slot} : 00 - {slot + 1} : 00
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             ))}
           </div>

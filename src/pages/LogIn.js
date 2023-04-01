@@ -1,20 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { fire } from "../fire";
-import { getAuth, signInWithEmailAndPassword, setPersistence } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { BranchContext } from "../App";
+import { Link } from "react-router-dom";
 
 export const LogIn = () => {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [formErrors, setFormErrors] = useState({ username: "", password: "" });
+  const { token, setToken } = useContext(BranchContext);
+
+  console.log("token:", token);
 
   const auth = getAuth(fire);
 
   const logInPage = (e) => {
     e.preventDefault();
-    console.log("auth", auth);
+    // console.log("auth", auth);
 
     signInWithEmailAndPassword(auth, formData.username, formData.password)
       .then((userCredential) => {
-        console.log(userCredential.user);
+        const accessToken = userCredential.user.accessToken;
+        setToken(accessToken);
         // Set session persistence type to SESSION_EXPIRATION
         auth
           .setPersistence(fire.auth.Auth.Persistence.SESSION_EXPIRATION)
@@ -43,7 +49,7 @@ export const LogIn = () => {
     user
       .getIdToken()
       .then((token) => {
-        console.log(`User token ID: ${token}`);
+        // console.log(`User token ID: ${token}`);
       })
       .catch((error) => {
         console.log(error.message);
@@ -146,7 +152,7 @@ export const LogIn = () => {
                 type="submit"
                 variant="contained"
               >
-                Log In
+                <Link to="/userProfile">Log In</Link>
               </button>
             </div>
           </form>
