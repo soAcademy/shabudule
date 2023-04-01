@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { MyParty, JoinParty, Profile } from "../components";
 import axios from "axios";
 
- const UserProfile = () => {
+const UserProfile = () => {
   const [myParty, setMyParty] = useState();
   const [joinParty, setJoinParty] = useState();
   const [memberId, setMemberId] = useState();

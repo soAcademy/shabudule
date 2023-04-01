@@ -138,7 +138,7 @@ const navigate = useNavigate();
         </Fade>
       )}
       <div className="bg-neutral-300 h-screen flex justify-center overflow-auto">
-        <div className="bg-[#F5F5F5] m-auto  w-full  mx-2 border border-4 border-[#B1454A] rounded-lg mt-[70px] overflow-auto">
+        <div className="bg-[#F5F5F5] m-auto  w-full  mx-2  border-4 border-[#B1454A] rounded-lg mt-[70px] overflow-auto">
           <div className=" p-2 font-bold text-xl text-[#B1454A]">PARTY LIST</div>
           {parties?.map((party, index) => (
             <div>
@@ -168,7 +168,7 @@ const navigate = useNavigate();
                   </div>
                 </div>
                 <div className="p-2 text-center bg-yellow-600 md:my-8 my-12 rounded-lg ml-1 md:mx-2 md:right-10 md:absolute">
-                  {acceptedMembersCount(party)}/{party.partyMembers?.length}
+                  {acceptedMembersCount(party)}/{party.table.seatPerDesk}
                 </div>
               </div>
               {toggles[index] && (
