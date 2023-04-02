@@ -3,9 +3,10 @@ import dayjs from "dayjs";
 import { Calendar, BranchInfo, MapLocation } from "../components";
 import { BranchContext } from "../App";
 // Locales
-// import "dayjs/locale/pt";
-// import localeDe from "dayjs/locale/de"; // With a custom alias for the locale object
+import "dayjs/locale/pt";
+import localeDe from "dayjs/locale/de"; // With a custom alias for the locale object
 import { useFetchBranch } from "../hooks";
+import { useNavigate } from "react-router-dom";
 
 const ShopBranch = () => {
   // const mockStore = [
@@ -71,10 +72,11 @@ const ShopBranch = () => {
   const { branch } = useFetchBranch();
 
   const savedToken = localStorage.getItem("SavedToken");
+  const navigate = useNavigate();
 
   const createParty = () => {
     if (savedToken) {
-      setCreatePartyByDate(selectDate.locale(localeDe).format())
+      setCreatePartyByDate(selectDate.locale(localeDe).format());
       navigate("/shabu/reservation");
     } else {
       navigate("/shabu/register");
