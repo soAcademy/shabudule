@@ -17,7 +17,7 @@ export const PopularParty = ({
     <>
       <div className="flex m-2 overflow-auto">
         {parties?.map((party) => {
-          console.log("party.name", party.name);
+          // console.log("party.name", party.name);
           return (
             <div key={party.id}>
               <div

@@ -6,14 +6,15 @@ import { Link } from "react-router-dom";
 
 export const UserProfile = () => {
   const [searchToggle, setSearchToggle] = useState(false);
-  const { user } = useContext(BranchContext);
+  const { user, token } = useContext(BranchContext);
   const { myParty, joinParty, setMemberId, setStatus, setPartyId } =
-    useFetchUserProfile();
+    useFetchUserProfile({ token });
 
+  console.log("token userProfile:", token);
   console.log("user :", user);
 
   return (
-    <div className=" bg-[#F5F5F5] w-full p-5">
+    <div className=" bg-[#F5F5F5] w-full p-5 mt-14">
       <div className="mb-5">
         <Profile user={user} />
       </div>
@@ -22,7 +23,7 @@ export const UserProfile = () => {
           className="bg-[#B1454A] text-white rounded-md p-1"
           onClick={() => setSearchToggle(true)}
         >
-          <Link to="/storeList"> สร้างปาร์ตี้ !</Link>
+          <Link to="/shabu/store"> สร้างปาร์ตี้ !</Link>
         </button>
       </div>
       <div className="space-y-5 md:flex justify-between md:space-x-5 md:space-y-0">

@@ -77,12 +77,12 @@ const StoreList = () => {
   return (
     <>
       <div className="bg-neutral-300 h-screen flex justify-center overflow-auto">
-        <div className="bg-neutral-50 m-auto w-full h-full mx-2 border border-4 border-red-700 rounded-lg mt-[70px] overflow-auto">
-          <div className=" p-2 font-bold text-xl text-red-700">STORE LIST</div>
+        <div className="bg-neutral-50 m-auto w-full h-full mx-2 border-4 border-primary rounded-lg mt-[70px] overflow-auto">
+          <div className=" p-2 font-bold text-xl text-primary">STORE LIST</div>
           {shops?.map((shop, index) => (
             <div>
               <div
-                className="p-2 m-2 flex bg-red-700 pointer-cursor border border-3 font-bold text-neutral-50 rounded-lg"
+                className="p-2 m-2 flex bg-primary pointer-cursor border border-3 font-bold text-neutral-50 rounded-lg"
                 key={index}
                 onClick={() => updateToggleIndex(index)}
               >

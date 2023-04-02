@@ -84,7 +84,7 @@ const ShopBranch = () => {
   };
 
   return (
-    <div className="bg-background">
+    <div className="bg-background mt-14">
       <div className="p-3">
         <div className="border-b-2 pb-3">
           <BranchInfo branch={branch} />
@@ -93,7 +93,7 @@ const ShopBranch = () => {
           <button
             className="bg-primary text-white rounded-md p-2 font-semibold text-sm"
             onClick={() => {
-              setCreatePartyByDate(selectDate.toISOString());
+              createParty();
             }}
           >
             สร้างปาร์ตี้ !

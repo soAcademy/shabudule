@@ -6,6 +6,7 @@ import { LoggedInNavBarContext } from "../App";
 import Button from "@mui/material/Button";
 import { fire } from "../fire";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 const LogIn = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const { setLoggedIn } = useContext(LoggedInNavBarContext);
@@ -16,7 +17,7 @@ const LogIn = () => {
   const navigate = useNavigate();
 
   const auth = getAuth(fire);
-  
+
   const logInPage = (e) => {
     e.preventDefault();
     // console.log("auth", auth);
@@ -36,6 +37,7 @@ const LogIn = () => {
       signInWithEmailAndPassword(auth, formData.email, formData.password)
         .then((u) => {
           const accessToken = u.user.accessToken;
+          setToken(accessToken);
           console.log(u);
           console.log("accessToken", u.user.accessToken);
           localStorage.setItem("SavedToken", "Bearer " + u.user.accessToken); //save token is the key, bearer is the type of token used, u.user.token is athe value
@@ -45,7 +47,6 @@ const LogIn = () => {
           setFormData({ email: "", password: "" });
           setPasswordError("");
           navigate("/shabu/home");
-          setToken(accessToken);
         })
         .catch((err) => {
           console.log(err);
