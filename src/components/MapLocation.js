@@ -1,7 +1,7 @@
 import React from "react";
 import Map, { Marker, ScaleControl } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import mapboxgl from "!mapbox-gl";
+// import mapboxgl from "!mapbox-gl";
 import { HiMapPin } from "react-icons/hi2";
 
 const TOKEN = process.env.REACT_APP_MAPBOX_TOKEN;
