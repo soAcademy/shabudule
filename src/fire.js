@@ -1,16 +1,14 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCzOS6r6x_nrvqnBM-pXLvttv9aKLnFVlw",
-  authDomain: "shabudule.firebaseapp.com",
-  projectId: "shabudule",
-  storageBucket: "shabudule.appspot.com",
-  messagingSenderId: "458585135469",
-  appId: "1:458585135469:web:d755d27d544e2b24db6264",
-  measurementId: "G-W660MCEFWK",
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGE_ID,
+  appId: process.env.REACT_APP_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
 
 export const fire = initializeApp(firebaseConfig);
-
-

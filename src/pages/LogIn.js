@@ -16,6 +16,7 @@ const LogIn = () => {
   const navigate = useNavigate();
 
   const auth = getAuth(fire);
+  
   const logInPage = (e) => {
     e.preventDefault();
     // console.log("auth", auth);
