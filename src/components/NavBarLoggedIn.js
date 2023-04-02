@@ -11,6 +11,7 @@ import Fade from "@mui/material/Fade";
 import { MenuItem } from "@mui/material";
 import Button from "@mui/material/Button";
 import { LoggedInNavBarContext } from "../App";
+import { BranchContext } from "../App";
 // import ProfilePopup from "../components/ProfilePopup";
 
 const NavBarLoggedIn = () => {
@@ -18,8 +19,14 @@ const NavBarLoggedIn = () => {
   const [toggleProfilePopup, setToggleProfilePopup] = useState(false);
   const [toggleBellPopup, setToggleBellPopup] = useState(false);
   const { setLoggedIn } = useContext(LoggedInNavBarContext);
+  const { token } = useContext(BranchContext);
+
+  console.log("token nav login :", token);
+
+
   const routes = [
     { name: "Home", url: "shabu/home" },
+    { name: "Profile", url: "shabu/userprofile" },
     { name: "Store", url: "shabu/store" },
     { name: "Party List", url: "shabu/party" },
   ];
@@ -41,7 +48,10 @@ const NavBarLoggedIn = () => {
         <Fade in={toggleProfilePopup}>
           <div className="absolute md:right-7 mt-14 w-full bg-white rounded-lg md:w-40 shadow-lg py-2 z-10">
             <Link to="/shabu/edituserprofile">
-              <Button className="text-base font-bold text-neutral-800 hover:bg-[#B1454A] button w-full hover:text-[#F5F5F5]  px-4 py-2 flex items-center justify-center" onClick={(() => setToggleProfilePopup(false))}>
+              <Button
+                className="text-base font-bold text-neutral-800 hover:bg-[#B1454A] button w-full hover:text-[#F5F5F5]  px-4 py-2 flex items-center justify-center"
+                onClick={() => setToggleProfilePopup(false)}
+              >
                 <div className="mr-2 md:w-1/4 font-bold text-xl">
                   <CgProfile />
                 </div>

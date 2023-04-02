@@ -7,6 +7,7 @@ import { PopularParty } from "../components/PopularParty";
 import { Search } from "../components/Search";
 import { PopularStore } from "../components/PopularStore";
 import { LoggedInNavBarContext } from "../App";
+import { BranchContext } from "../App";
 import Button from "@mui/material/Button";
 
 // const restaurants = [
@@ -109,12 +110,15 @@ const Home = () => {
   const [searchDatas, setSearchDatas] = useState([]);
   const [shops, setShops] = useState([]);
   const { loggedIn } = useContext(LoggedInNavBarContext);
+  const { token } = useContext(BranchContext);
+
+  console.log("token home :", token);
 
   const getParties = async () => {
     const result = await axios.post(
       "https://shabudule-api.vercel.app/function/getPartyShabudule"
     );
-    console.log("result", result);
+    // console.log("result", result);
     setParties(result.data);
   };
 
@@ -126,7 +130,7 @@ const Home = () => {
     const result = await axios.post(
       "https://shabudule-api.vercel.app/function/getShopShabudule"
     );
-    console.log("result", result);
+    // console.log("result", result);
     setShops(result.data);
   };
 
@@ -134,13 +138,13 @@ const Home = () => {
     getShops();
   }, []); //empty dependency [] as only render once
 
-  console.log("test", promotion?.length);
+  // console.log("test", promotion?.length);
 
   const getPromotion = async () => {
     const result = await axios.post(
       "https://shabudule-api.vercel.app/function/getPromotionShabudule"
     );
-    console.log("Promotion Api", result.data);
+    // console.log("Promotion Api", result.data);
     setPromotion(result.data);
   };
   useEffect(() => {
@@ -156,7 +160,7 @@ const Home = () => {
         setCurrentParty={setCurrentParty}
       />
       <div className="bg-neutral-300 h-screen flex justify-center overflow-auto">
-        <div className="bg-[#F5F5F5] m-auto w-full h-full mx-2 border border-4 border-[#B1454A] rounded-lg mt-[70px] overflow-auto">
+        <div className="bg-[#F5F5F5] m-auto w-full h-full mx-2 border-4 border-[#B1454A] rounded-lg mt-[70px] overflow-auto">
           <Search
             search={search}
             setSearch={setSearch}

@@ -38,7 +38,7 @@ export const Search = ({
       </div>
       {search !== undefined && search.length >= 2 && (
         <div className="w-2/4 mx-auto bg-white shadow-lg top-0 overflow-auto relative">
-          <div className={`w-full top-0 ${searchDatas.length > 5 ? "h-44 overflow-auto" : ""}`}>
+          <div className={`w-full top-0 ${searchDatas.length > 5 ? "h-44 overflow-auto" : ""} `}>
             <div>
               {searchDatas?.map((data, index) => (
                 <div key={index} className="text-center">
