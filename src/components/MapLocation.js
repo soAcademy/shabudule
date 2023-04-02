@@ -1,6 +1,7 @@
 import React from "react";
 import Map, { Marker, ScaleControl } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
+import mapboxgl from "!mapbox-gl";
 import { HiMapPin } from "react-icons/hi2";
 
 const TOKEN = process.env.REACT_APP_MAPBOX_TOKEN;
@@ -27,10 +28,7 @@ export const MapLocation = ({ branch }) => {
               mapboxAccessToken={TOKEN}
             >
               <ScaleControl />
-              <Marker
-                longitude={branch?.longitude}
-                latitude={branch?.latitude}
-              >
+              <Marker longitude={branch?.longitude} latitude={branch?.latitude}>
                 <HiMapPin size={30} className="text-primary" />
               </Marker>
             </Map>
