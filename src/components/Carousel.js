@@ -31,7 +31,7 @@ export const Carousel = ({ promotion, slides, auto, interval }) => {
   }, [auto, interval, promotion?.length]);
 
   return (
-    <div className="max-w-[1200px] h-[350px] md:h-[500px] w-full m-auto py-9 px-4 relative group">
+    <div className="max-w-[1200px] h-[250px] md:h-[500px] w-full m-auto py-9 px-4 relative group">
       {currentIndex >= 0 && (
         <div
           style={{

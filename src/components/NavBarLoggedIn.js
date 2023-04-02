@@ -19,16 +19,16 @@ const NavBarLoggedIn = () => {
   const [toggleProfilePopup, setToggleProfilePopup] = useState(false);
   const [toggleBellPopup, setToggleBellPopup] = useState(false);
   const { setLoggedIn } = useContext(LoggedInNavBarContext);
-  const { token } = useContext(BranchContext);
+  const { token, user } = useContext(BranchContext);
 
   console.log("token nav login :", token);
-
+  console.log("user nav login :", user);
 
   const routes = [
     { name: "Home", url: "shabu/home" },
     { name: "Profile", url: "shabu/userprofile" },
     { name: "Store", url: "shabu/store" },
-    { name: "Party List", url: "shabu/party" },
+    { name: "Party", url: "shabu/party" },
   ];
 
   const loggedOut = () => {
@@ -44,34 +44,6 @@ const NavBarLoggedIn = () => {
 
   return (
     <>
-      {toggleProfilePopup && (
-        <Fade in={toggleProfilePopup}>
-          <div className="absolute md:right-7 mt-14 w-full bg-white rounded-lg md:w-40 shadow-lg py-2 z-10">
-            <Link to="/shabu/edituserprofile">
-              <Button
-                className="text-base font-bold text-neutral-800 hover:bg-[#B1454A] button w-full hover:text-[#F5F5F5]  px-4 py-2 flex items-center justify-center"
-                onClick={() => setToggleProfilePopup(false)}
-              >
-                <div className="mr-2 md:w-1/4 font-bold text-xl">
-                  <CgProfile />
-                </div>
-                <div className="md:w-3/4">Edit Profile</div>
-              </Button>
-            </Link>
-            <Link to="/shabu/Home">
-              <Button
-                className="text-base font-bold text-neutral-800 hover:bg-[#B1454A] button w-full hover:text-[#F5F5F5]  py-2 flex items-center justify-center"
-                onClick={loggedOut}
-              >
-                <div className=" md:ml-3 md:w-1/4 font-bold  text-xl">
-                  <MdOutlineLogout />
-                </div>
-                <div className="md:w-3/4">Log Out</div>
-              </Button>
-            </Link>
-          </div>
-        </Fade>
-      )}
       {toggleBellPopup && (
         <div className="absolute md:right-28 right-2 mt-12 bg-white rounded-lg w-48 shadow-lg py-2 z-10">
           <button className="text-sm  text-neutral-800 hover:bg-[#B1454A] button w-full hover:text-[#F5F5F5] px-4 py-2">
@@ -122,7 +94,7 @@ const NavBarLoggedIn = () => {
                 <h1 className="text-[#F5F5F5] text-4xl mt-1 float-left ml-2 font-bold md:hidden">
                   <MdOutlineFoodBank />
                 </h1>
-                <h1 className="ml-1 font-bold text-[#F5F5F5] p-2 md:hidden text-xl">
+                <h1 className="ml-1 font-bold text-[#F5F5F5] p-2 md:hidden text-lg">
                   SHABUDULE
                 </h1>
                 {/* </div> */}
@@ -149,12 +121,53 @@ const NavBarLoggedIn = () => {
                 </Button>
               </div>
             </div>
+
+            {toggleProfilePopup && (
+              <Fade in={toggleProfilePopup}>
+                <div className="absolute md:right-7 w-full bg-white rounded-b-md md:w-40 shadow-lg py-2 z-10 left-0">
+                  <Link to="/shabu/userprofile">
+                    <Button
+                      className="text-base font-bold text-neutral-800 hover:bg-[#B1454A] button w-full hover:text-[#F5F5F5]  px-4 py-2 flex items-center justify-center"
+                      onClick={() => setToggleProfilePopup(false)}
+                    >
+                      <div className="mr-2 md:w-1/4 font-bold text-xl">
+                        <CgProfile />
+                      </div>
+                      <div className="md:w-3/4">YOUR Profile</div>
+                    </Button>
+                  </Link>
+                  <Link to="/shabu/edituserprofile">
+                    <Button
+                      className="text-base font-bold text-neutral-800 hover:bg-[#B1454A] button w-full hover:text-[#F5F5F5]  px-4 py-2 flex items-center justify-center"
+                      onClick={() => setToggleProfilePopup(false)}
+                    >
+                      <div className="mr-2 md:w-1/4 font-bold text-xl">
+                        <CgProfile />
+                      </div>
+                      <div className="md:w-3/4">Edit Profile</div>
+                    </Button>
+                  </Link>
+                  <Link to="/shabu/Home">
+                    <Button
+                      className="text-base font-bold text-neutral-800 hover:bg-[#B1454A] button w-full hover:text-[#F5F5F5]  py-2 flex items-center justify-center"
+                      onClick={loggedOut}
+                    >
+                      <div className=" md:ml-3 md:w-1/4 font-bold  text-xl">
+                        <MdOutlineLogout />
+                      </div>
+                      <div className="md:w-3/4">Log Out</div>
+                    </Button>
+                  </Link>
+                </div>
+              </Fade>
+            )}
+
             {toggle && (
               <div>
                 {routes.map((route) => (
                   <Fade in={toggle}>
                     <Link to={route.url} onClick={handleClick}>
-                      <MenuItem className="text-2xl font-bold text-[#F5F5F5] p-6 md:hidden hover:bg-[#c95f64] z-50">
+                      <MenuItem className="font-semibold text-[#F5F5F5] pl-6 md:hidden hover:bg-[#c95f64] z-50">
                         {route.name}
                       </MenuItem>
                     </Link>
@@ -163,11 +176,12 @@ const NavBarLoggedIn = () => {
               </div>
             )}
           </div>
+
           <div>
-            <div className=" md:flex md:items-center">
+            <div className=" md:flex md:justify-end md:items-center">
               {routes.map((route) => (
                 <Link to={route.url}>
-                  <Button className="text-base font-bold text-[#F5F5F5]  md:mx-6  hidden md:block hover:bg-[#c95f64]  rounded-lg p-3">
+                  <Button className="font-semibold text-[#F5F5F5]  md:mx-6  hidden md:block hover:bg-[#c95f64]  rounded-lg p-3">
                     {route.name}
                   </Button>
                 </Link>
@@ -192,7 +206,7 @@ const NavBarLoggedIn = () => {
                 <div className="text-2xl font-bold p-2">
                   <CgProfile />
                 </div>
-                <div className="text-base font-bold p-2">John Doe</div>
+                <div className=" font-semibold p-2">{user[0]?.name}</div>
               </Button>
             </div>
           </div>

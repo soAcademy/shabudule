@@ -7,3 +7,4 @@ export * from "./MyParty";
 export * from "./Profile";
 export * from "./Carousel";
 export * from "./cn";
+export * from "./Search";
