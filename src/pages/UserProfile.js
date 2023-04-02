@@ -1,20 +1,35 @@
-import React, { useState, useContext } from "react";
-import { MyParty, JoinParty, Profile } from "../components";
+import React, { useState, useContext, useEffect } from "react";
+import { MyParty, JoinParty, Profile, Search } from "../components";
 import { BranchContext } from "../App";
 import { useFetchUserProfile } from "../hooks";
-import { Link } from "react-router-dom";
+import axios from "axios";
 
 export const UserProfile = () => {
   const [searchToggle, setSearchToggle] = useState(false);
   const { user, token } = useContext(BranchContext);
   const { myParty, joinParty, setMemberId, setStatus, setPartyId } =
     useFetchUserProfile({ token });
+  const [search, setSearch] = useState();
+  const [searchDatas, setSearchDatas] = useState([]);
+  const [shops, setShops] = useState([]);
 
   console.log("token userProfile:", token);
   console.log("user :", user);
 
+  const getShops = async () => {
+    const result = await axios.post(
+      "https://shabudule-api.vercel.app/function/getShopShabudule"
+    );
+    // console.log("result", result);
+    setShops(result.data);
+  };
+
+  useEffect(() => {
+    getShops();
+  }, []); //empty dependency [] as only render once
+
   return (
-    <div className=" bg-[#F5F5F5] w-full p-5 mt-14">
+    <div className=" bg-background h-screen w-full p-5 mt-14">
       <div className="mb-5">
         <Profile user={user} />
       </div>
@@ -23,7 +38,7 @@ export const UserProfile = () => {
           className="bg-[#B1454A] text-white rounded-md p-1"
           onClick={() => setSearchToggle(true)}
         >
-          <Link to="/shabu/store"> สร้างปาร์ตี้ !</Link>
+          สร้างปาร์ตี้ !
         </button>
       </div>
       <div className="space-y-5 md:flex justify-between md:space-x-5 md:space-y-0">
@@ -52,7 +67,15 @@ export const UserProfile = () => {
                 Close
               </button>
             </div>
-            <input className="w-full rounded-md p-1" />
+            <div>
+              <Search
+                search={search}
+                setSearch={setSearch}
+                searchDatas={searchDatas}
+                setSearchDatas={setSearchDatas}
+                shops={shops}
+              />
+            </div>
           </div>
         </div>
       )}

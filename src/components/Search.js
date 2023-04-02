@@ -31,13 +31,13 @@ export const Search = ({
       <div className="text-center">
         <input
           type="text"
-          className="w-1/2 m-auto bg-neutral-200 rounded-lg my-2 text-center"
+          className="w-4/5 m-auto bg-white rounded-md my-2 text-center"
           placeholder="search here"
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>
       {search !== undefined && search.length >= 2 && (
-        <div className="w-2/4 mx-auto bg-white shadow-lg top-0 overflow-auto relative">
+        <div className="w-4/5 mx-auto -mt-2.5 pt-2 bg-white rounded-b-md shadow-lg top-0 overflow-auto relative">
           <div className={`w-full top-0 ${searchDatas.length > 5 ? "h-44 overflow-auto" : ""} `}>
             <div>
               {searchDatas?.map((data, index) => (
@@ -54,7 +54,7 @@ export const Search = ({
                       <div>
                         {data?.shabuShopBranchs?.map((branch, index) => (
                           <div key={index} className="text-center">
-                            <div className="px-1 hover:bg-red-500 hover:text-[#F5F5F5] text-[#B1454A] font-bold active:bg-[#c95f64] cursor-pointer">
+                            <div className="text-sm px-1 hover:bg-red-500 hover:text-[#F5F5F5] text-[#B1454A] font-semibold active:bg-[#c95f64] cursor-pointer">
                               {data?.name}: {branch?.branchName}
                             </div>
                           </div>
