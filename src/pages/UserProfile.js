@@ -29,7 +29,7 @@ export const UserProfile = () => {
   }, []); //empty dependency [] as only render once
 
   return (
-    <div className=" bg-background h-screen w-full p-5 mt-14">
+    <div className=" bg-background md:h-screen w-full p-5 mt-14">
       <div className="mb-5">
         <Profile user={user} />
       </div>
