@@ -100,11 +100,11 @@ const EditUserProfile = () => {
     const { name, tel, bio } = formData;
 
     updateUserName(savedToken, name);
-    console.log("updateUserName", updateUserName)
+    console.log("updateUserName", updateUserName);
     updateUserTel(savedToken, tel);
-    console.log("updateUserTel", updateUserTel)
+    console.log("updateUserTel", updateUserTel);
     updateUserBio(savedToken, bio);
-    console.log("updateUserBio", updateUserBio)
+    console.log("updateUserBio", updateUserBio);
 
     navigate("/shabu/home");
   };
@@ -112,26 +112,27 @@ const EditUserProfile = () => {
   return (
     <>
       <div className="bg-neutral-300 h-screen flex justify-center overflow-auto">
-        <div className="bg-[#F5F5F5] m-auto md:w-9/12 w-full h-[500px] mx-2 border border-4 border-[#B1454A] rounded-lg mt-[70px]">
+        <div className="bg-[#F5F5F5] m-auto md:w-9/12 w-full mx-2 border border-4 border-[#B1454A] rounded-lg mt-20">
           <h1 className="text-center p-4 text-xl font-bold ">
             Edit User Profile
           </h1>
           <div className="py-2">
             <div className="flex">
               <h1 className="text-[#F5F5F5] ml-1 md:ml-3 lg:ml-5">.</h1>
-              <h1 className="lg:ml-20 ml-9 md:ml-8">Name</h1>
+              <h1 className="lg:ml-20 ml-9 md:ml-8">Change Name : </h1>
             </div>
-            <div className="text-center">
+            <div className="text-center mt-2">
               <input
                 type="text"
                 id="name"
+                placeholder="Please input new name ..."
                 onChange={handleInputChange}
                 required
                 className="w-3/4 m-auto bg-neutral-300 rounded-sm border border-gray-300"
               />
             </div>
           </div>
-          <div className="py-2">
+          {/* <div className="py-2">
             <div className="flex">
               <h1 className="text-[#F5F5F5] ml-1 md:ml-3 lg:ml-5">.</h1>
               <h1 className="lg:ml-20 ml-9 md:ml-8">tel</h1>
@@ -144,8 +145,8 @@ const EditUserProfile = () => {
                 className="w-3/4 m-auto bg-neutral-300 rounded-sm border border-gray-300"
               />
             </div>
-          </div>
-          <div className="py-2">
+          </div> */}
+          {/* <div className="py-2">
             <div className="flex">
               <h1 className="text-[#F5F5F5] ml-1 md:ml-3 lg:ml-5">.</h1>
               <h1 className="lg:ml-20 ml-9 md:ml-8">Bio</h1>
@@ -158,26 +159,31 @@ const EditUserProfile = () => {
                 className="w-3/4 m-auto bg-neutral-300 rounded-sm border border-gray-300"
               />
             </div>
-          </div>
+          </div> */}
           <form className="flex justify-center">
-            <div className="text-center" onClick={editProfilePage} id="editUserProfile-form">
-              <Button
-                className=" bg-[#B1454A] mb-2 text-[#F5F5F5] font-bold md:w-[200px] w-[100px] p-4  md:p-2 mt-4 rounded-lg mx-auto mb-4  md:text-base text-sm"
-                type="submit"
-                variant="contained"
-              >
-                confirm
-              </Button>
+            <div
+              className="text-center"
+              onClick={editProfilePage}
+              id="editUserProfile-form"
+            >
+              <Link to="/shabu/userprofile">
+                <Button
+                  className=" bg-[#B1454A] mb-2 text-[#F5F5F5] font-bold px-2  md:p-2 mt-4 rounded-lg mx-auto mb-4"
+                  type="submit"
+                  variant="contained"
+                >
+                  Confirm
+                </Button>
+              </Link>
             </div>
             <div className="text-center">
-              <Link to="/shabu/home">
-              <Button
-                className=" bg-[#B1454A] mb-2 text-[#F5F5F5] font-bold md:w-[200px]  p-4 md:p-2 mt-4 rounded-lg mx-auto mb-4 ml-4 md:text-base text-sm"
-                type="submit"
-                variant="contained"
-              >
-                Cancel
-              </Button>
+              <Link to="/shabu/userprofile">
+                <Button
+                  className=" bg-[#B1454A] mb-2 text-[#F5F5F5] font-bold px-2 md:p-2 mt-4 rounded-lg mx-auto mb-4 ml-4"
+                  variant="contained"
+                >
+                  Cancel
+                </Button>
               </Link>
             </div>
           </form>

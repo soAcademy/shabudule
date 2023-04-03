@@ -121,7 +121,7 @@ const Home = () => {
             setCurrentParty={setCurrentParty}
           />
           <div className="mx-6 font-bold text-[#B1454A] text-xl md:text-2xl mt-8">
-            POPULAR SHABU RESTAURANT
+            POPULAR SHABU RESTAURANTS
           </div>
           <PopularStore shops={shops} />
         </div>

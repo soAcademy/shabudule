@@ -87,7 +87,7 @@ const LogIn = () => {
   return (
     <>
       <div className="bg-neutral-300 h-screen flex justify-center">
-        <div className="bg-[#F5F5F5] md:w-1/2 w-full mx-2 border-4 border-[#B1454A] rounded-lg mt-20 h-1/2">
+        <div className="bg-[#F5F5F5] md:w-1/2 w-full mx-2 border-4 border-[#B1454A] rounded-lg mt-20 h-2/5">
           <h1 className="text-center p-4 text-xl font-bold">Log In</h1>
           <div className="py-2">
             <div className="flex">
