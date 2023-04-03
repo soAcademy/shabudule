@@ -7,8 +7,14 @@ import axios from "axios";
 export const UserProfile = () => {
   const [searchToggle, setSearchToggle] = useState(false);
   const { user, token } = useContext(BranchContext);
-  const { myParty, joinParty, setMemberId, setStatus, setPartyId } =
-    useFetchUserProfile({ token });
+  const {
+    myParty,
+    joinParty,
+    setMemberId,
+    setStatus,
+    setPartyId,
+    setConfirmDel,
+  } = useFetchUserProfile({ token });
   const [search, setSearch] = useState();
   const [searchDatas, setSearchDatas] = useState([]);
   const [shops, setShops] = useState([]);
@@ -48,6 +54,7 @@ export const UserProfile = () => {
             setMemberId={setMemberId}
             setStatus={setStatus}
             setPartyId={setPartyId}
+            setConfirmDel={setConfirmDel}
           />
         </div>
         <div className="md:w-6/12">

@@ -11,7 +11,7 @@ export const Reservation = () => {
   const { branchId, createPartyByDate, user, token } =
     useContext(BranchContext);
   const [today, setToday] = useState(currentDate);
-  const [selectDate, setSelectDate] = useState(currentDate);
+  const [selectDate, setSelectDate] = useState(new Date());
   const [tableAndTime, setTableAndTime] = useState();
   const { branch } = useFetchBranch();
   const [partyName, setPartyName] = useState("");

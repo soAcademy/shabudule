@@ -79,7 +79,7 @@ const ShopBranch = () => {
       setCreatePartyByDate(selectDate.locale(localeDe).format());
       navigate("/shabu/reservation");
     } else {
-      navigate("/shabu/register");
+      navigate("/shabu/login");
     }
   };
 

@@ -40,7 +40,7 @@ const LogIn = () => {
           setToken(accessToken);
           console.log(u);
           console.log("accessToken", u.user.accessToken);
-          localStorage.setItem("SavedToken", "Bearer " + u.user.accessToken); //save token is the key, bearer is the type of token used, u.user.token is athe value
+          localStorage.setItem("SavedToken", u.user.accessToken); //save token is the key, bearer is the type of token used, u.user.token is athe value
           axios.defaults.headers.common["Authorization"] =
             "Bearer " + u.user.accessToken; //sets a default value for the "Authorization" header for all Axios HTTP requests.
           setLoggedIn(true);
