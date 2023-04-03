@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { BranchContext } from "../App";
 
-export const useFetchUserProfile = ({ token }) => {
+export const useFetchUserProfile = () => {
   const [myParty, setMyParty] = useState();
   const [joinParty, setJoinParty] = useState();
   const [memberId, setMemberId] = useState();
@@ -97,7 +97,7 @@ export const useFetchUserProfile = ({ token }) => {
         const result = await axios.post(
           "https://shabudule-api.vercel.app/function/updatePartyStatusAuthShabudule",
           {
-            idToken: token,
+            idToken: idToken,
             partyId: partyId,
           }
         );

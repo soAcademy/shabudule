@@ -268,7 +268,7 @@ export const MyParty = ({
                         <p className="font-bold">Delete Party</p>
                         <button
                           className="cursor-pointer"
-                          onClick={() => setDelToggle(false)}
+                          onClick={() => deleteToggleByParty(idx)}
                         >
                           Close
                         </button>

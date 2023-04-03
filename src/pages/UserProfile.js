@@ -19,8 +19,9 @@ export const UserProfile = () => {
   const [searchDatas, setSearchDatas] = useState([]);
   const [shops, setShops] = useState([]);
 
-  console.log("token userProfile:", token);
+  // console.log("token userProfile:", token);
   console.log("user :", user);
+  // console.log("test :", myParty);
 
   const getShops = async () => {
     const result = await axios.post(

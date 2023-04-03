@@ -15,11 +15,12 @@ export const TimeAndTable = ({
   time,
   setTime,
   setButtonClicked,
+  fillOutToggle,
+  setFillOutToggle,
 }) => {
-  console.log("test2 :", tableAndTime);
+  // console.log("test2 :", tableAndTime);
 
   const [confirmToggle, setConfirmToggle] = useState(false);
-  const [fillOutToggle, setFillOutToggle] = useState(false);
   const [selectTime4Toggle, setSelectTime4Toggle] = useState(
     [...Array(tableAndTime?.length)].map(() => false)
   );
@@ -199,7 +200,6 @@ export const TimeAndTable = ({
                           key={i}
                           className="border mx-5 py-1 shadow-sm"
                           onClick={() => {
-                            setFillOutToggle(true);
                             setTime(slot);
                           }}
                         >
