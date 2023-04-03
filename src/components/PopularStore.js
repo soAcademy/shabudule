@@ -45,13 +45,16 @@ export const PopularStore = ({ shops }) => {
             <Link to="/shabu/shopBranch">
               <div
                 key={`${shop.id}-${branch.id}`}
-                className="bg-neutral-200 h-56 w-44 rounded-lg m-2"
-                onClick={() => {setBranchId(branch.id);  console.log(branch.id);}}
+                className="bg-neutral-200 h-48 w-44 rounded-lg m-2"
+                onClick={() => {
+                  setBranchId(branch.id);
+                  console.log(branch.id);
+                }}
               >
                 <img
                   src={shop.shopImage}
                   alt="branch"
-                  className=" w-full rounded-lg h-1/2 "
+                  className=" w-full rounded-lg h-3/5"
                 />
                 <div className="h-full">
                   <div className="m-2 font-bold md:text-sm text-center h-1/4">

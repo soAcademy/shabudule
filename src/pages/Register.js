@@ -85,7 +85,7 @@ const Register = () => {
           navigate("/shabu/createuserprofile");
         })
         .catch((err) => {
-          setRegisterError("This email has already been registered")
+          setRegisterError("This email has already been registered");
           console.log(err);
         });
     }
@@ -104,12 +104,12 @@ const Register = () => {
   return (
     <>
       <div className="bg-neutral-300 h-screen flex justify-center overflow-auto">
-        <div className="bg-[#F5F5F5] m-auto md:w-9/12 w-full h-[500px] mx-2 border border-4 border-[#B1454A] rounded-lg mt-[70px]">
+        <div className="bg-[#F5F5F5] md:w-9/12 w-full h-1/2 mx-2 border border-4 border-[#B1454A] rounded-lg mt-20">
           <h1 className="text-center p-4 text-xl font-bold ">Registration</h1>
           <div className="py-2">
             <div className="flex">
               <h1 className="text-[#F5F5F5] ml-1 md:ml-3 lg:ml-5">.</h1>
-              <h1 className="lg:ml-20 ml-9 md:ml-8">Email</h1>
+              <h1 className="lg:ml-20 ml-9 md:ml-8 mb-2">Email</h1>
             </div>
             <div className="text-center">
               <input
@@ -130,7 +130,7 @@ const Register = () => {
             <div
               id="register-error"
               className="text-[#B1454A] ml-12 md:ml-28 font-bold text-sm"
-              style={{ display:registerError ? "block" : "none" }}
+              style={{ display: registerError ? "block" : "none" }}
             >
               {registerError}
             </div>
@@ -138,7 +138,7 @@ const Register = () => {
           <div className="py-2">
             <div className="flex">
               <h1 className="text-[#F5F5F5] ml-1 md:ml-3 lg:ml-5">.</h1>
-              <h1 className="lg:ml-20 ml-9 md:ml-8">Password</h1>
+              <h1 className="lg:ml-20 ml-9 md:ml-8 mb-2">Password</h1>
             </div>
             <div className="text-center">
               <input
@@ -159,7 +159,7 @@ const Register = () => {
           <div className="py-2">
             <div className="flex">
               <h1 className="text-[#F5F5F5] ml-1 md:ml-3 lg:ml-5">.</h1>
-              <h1 className="lg:ml-20 ml-9 md:ml-8">Confirm Password</h1>
+              <h1 className="lg:ml-20 ml-9 md:ml-8 mb-2">Confirm Password</h1>
             </div>
             <div className="text-center">
               <input
@@ -189,11 +189,11 @@ const Register = () => {
             <div className="flex">
               <div className="text-[#F5F5F5] ml-1 md:ml-3 lg:ml-5">.</div>
               <div className="text-xs mt-2 lg:ml-20 ml-9 md:ml-8">
-                already have an account?
+                Already have an account?
               </div>
               <div>
                 <Link to="/shabu/login">
-                  <button className="mr-5 text-xs mt-2 underline-offset-0 underline button hover:text-sky-500 active:text-sky-800 ">
+                  <button className="mr-5 text-xs mt-2 button hover:text-sky-500 active:text-sky-800 ">
                     Log in
                   </button>
                 </Link>
@@ -203,7 +203,7 @@ const Register = () => {
           <form onClick={registerPage} id="register-form">
             <div className="text-center">
               <Button
-                className=" bg-[#B1454A] mb-2 text-[#F5F5F5] font-bold md:w-1/3 w-3/4 p-2 mt-4 rounded-lg mx-auto mb-4  md:text-base text-sm"
+                className=" bg-[#B1454A] text-[#F5F5F5] font-bold md:w-1/3 w-3/4 p-2 mt-2 rounded-lg mx-auto md:text-base text-sm"
                 type="submit"
                 variant="contained"
               >
