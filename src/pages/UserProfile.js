@@ -37,12 +37,12 @@ export const UserProfile = () => {
 
   return (
     <div className=" bg-background md:h-screen w-full p-5 mt-14">
-      <div className="mb-5">
+      <div className="">
         <Profile user={user} />
       </div>
-      <div className="my-5 flex justify-end">
+      <div className="my-4 flex justify-center ">
         <button
-          className="bg-[#B1454A] text-white rounded-md p-1"
+          className="bg-primary text-white rounded-md px-4 py-2 font-semibold text-sm mt-4 mr-4 md:text-xl"
           onClick={() => setSearchToggle(true)}
         >
           สร้างปาร์ตี้ !

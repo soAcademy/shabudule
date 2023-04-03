@@ -5,20 +5,15 @@ import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 
 const EditUserProfile = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    tel: "",
-    bio: "",
-  });
+  const [name, setName] = useState("");
+  console.log("name", name);
 
-  console.log("formdata", formData);
   const navigate = useNavigate();
 
   const savedToken = localStorage.getItem("SavedToken");
-  console.log("savedToken1", savedToken);
+  console.log("savedToken", savedToken);
 
   const updateUserName = async (idToken, name) => {
-    console.log("accessToken3", idToken);
     try {
       const result = await axios.post(
         "https://shabudule-api.vercel.app/function/updateUserNameAuthShabudule",
@@ -29,6 +24,7 @@ const EditUserProfile = () => {
         { headers: { Authorization: localStorage.getItem("SavedToken") } }
       );
       console.log("editUserDetail response:", result);
+      navigate("/shabu/userprofile");
       if (result.status === 200) {
         console.log("result.data.editProfile:", result.data);
         return result.data;
@@ -36,77 +32,6 @@ const EditUserProfile = () => {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const updateUserTel = async (idToken, tel) => {
-    console.log("accessToken3", idToken);
-    try {
-      const result = await axios.post(
-        "https://shabudule-api.vercel.app/function/updateUserTelAuthShabudule",
-        {
-          idToken: idToken,
-          tel: tel,
-        },
-        { headers: { Authorization: localStorage.getItem("SavedToken") } }
-      );
-      console.log("editUserDetail response:", result);
-      if (result.status === 200) {
-        console.log("result.data.editProfile:", result.data);
-        return result.data;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const updateUserBio = async (idToken, bio) => {
-    console.log("accessToken3", idToken);
-    try {
-      const result = await axios.post(
-        "https://shabudule-api.vercel.app/function/updateUserNameAuthShabudule",
-        {
-          idToken: idToken,
-          bio: bio,
-        },
-        { headers: { Authorization: localStorage.getItem("SavedToken") } }
-      );
-      console.log("editUserDetail response:", result);
-      if (result.status === 200) {
-        console.log("result.data.editProfile:", result.data);
-        return result.data;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleInputChange = (event) => {
-    const { id, value } = event.target;
-    setFormData({ ...formData, [id]: value });
-  };
-
-  const editProfilePage = (e) => {
-    console.log("token value2:", savedToken);
-    e.preventDefault();
-
-    console.log(
-      "editUserProfileAuthShabudule called with params:",
-      savedToken,
-      formData.name,
-      formData.tel,
-      formData.bio
-    );
-    console.log("token value3:", savedToken);
-    const { name, tel, bio } = formData;
-
-    updateUserName(savedToken, name);
-    console.log("updateUserName", updateUserName);
-    updateUserTel(savedToken, tel);
-    console.log("updateUserTel", updateUserTel);
-    updateUserBio(savedToken, bio);
-    console.log("updateUserBio", updateUserBio);
-
-    navigate("/shabu/home");
   };
 
   return (
@@ -126,55 +51,22 @@ const EditUserProfile = () => {
                 type="text"
                 id="name"
                 placeholder="Please input new name ..."
-                onChange={handleInputChange}
+                onChange={(e) => setName(e.target.value)}
                 required
                 className="w-3/4 m-auto bg-neutral-300 rounded-sm border border-gray-300"
               />
             </div>
           </div>
-          {/* <div className="py-2">
-            <div className="flex">
-              <h1 className="text-[#F5F5F5] ml-1 md:ml-3 lg:ml-5">.</h1>
-              <h1 className="lg:ml-20 ml-9 md:ml-8">tel</h1>
-            </div>
+          <div className="flex justify-center">
             <div className="text-center">
-              <input
-                type="text"
-                id="tel"
-                onChange={handleInputChange}
-                className="w-3/4 m-auto bg-neutral-300 rounded-sm border border-gray-300"
-              />
-            </div>
-          </div> */}
-          {/* <div className="py-2">
-            <div className="flex">
-              <h1 className="text-[#F5F5F5] ml-1 md:ml-3 lg:ml-5">.</h1>
-              <h1 className="lg:ml-20 ml-9 md:ml-8">Bio</h1>
-            </div>
-            <div className="text-center">
-              <textarea
-                type="text"
-                id="bio"
-                onChange={handleInputChange}
-                className="w-3/4 m-auto bg-neutral-300 rounded-sm border border-gray-300"
-              />
-            </div>
-          </div> */}
-          <form className="flex justify-center">
-            <div
-              className="text-center"
-              onClick={editProfilePage}
-              id="editUserProfile-form"
-            >
-              <Link to="/shabu/userprofile">
-                <Button
-                  className=" bg-[#B1454A] mb-2 text-[#F5F5F5] font-bold px-2  md:p-2 mt-4 rounded-lg mx-auto mb-4"
-                  type="submit"
-                  variant="contained"
-                >
-                  Confirm
-                </Button>
-              </Link>
+              <Button
+                className=" bg-[#B1454A] mb-2 text-[#F5F5F5] font-bold px-2  md:p-2 mt-4 rounded-lg mx-auto mb-4"
+                type="submit"
+                variant="contained"
+                onClick={() => updateUserName(savedToken, name)}
+              >
+                Confirm
+              </Button>
             </div>
             <div className="text-center">
               <Link to="/shabu/userprofile">
@@ -186,7 +78,7 @@ const EditUserProfile = () => {
                 </Button>
               </Link>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </>

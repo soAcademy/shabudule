@@ -25,8 +25,6 @@ const NavBarLoggedIn = () => {
   console.log("user nav login :", user);
 
   const routes = [
-    { name: "Home", url: "shabu/home" },
-    { name: "Profile", url: "shabu/userprofile" },
     { name: "Store", url: "shabu/store" },
     { name: "Party", url: "shabu/party" },
   ];
@@ -71,10 +69,11 @@ const NavBarLoggedIn = () => {
       <div className="w-full fixed top-0 z-50">
         <nav className="bg-[#B1454A] shadow-lg md:flex md:items-center md:justify-between p-1">
           <div className="md:flex">
-            <div className="align-left font-bold text-[#F5F5F5] hidden md:block text-2xl ml-10">
-              SHABUDULE
-            </div>
-
+            <Link to="/shabu/home">
+              <div className="align-left font-bold text-[#F5F5F5] hidden md:block text-2xl ml-10">
+                SHABUDULE
+              </div>
+            </Link>
             <div>
               <div className="flex">
                 <IconButton
@@ -88,9 +87,11 @@ const NavBarLoggedIn = () => {
                   <GiHamburgerMenu />
                 </IconButton>
                 {/* <div className="flex"> */}
-                <h1 className="ml-1 mt-1 font-bold text-[#F5F5F5] p-2 md:hidden text-xl">
-                  SHABUDULE
-                </h1>
+                <Link to="/shabu/home">
+                  <h1 className="ml-1 mt-1 font-bold text-[#F5F5F5] p-2 md:hidden text-xl">
+                    SHABUDULE
+                  </h1>
+                </Link>
                 {/* </div> */}
 
                 {/* <button

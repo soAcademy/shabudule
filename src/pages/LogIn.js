@@ -18,6 +18,17 @@ const LogIn = () => {
 
   const auth = getAuth(fire);
 
+  const loggedOut = () => {
+    localStorage.removeItem("SavedToken");
+    setLoggedIn(false);
+  };
+
+  // const runLogoutTimer = (dispatch, timer) => {
+  //   setTimeout(() => {
+  //     dispatch(loggedOut());
+  //   }, 5000);
+  // };
+
   const logInPage = (e) => {
     e.preventDefault();
     // console.log("auth", auth);
@@ -41,6 +52,7 @@ const LogIn = () => {
           console.log(u);
           console.log("accessToken", u.user.accessToken);
           localStorage.setItem("SavedToken", u.user.accessToken); //save token is the key, bearer is the type of token used, u.user.token is athe value
+          // runLogoutTimer(dispatch, u.data.timer * 1000);
           axios.defaults.headers.common["Authorization"] =
             "Bearer " + u.user.accessToken; //sets a default value for the "Authorization" header for all Axios HTTP requests.
           setLoggedIn(true);
@@ -87,7 +99,7 @@ const LogIn = () => {
   return (
     <>
       <div className="bg-neutral-300 h-screen flex justify-center">
-        <div className="bg-[#F5F5F5] md:w-1/2 w-full mx-2 border-4 border-[#B1454A] rounded-lg mt-20 h-2/5">
+        <div className="bg-[#F5F5F5] md:w-1/2 w-full mx-2 border-4 border-[#B1454A] rounded-lg mt-20 h-1/2">
           <h1 className="text-center p-4 text-xl font-bold">Log In</h1>
           <div className="py-2">
             <div className="flex">
