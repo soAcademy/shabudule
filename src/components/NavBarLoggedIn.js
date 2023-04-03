@@ -25,6 +25,8 @@ const NavBarLoggedIn = () => {
   console.log("user nav login :", user);
 
   const routes = [
+    { name: "Home", url: "shabu/home" },
+    { name: "Profile", url: "shabu/userprofile" },
     { name: "Store", url: "shabu/store" },
     { name: "Party", url: "shabu/party" },
   ];

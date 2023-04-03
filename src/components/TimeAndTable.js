@@ -14,10 +14,11 @@ export const TimeAndTable = ({
   setTableId,
   time,
   setTime,
-  setButtonClicked,
   fillOutToggle,
   setFillOutToggle,
   createParty,
+  warningToggle,
+  setWarningToggle,
 }) => {
   // console.log("test2 :", tableAndTime);
 
@@ -59,6 +60,29 @@ export const TimeAndTable = ({
 
   return (
     <div>
+      {warningToggle === true && (
+        <div className="w-full h-screen left-0 top-0 z-50 fixed flex bg-gray-500/30 backdrop-blur-sm">
+          <div className="flex flex-col m-auto bg-background p-5 w-4/5 rounded-md">
+            <div className="mb-4 text-center">
+              <p className="font-bold text-xl">
+                คุณได้จองเวลานี้ไปแล้ว กรุณาเลือกเวลาใหม่
+              </p>
+            </div>
+            <div className="flex justify-center">
+              <button
+                className="bg-[#B1454A] text-white rounded-md p-1 mr-2 w-3/12 md:w-2/12"
+                onClick={() => {
+                  setTime();
+                  setWarningToggle(false);
+                }}
+              >
+                ปิด
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {fillOutToggle && (
         <div className="w-full h-screen left-0 top-0 z-50 fixed flex bg-gray-500/30 backdrop-blur-sm">
           <div className="flex flex-col m-auto bg-background p-5 w-4/5 rounded-md">
@@ -122,7 +146,6 @@ export const TimeAndTable = ({
                 onClick={() => {
                   setFillOutToggle(false);
                   setConfirmToggle(true);
-                  createParty();
                 }}
               >
                 Accept
@@ -161,8 +184,8 @@ export const TimeAndTable = ({
               <button
                 className="bg-[#B1454A] text-white rounded-md p-1 mr-2 w-3/12 md:w-2/12"
                 onClick={() => {
+                  createParty();
                   setConfirmToggle(false);
-                  setButtonClicked(true);
                 }}
               >
                 accept

@@ -20,10 +20,7 @@ export const Reservation = () => {
   const [partyType, setPartyType] = useState("public");
   const [tableId, setTableId] = useState();
   const [time, setTime] = useState();
-  const [buttonClicked, setButtonClicked] = useState(false);
   const [partyId, setPartyId] = useState();
-  const [checkTime, setCheckTime] = useState();
-  const [warningTime, setWarningTime] = useState(false);
   const [fillOutToggle, setFillOutToggle] = useState(false);
   const [warningToggle, setWarningToggle] = useState(false);
 
@@ -101,6 +98,7 @@ export const Reservation = () => {
         type: partyType,
       },
     }).then((res) => {
+      setPartyId(res.data.id);
       console.log("createParty resp", res.data);
     });
   };
@@ -155,10 +153,11 @@ export const Reservation = () => {
             setTableId={setTableId}
             time={time}
             setTime={setTime}
-            setButtonClicked={setButtonClicked}
             fillOutToggle={fillOutToggle}
             setFillOutToggle={setFillOutToggle}
             createParty={createParty}
+            warningToggle={warningToggle}
+            setWarningToggle={setWarningToggle}
           />
         </div>
       </div>
