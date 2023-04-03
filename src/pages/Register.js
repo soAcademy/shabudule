@@ -85,8 +85,7 @@ const Register = () => {
           navigate("/shabu/createuserprofile");
         })
         .catch((err) => {
-          setRegisterError("This email has already been registered");
-          console.log(err);
+          alert(err);
         });
     }
   };
@@ -113,7 +112,7 @@ const Register = () => {
             </div>
             <div className="text-center">
               <input
-                type="text"
+                type="email"
                 id="email"
                 onChange={handleInputChange}
                 required

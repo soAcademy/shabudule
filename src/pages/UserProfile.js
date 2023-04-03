@@ -40,7 +40,7 @@ export const UserProfile = () => {
       <div className="mb-5">
         <Profile user={user} />
       </div>
-      <div className="my-5 flex justify-end">
+      <div className="my-4 flex justify-end">
         <button
           className="bg-[#B1454A] text-white rounded-full p-3"
           onClick={() => setSearchToggle(true)}
