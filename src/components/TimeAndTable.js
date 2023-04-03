@@ -17,6 +17,7 @@ export const TimeAndTable = ({
   setButtonClicked,
   fillOutToggle,
   setFillOutToggle,
+  createParty,
 }) => {
   // console.log("test2 :", tableAndTime);
 
@@ -121,6 +122,7 @@ export const TimeAndTable = ({
                 onClick={() => {
                   setFillOutToggle(false);
                   setConfirmToggle(true);
+                  createParty();
                 }}
               >
                 Accept
