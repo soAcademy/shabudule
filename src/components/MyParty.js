@@ -43,9 +43,11 @@ export const MyParty = ({
 
   return (
     <div>
-      <div className="bg-white rounded-md w-full pb-2">
-        <h1 className="text-center text-lg font-semibold py-5">My Party</h1>
-        <div className="bg-white rounded-md w-full px-2 pb-2 overflow-y-auto h-80">
+      <div className="bg-white rounded-md w-full pb-2 border-4 border-primary md:px-1">
+        <h1 className="text-center  font-bold text-xl text-primary py-5 ">
+          My Party
+        </h1>
+        <div className="rounded-md w-full px-2 pb-2 overflow-y-auto h-80 md:h-[600px]">
           {myParty
             ?.sort((a, b) => b.active - a.active)
             .map((r, idx) => (
@@ -54,7 +56,9 @@ export const MyParty = ({
                   <div>
                     <div
                       className={`flex w-full ${
-                        partyToggle[idx] ? "bg-[#B1454A]" : "bg-[#F4F4F4]"
+                        partyToggle[idx]
+                          ? "bg-[#B1454A] text-white"
+                          : "bg-[#F5F5F5]"
                       } rounded-md p-2 mb-2 space-x-1 cursor-pointer`}
                       onClick={() => {
                         openToggleParty(idx);
@@ -70,11 +74,19 @@ export const MyParty = ({
                       </div>
                       <div className="flex flex-col w-8/12 space-y-1">
                         <p className="font-semibold">{r.name}</p>
-                        <div className="bg-white rounded-md font-medium pl-2 text-xs">
+                        <div
+                          className={`bg-white rounded-md font-medium pl-2 text-xs lg:text-base ${
+                            partyToggle[idx] ? "text-primary" : "text-black"
+                          }`}
+                        >
                           {r.table.branch.shabuShop.name} :{" "}
                           {r.table.branch.branchName}
                         </div>
-                        <div className="bg-white rounded-md font-medium pl-2 text-xs">
+                        <div
+                          className={`bg-white rounded-md font-medium pl-2 text-xs lg:text-base ${
+                            partyToggle[idx] ? "text-primary" : "text-black"
+                          }`}
+                        >
                           {r.startDateTime.slice(0, 10)},{" "}
                           {r.startDateTime.slice(11, 16)} -{" "}
                           {r.endDateTime.slice(11, 16)}
@@ -156,18 +168,20 @@ export const MyParty = ({
 
                 {partyToggle[idx] && (
                   <div className="flex w-full -mt-2 rounded-b-md p-2 border-b-2 border-x-2 mb-2">
-                    <div className="w-9/12">
-                      <p className="indent-5 text-sm">{r.partyDetail}</p>
+                    <div className="w-9/12 mt-3">
+                      <p className="indent-5 text-sm lg:text-base">
+                        {r.partyDetail}
+                      </p>
                     </div>
                     <div className="flex flex-col items-center justify-center w-3/12 space-y-3">
                       <button
-                        className="bg-[#B1454A] text-white text-xs rounded-md p-1"
+                        className="bg-[#B1454A] text-white text-xs rounded-full p-2"
                         onClick={() => deleteToggleByParty(idx)}
                       >
                         Cancel
                       </button>
                       <button
-                        className="bg-[#B1454A] text-white text-xs rounded-md p-1"
+                        className="bg-[#B1454A] text-white text-xs rounded-full p-2"
                         key={idx}
                         onClick={() => memberToggleByParty(r.id)}
                       >
@@ -195,11 +209,16 @@ export const MyParty = ({
                           .filter((k) => k.status === "accept")
                           .map((j, idx) => (
                             <div
-                              className="flex bg-white rounded-md p-3 mb-5"
+                              className="flex bg-white rounded-md p-3 mb-5 border-4 border-primary"
                               key={idx}
                             >
                               <div className="w-7/12">
-                                <p key={idx}>{j.userFirebase.user.name}</p>
+                                <p
+                                  key={idx}
+                                  className="md:text-lg md:font-medium text-primary"
+                                >
+                                  {j.userFirebase.user.name}
+                                </p>
                               </div>
                               <div className="flex w-5/12 justify-end">
                                 {r.createByUserFirebaseEmail.email ===
@@ -225,13 +244,21 @@ export const MyParty = ({
                             {r.partyMembers
                               .filter((k) => k.status === "request")
                               .map((j, idx) => (
-                                <div className="flex bg-white rounded-md p-3 mb-5">
+                                <div
+                                  className="flex bg-white rounded-md p-3 mb-5 border-4 border-primary"
+                                  key={idx}
+                                >
                                   <div className="w-7/12">
-                                    <p key={idx}>{j.userFirebase.user.name}</p>
+                                    <p
+                                      key={idx}
+                                      className="md:text-lg md:font-medium text-primary"
+                                    >
+                                      {j.userFirebase.user.name}
+                                    </p>
                                   </div>
                                   <div className="flex w-5/12 justify-end">
                                     <button
-                                      className="bg-[#B1454A] text-white text-xs rounded-md p-1 mr-2"
+                                      className="bg-[#B1454A] text-white text-xs rounded-full p-2 mr-2"
                                       onClick={() => {
                                         setMemberId(j.id);
                                         setStatus("accept");
@@ -242,7 +269,7 @@ export const MyParty = ({
                                       accept
                                     </button>
                                     <button
-                                      className="bg-[#B1454A] text-white text-xs rounded-md p-1"
+                                      className="bg-[#B1454A] text-white text-xs rounded-full p-2"
                                       onClick={() => {
                                         memberToggleByParty(idx);
                                         setMemberId(j.id);
@@ -280,7 +307,7 @@ export const MyParty = ({
                             setConfirmDel(true);
                             deleteToggleByParty(idx);
                           }}
-                          className="px-4 py-2 bg-[#B1454A] active:bg-[#c95f64] rounded-md w-full font-bold"
+                          className="px-4 py-2 bg-[#B1454A] active:bg-[#c95f64] text-white rounded-md w-full font-bold"
                         >
                           Confirm Delete
                         </button>
