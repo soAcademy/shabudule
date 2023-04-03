@@ -25,6 +25,7 @@ export const Reservation = () => {
   const [checkTime, setCheckTime] = useState();
   const [warningTime, setWarningTime] = useState(false);
   const [fillOutToggle, setFillOutToggle] = useState(false);
+  const [warningToggle, setWarningToggle] = useState(false);
 
   console.log("Branch ID", branchId);
   console.log("createParty By Date", createPartyByDate);
@@ -67,59 +68,42 @@ export const Reservation = () => {
     getTimeAndTable();
   }, [branchId, createPartyByDate, selectDate]);
 
-  // const filterTime = checkTime?.filter((r) => r === time);
-  // if (filterTime?.length > 0) {
-  //   setWarningTime(true);
-  //   setTime();
-  // } else {
-  //   setFillOutToggle(true);
-  // }
-
   useEffect(() => {
-    if (time) {
-      const checkTimeBooking = async () => {
-        try {
-          const result = await axios.post(
-            " https://shabudule-api.vercel.app/function/getMyBookedTimeAuthShabudule",
-            {
-              idToken: savedToken,
-              date: startDate(),
-            }
-          );
-          console.log("check time booking", result.data);
-          setCheckTime(result.data);
-        } catch (error) {
-          console.log("Error check booking:", error);
-        }
-        checkTimeBooking();
-      };
-    }
+    console.log("selected date", selectDate);
+    axios({
+      method: "post",
+      url: "https://shabudule-api.vercel.app/function/getMyBookedTimeAuthShabudule",
+      data: {
+        idToken: savedToken,
+        date: startDate(),
+      },
+    }).then((res) => {
+      console.log("booked time slot", res.data);
+      if (res.data.filter((r) => r === time).length > 0) {
+        setWarningToggle(true);
+      } else {
+        setFillOutToggle(true);
+      }
+    });
+  }, [time]);
 
-    if (buttonClicked) {
-      const createParty = async () => {
-        try {
-          const result = await axios.post(
-            "https://shabudule-api.vercel.app/function/createPartyAuthShabudule",
-            {
-              idToken: savedToken,
-              name: partyName,
-              shabuShopTableId: tableId,
-              startDateTime: startDate(),
-              endDateTime: endDate(),
-              partyDetail: desc,
-              type: partyType,
-            }
-          );
-          console.log("created party:", result.data);
-          setPartyId(result.data.id);
-          setButtonClicked(false);
-        } catch (e) {
-          console.log("Error create party:", e);
-        }
-      };
-      createParty();
-    }
-  }, [buttonClicked, time, savedToken, startDate, endDate]);
+  const createParty = () => {
+    axios({
+      method: "post",
+      url: "https://shabudule-api.vercel.app/function/createPartyAuthShabudule",
+      data: {
+        idToken: savedToken,
+        name: partyName,
+        shabuShopTableId: tableId,
+        startDateTime: startDate(),
+        endDateTime: endDate(),
+        partyDetail: desc,
+        type: partyType,
+      },
+    }).then((res) => {
+      console.log("createParty resp", res.data);
+    });
+  };
 
   useEffect(() => {
     if (partyId > 0) {
@@ -174,6 +158,7 @@ export const Reservation = () => {
             setButtonClicked={setButtonClicked}
             fillOutToggle={fillOutToggle}
             setFillOutToggle={setFillOutToggle}
+            createParty={createParty}
           />
         </div>
       </div>
