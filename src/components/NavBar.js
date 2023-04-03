@@ -12,8 +12,8 @@ const NavBar = () => {
   const [toggle, setToggle] = useState(false);
   const routes = [
     { name: "Home", url: "shabu/home" },
-    { name: "Store", url: "shabu/store" },
-    { name: "Party List", url: "shabu/party" },
+    { name: "Shabu Restaurant", url: "shabu/store" },
+    { name: "Party", url: "shabu/party" },
     { name: "Register", url: "shabu/register" },
     { name: "Log In", url: "shabu/login" },
   ];
@@ -27,14 +27,9 @@ const NavBar = () => {
     <>
       <div className="w-full fixed top-0 z-50">
         <nav className="bg-[#B1454A] shadow-lg md:flex md:items-center md:justify-between p-1">
-          <div className="md:flex">
-            <h1 className="text-[#F5F5F5] text-3xl -mt-1 float-left font-bold hidden md:block">
-              <MdOutlineFoodBank />
-            </h1>
-            <h1 className="align-left font-bold text-[#F5F5F5] hidden md:block">
-              SHABUDULE
-            </h1>
-          </div>
+          <h1 className="align-left font-bold text-[#F5F5F5] hidden md:block text-2xl ml-10">
+            SHABUDULE
+          </h1>
 
           <div>
             <div className="flex">
@@ -46,10 +41,7 @@ const NavBar = () => {
               </IconButton>
 
               <div className="flex">
-                <h1 className="text-[#F5F5F5] text-4xl mt-1 float-left ml-2 font-bold md:hidden">
-                  <MdOutlineFoodBank />
-                </h1>
-                <h1 className="ml-1 mt-1 font-bold text-[#F5F5F5] p-2 md:hidden">
+                <h1 className="ml-1 mt-1 font-bold text-[#F5F5F5] p-2 md:hidden text-xl">
                   SHABUDULE
                 </h1>
               </div>

@@ -13,7 +13,7 @@ export const MapLocation = ({ branch }) => {
       <div>
         <p>Location</p>
         {branch?.id >= 0 && (
-          <div className="w-full mt-2 flex justify-center">
+          <div className="w-full mb-2 p-4 flex justify-center">
             <Map
               initialViewState={{
                 longitude: branch?.longitude,
@@ -23,7 +23,7 @@ export const MapLocation = ({ branch }) => {
                 pitch: 0,
               }}
               dragEnabled={false}
-              style={{ width: 375, height: 375 }}
+              style={{ width: 500, height: 300 }}
               mapStyle="mapbox://styles/mapbox/streets-v9"
               mapboxAccessToken={TOKEN}
             >
