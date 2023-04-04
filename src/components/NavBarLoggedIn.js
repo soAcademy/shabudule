@@ -192,7 +192,9 @@ const NavBarLoggedIn = () => {
                 <div className="text-2xl font-bold p-2">
                   <CgProfile />
                 </div>
-                <div className=" font-semibold p-2">{user[0]?.name}</div>
+                <div className=" font-semibold p-2 md:text-xs lg:text-base">
+                  {user[0]?.name}
+                </div>
               </Button>
             </div>
           </div>

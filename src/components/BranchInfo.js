@@ -12,9 +12,9 @@ export const BranchInfo = ({ branch }) => {
           <p>สาขา {branch?.branchName}</p>
         </div>
       </div>
-      <div className="flex w-full mt-6">
-        <p className="w-1/2">Email: {branch?.shopDetail}</p>
-        <p className="w-1/2">Tel: {branch?.tel}</p>
+      <div className="w-full mt-6">
+        <p className="">shopDetail : {branch?.shopDetail}</p>
+        <p className="mt-2">Tel: {branch?.tel}</p>
       </div>
       <div className="mt-2">
         <p>Address: {branch?.address}</p>

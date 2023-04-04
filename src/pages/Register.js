@@ -77,9 +77,8 @@ const Register = () => {
           console.log(u);
           createUser(u.user.accessToken);
           console.log("accessTokenu", u.user.accessToken);
-          localStorage.setItem("SavedToken", "Bearer " + u.user.accessToken); //save token is the key, bearer is the type of token used, u.user.token is athe value
-          axios.defaults.headers.common["Authorization"] =
-            "Bearer " + u.user.accessToken; //sets a default value for the "Authorization" header for all Axios HTTP requests.
+          localStorage.setItem("SavedToken", u.user.accessToken); //save token is the key, bearer is the type of token used, u.user.token is athe value
+          axios.defaults.headers.common["Authorization"] = u.user.accessToken; //sets a default value for the "Authorization" header for all Axios HTTP requests.
           setFormData({ email: "", password: "", confirmPassword: "" });
           setLoggedIn(true);
           navigate("/shabu/createuserprofile");

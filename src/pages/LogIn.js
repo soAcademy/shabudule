@@ -18,10 +18,10 @@ const LogIn = () => {
 
   const auth = getAuth(fire);
 
-  const loggedOut = () => {
-    localStorage.removeItem("SavedToken");
-    setLoggedIn(false);
-  };
+  // const loggedOut = () => {
+  //   localStorage.removeItem("SavedToken");
+  //   setLoggedIn(false);
+  // };
 
   // const runLogoutTimer = (dispatch, timer) => {
   //   setTimeout(() => {
@@ -47,14 +47,13 @@ const LogIn = () => {
     if (Object.keys(errors).length === 0) {
       signInWithEmailAndPassword(auth, formData.email, formData.password)
         .then((u) => {
-          const accessToken = u.user.accessToken;
+          const accessToken = u.user.accessToken; // remove the "Bearer " prefix
           setToken(accessToken);
           console.log(u);
-          console.log("accessToken", u.user.accessToken);
-          localStorage.setItem("SavedToken", u.user.accessToken); //save token is the key, bearer is the type of token used, u.user.token is athe value
+          console.log("accessToken", accessToken);
+          localStorage.setItem("SavedToken", accessToken); //save token is the key, bearer is the type of token used, u.user.token is athe value
           // runLogoutTimer(dispatch, u.data.timer * 1000);
-          axios.defaults.headers.common["Authorization"] =
-            "Bearer " + u.user.accessToken; //sets a default value for the "Authorization" header for all Axios HTTP requests.
+          axios.defaults.headers.common["Authorization"] = accessToken; //sets a default value for the "Authorization" header for all Axios HTTP requests.
           setLoggedIn(true);
           setFormData({ email: "", password: "" });
           setPasswordError("");

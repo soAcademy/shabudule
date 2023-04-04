@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { LoggedInNavBarContext } from "../App";
 
 const CreateUserProfile = () => {
+  const [imageFile, setImageFile] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
     tel: "",
@@ -22,20 +23,21 @@ const CreateUserProfile = () => {
   const savedToken = localStorage.getItem("SavedToken");
   console.log("savedToken1", savedToken);
 
-  const createUserDetail = async (idToken, name, tel, bio) => {
-    console.log("accessToken3", idToken);
+  const createUserDetail = async (idToken, name, tel, bio, picture) => {
     try {
+      const formData = new FormData();
+      formData.append("idToken", idToken);
+      formData.append("name", name);
+      formData.append("tel", tel);
+      formData.append("bio", bio);
+      if (picture) {
+        formData.append("profileImage", picture);
+      }
       const result = await axios.post(
         "https://shabudule-api.vercel.app/function/createUserProfileAuthShabudule",
-        {
-          idToken: idToken,
-          name: name,
-          tel: tel,
-          bio: bio,
-        },
-        { headers: { Authorization: localStorage.getItem("SavedToken") } }
+        formData,
+        { headers: { Authorization: savedToken } }
       );
-      console.log("createUserDetail response:", result);
       if (result.status === 200) {
         console.log("result.data.createProfile:", result.data);
         return result.data;
@@ -48,6 +50,21 @@ const CreateUserProfile = () => {
   const handleInputChange = (event) => {
     const { id, value } = event.target;
     setFormData({ ...formData, [id]: value });
+  };
+
+  const handleFileInputChange = (event) => {
+    const file = event.target.files[0];
+    if (!file) {
+      return;
+    }
+    if (!file.type.startsWith("image/")) {
+      setFormErrors({
+        ...formErrors,
+        picture: "Only image files are allowed.",
+      });
+      return;
+    }
+    setFormData({ ...formData, picture: file });
   };
 
   const createProfilePage = async (e) => {
@@ -167,6 +184,28 @@ const CreateUserProfile = () => {
               style={{ display: formErrors.bio ? "block" : "none" }}
             >
               {formErrors.bio}
+            </div>
+            <div className="py-2">
+              <div className="flex">
+                <h1 className="text-[#F5F5F5] ml-1 md:ml-3 lg:ml-5">.</h1>
+                <h1 className="lg:ml-20 ml-9 md:ml-8">Profile Picture</h1>
+              </div>
+              <div className="flex justify-center mt-2">
+                <div className="w-4/5 pl-2">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileInputChange}
+                  />
+                </div>
+                <div
+                  id="picture-error"
+                  className="text-[#B1454A] ml-12 md:ml-28 font-bold text-sm"
+                  style={{ display: formErrors.picture ? "block" : "none" }}
+                >
+                  {formErrors.picture}
+                </div>
+              </div>
             </div>
           </div>
           <form onClick={createProfilePage} id="createUserProfile-form">
