@@ -150,12 +150,8 @@ const PartyList = () => {
                     {party.table.branch.branchName}
                   </div>
                   <div className="p-2 text-xs text-white text-center rounded flex justify-center items-center md:w-1/3 md:text-lg">
-                    Party Start :{" "}
-                    {new Date(party.startDateTime).toLocaleString("en-US", {
-                      dateStyle: "short",
-                      timeStyle: "short",
-                      hour12: true,
-                    })}
+                    Party Start : {party.startDateTime.slice(9, 10)}/{party.startDateTime.slice(6, 7)}/{party.startDateTime.slice(2, 4)},{" "}
+                    {party.startDateTime.slice(11, 16)}
                   </div>
                 </div>
                 <div className="p-2 text-center bg-yellow-600 mr-2 h-1/3 w-10 my-auto">
