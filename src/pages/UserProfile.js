@@ -7,14 +7,21 @@ import axios from "axios";
 export const UserProfile = () => {
   const [searchToggle, setSearchToggle] = useState(false);
   const { user, token } = useContext(BranchContext);
-  const { myParty, joinParty, setMemberId, setStatus, setPartyId } =
-    useFetchUserProfile({ token });
+  const {
+    myParty,
+    joinParty,
+    setMemberId,
+    setStatus,
+    setPartyId,
+    setConfirmDel,
+  } = useFetchUserProfile({ token });
   const [search, setSearch] = useState();
   const [searchDatas, setSearchDatas] = useState([]);
   const [shops, setShops] = useState([]);
 
-  console.log("token userProfile:", token);
+  // console.log("token userProfile:", token);
   console.log("user :", user);
+  // console.log("test :", myParty);
 
   const getShops = async () => {
     const result = await axios.post(
@@ -29,13 +36,13 @@ export const UserProfile = () => {
   }, []); //empty dependency [] as only render once
 
   return (
-    <div className=" bg-background md:h-screen w-full p-5 mt-14">
+    <div className=" bg-background md:h-screen lg:h-auto w-full p-5 mt-14">
       <div className="mb-5">
         <Profile user={user} />
       </div>
-      <div className="my-5 flex justify-end">
+      <div className="my-4 flex justify-end">
         <button
-          className="bg-[#B1454A] text-white rounded-md p-1"
+          className="bg-[#B1454A] text-white rounded-full p-3"
           onClick={() => setSearchToggle(true)}
         >
           สร้างปาร์ตี้ !
@@ -48,6 +55,7 @@ export const UserProfile = () => {
             setMemberId={setMemberId}
             setStatus={setStatus}
             setPartyId={setPartyId}
+            setConfirmDel={setConfirmDel}
           />
         </div>
         <div className="md:w-6/12">

@@ -71,13 +71,11 @@ const NavBarLoggedIn = () => {
       <div className="w-full fixed top-0 z-50">
         <nav className="bg-[#B1454A] shadow-lg md:flex md:items-center md:justify-between p-1">
           <div className="md:flex">
-            <div className="text-[#F5F5F5] text-3xl -mt-1 float-left font-bold hidden md:block">
-              <MdOutlineFoodBank />
-            </div>
-            <div className="align-left font-bold text-[#F5F5F5] hidden md:block">
-              SHABUDULE
-            </div>
-
+            <Link to="/shabu/home">
+              <div className="align-left font-bold text-[#F5F5F5] hidden md:block text-2xl ml-10">
+                SHABUDULE
+              </div>
+            </Link>
             <div>
               <div className="flex">
                 <IconButton
@@ -91,12 +89,11 @@ const NavBarLoggedIn = () => {
                   <GiHamburgerMenu />
                 </IconButton>
                 {/* <div className="flex"> */}
-                <h1 className="text-[#F5F5F5] text-4xl mt-1 float-left ml-2 font-bold md:hidden">
-                  <MdOutlineFoodBank />
-                </h1>
-                <h1 className="ml-1 font-bold text-[#F5F5F5] p-2 md:hidden text-lg">
-                  SHABUDULE
-                </h1>
+                <Link to="/shabu/home">
+                  <h1 className="ml-1 mt-1 font-bold text-[#F5F5F5] p-2 md:hidden text-xl">
+                    SHABUDULE
+                  </h1>
+                </Link>
                 {/* </div> */}
 
                 {/* <button
@@ -124,27 +121,16 @@ const NavBarLoggedIn = () => {
 
             {toggleProfilePopup && (
               <Fade in={toggleProfilePopup}>
-                <div className="absolute md:right-7 w-full bg-white rounded-b-md md:w-40 shadow-lg py-2 z-10 left-0">
+                <div className="absolute w-full bg-white rounded-b-md md:w-1/3 shadow-lg py-2 z-10 right-0 md:mt-12 md:mx-6 md:px-10">
                   <Link to="/shabu/userprofile">
                     <Button
                       className="text-base font-bold text-neutral-800 hover:bg-[#B1454A] button w-full hover:text-[#F5F5F5]  px-4 py-2 flex items-center justify-center"
                       onClick={() => setToggleProfilePopup(false)}
                     >
-                      <div className="mr-2 md:w-1/4 font-bold text-xl">
+                      <div className="mr-2 ml-1 font-bold text-xl">
                         <CgProfile />
                       </div>
-                      <div className="md:w-3/4">YOUR Profile</div>
-                    </Button>
-                  </Link>
-                  <Link to="/shabu/edituserprofile">
-                    <Button
-                      className="text-base font-bold text-neutral-800 hover:bg-[#B1454A] button w-full hover:text-[#F5F5F5]  px-4 py-2 flex items-center justify-center"
-                      onClick={() => setToggleProfilePopup(false)}
-                    >
-                      <div className="mr-2 md:w-1/4 font-bold text-xl">
-                        <CgProfile />
-                      </div>
-                      <div className="md:w-3/4">Edit Profile</div>
+                      <div className="">Profile</div>
                     </Button>
                   </Link>
                   <Link to="/shabu/Home">
@@ -152,10 +138,10 @@ const NavBarLoggedIn = () => {
                       className="text-base font-bold text-neutral-800 hover:bg-[#B1454A] button w-full hover:text-[#F5F5F5]  py-2 flex items-center justify-center"
                       onClick={loggedOut}
                     >
-                      <div className=" md:ml-3 md:w-1/4 font-bold  text-xl">
+                      <div className=" md:ml-3 font-bold  text-xl">
                         <MdOutlineLogout />
                       </div>
-                      <div className="md:w-3/4">Log Out</div>
+                      <div className="">Log Out</div>
                     </Button>
                   </Link>
                 </div>

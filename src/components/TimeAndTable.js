@@ -14,12 +14,15 @@ export const TimeAndTable = ({
   setTableId,
   time,
   setTime,
-  setButtonClicked,
+  fillOutToggle,
+  setFillOutToggle,
+  createParty,
+  warningToggle,
+  setWarningToggle,
 }) => {
-  console.log("test2 :", tableAndTime);
+  // console.log("test2 :", tableAndTime);
 
   const [confirmToggle, setConfirmToggle] = useState(false);
-  const [fillOutToggle, setFillOutToggle] = useState(false);
   const [selectTime4Toggle, setSelectTime4Toggle] = useState(
     [...Array(tableAndTime?.length)].map(() => false)
   );
@@ -57,32 +60,55 @@ export const TimeAndTable = ({
 
   return (
     <div>
+      {warningToggle === true && (
+        <div className="w-full h-screen left-0 top-0 z-50 fixed flex bg-gray-500/30 backdrop-blur-sm">
+          <div className="flex flex-col m-auto bg-background p-5 w-4/5 rounded-md">
+            <div className="mb-4 text-center">
+              <p className="font-bold text-xl">
+                คุณได้จองเวลานี้ไปแล้ว กรุณาเลือกเวลาใหม่
+              </p>
+            </div>
+            <div className="flex justify-center">
+              <button
+                className="bg-[#B1454A] text-white rounded-md p-1 mr-2 w-3/12 md:w-2/12"
+                onClick={() => {
+                  setTime();
+                  setWarningToggle(false);
+                }}
+              >
+                ปิด
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {fillOutToggle && (
         <div className="w-full h-screen left-0 top-0 z-50 fixed flex bg-gray-500/30 backdrop-blur-sm">
           <div className="flex flex-col m-auto bg-background p-5 w-4/5 rounded-md">
             <div className="mb-4 text-center">
-              <p className="font-bold">กรอกข้อมูลสำหรับสร้าง Party!</p>
-              <div className="text-left text-sm mt-5">
+              <p className="font-bold text-xl">กรุณากรอกรายละเอียด</p>
+              <div className="text-left text-lg mt-5">
                 <form className="space-y-2">
-                  <p>ชื่อ Party : </p>
+                  <p className="font-bold">Party Name : </p>
                   <input
                     type="text"
-                    placeholder="party name..."
+                    placeholder="Party name..."
                     name="party"
                     maxLength="30"
-                    className="border-2 placeholder:text-slate-400 bg-white rounded-md pl-2 w-full"
+                    className="border-2 placeholder:text-slate-400 bg-white rounded-md pl-2 w-full py-2"
                     onChange={(e) => setPartyName(e.target.value)}
                   />
-                  <p>description : </p>
+                  <p className="font-bold">Details : </p>
                   <textarea
                     name="description"
-                    placeholder="description..."
-                    className="border-2 placeholder:text-slate-400 bg-white rounded-md pl-2 w-full"
+                    placeholder="Description..."
+                    className="border-2 placeholder:text-slate-400 bg-white rounded-md pl-2 w-full py-2"
                     onChange={(e) => setDesc(e.target.value)}
                   />
-                  <p>ประเภท : </p>
-                  <div className="flex justify-between">
-                    <div className="w-6/12 flex space-x-2">
+                  <p className="font-bold">Type : </p>
+                  <div className="flex">
+                    <div className="w-6/12 flex space-x-2 justify-center">
                       <input
                         type="radio"
                         name="type"
@@ -93,7 +119,7 @@ export const TimeAndTable = ({
                       />
                       <label htmlFor="public">Public Party</label>
                     </div>
-                    <div className="w-6/12 flex space-x-2">
+                    <div className="w-6/12 flex space-x-2 justify-center">
                       <input
                         type="radio"
                         name="type"
@@ -108,21 +134,21 @@ export const TimeAndTable = ({
                 </form>
               </div>
             </div>
-            <div className="flex justify-between ">
+            <div className="flex justify-center space-x-6">
               <button
-                className="bg-[#B1454A] text-white text-xs rounded-md p-1 mr-2"
+                className="bg-[#B1454A] text-white rounded-md p-1 mr-2 w-3/12 md:w-2/12"
                 onClick={() => setFillOutToggle(false)}
               >
-                decline
+                Decline
               </button>
               <button
-                className="bg-[#B1454A] text-white text-xs rounded-md p-1"
+                className="bg-[#B1454A] text-white rounded-md p-1  w-3/12 md:w-2/12"
                 onClick={() => {
                   setFillOutToggle(false);
                   setConfirmToggle(true);
                 }}
               >
-                accept
+                Accept
               </button>
             </div>
           </div>
@@ -133,33 +159,33 @@ export const TimeAndTable = ({
         <div className="w-full h-screen left-0 top-0 fixed flex bg-gray-500/30 backdrop-blur-sm">
           <div className="flex flex-col m-auto bg-background p-5 w-4/5 rounded-md">
             <div className="mb-4 text-center">
-              <p className="font-bold">CONFIRMATION</p>
-              <div className="text-left text-sm mt-5 space-y-2">
-                <p>party : {partyName}</p>
-                <p>description : {desc}</p>
-                <p>ประเภท : {partyType}</p>
+              <p className="font-bold text-xl">CONFIRMATION</p>
+              <div className="text-left text-lg mt-5 space-y-2">
+                <p>Party Name : {partyName}</p>
+                <p>Details : {desc}</p>
+                <p>Type : {partyType}</p>
                 <p>
-                  ร้าน : {branch?.shabuShop.name} : {branch?.branchName}
+                  Shabu Branch : {branch?.shabuShop.name} : {branch?.branchName}
                 </p>
                 <p>
-                  เวลา : {time}:00 - {time + 1}:00 จำนวน {quantityTables}{" "}
+                  Date&Time : {time}:00 - {time + 1}:00 จำนวน {quantityTables}{" "}
                   ที่นั่ง
                 </p>
-                <p>สร้างโดย : {user[0]?.name} </p>
+                <p>Create By : {user[0]?.name} </p>
               </div>
             </div>
-            <div className="flex justify-between ">
+            <div className="flex justify-center space-x-6">
               <button
-                className="bg-[#B1454A] text-white text-xs rounded-md p-1 mr-2"
+                className="bg-[#B1454A] text-white rounded-md p-1 mr-2 w-3/12 md:w-2/12"
                 onClick={() => setConfirmToggle(false)}
               >
                 decline
               </button>
               <button
-                className="bg-[#B1454A] text-white text-xs rounded-md p-1"
+                className="bg-[#B1454A] text-white rounded-md p-1 mr-2 w-3/12 md:w-2/12"
                 onClick={() => {
+                  createParty();
                   setConfirmToggle(false);
-                  setButtonClicked(true);
                 }}
               >
                 accept
@@ -171,7 +197,7 @@ export const TimeAndTable = ({
 
       <div className="bg-white rounded-md">
         <div className="p-3">
-          <p>AVAILALE TIME</p>
+          <p className="font-bold text-xl">AVAILABLE TIME</p>
 
           <div className="mt-10">
             <p>โต๊ะ 4 ที่นั่ง</p>
@@ -199,7 +225,6 @@ export const TimeAndTable = ({
                           key={i}
                           className="border mx-5 py-1 shadow-sm"
                           onClick={() => {
-                            setFillOutToggle(true);
                             setTime(slot);
                           }}
                         >

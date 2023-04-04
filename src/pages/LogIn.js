@@ -18,6 +18,17 @@ const LogIn = () => {
 
   const auth = getAuth(fire);
 
+  const loggedOut = () => {
+    localStorage.removeItem("SavedToken");
+    setLoggedIn(false);
+  };
+
+  // const runLogoutTimer = (dispatch, timer) => {
+  //   setTimeout(() => {
+  //     dispatch(loggedOut());
+  //   }, 5000);
+  // };
+
   const logInPage = (e) => {
     e.preventDefault();
     // console.log("auth", auth);
@@ -40,7 +51,8 @@ const LogIn = () => {
           setToken(accessToken);
           console.log(u);
           console.log("accessToken", u.user.accessToken);
-          localStorage.setItem("SavedToken", "Bearer " + u.user.accessToken); //save token is the key, bearer is the type of token used, u.user.token is athe value
+          localStorage.setItem("SavedToken", u.user.accessToken); //save token is the key, bearer is the type of token used, u.user.token is athe value
+          // runLogoutTimer(dispatch, u.data.timer * 1000);
           axios.defaults.headers.common["Authorization"] =
             "Bearer " + u.user.accessToken; //sets a default value for the "Authorization" header for all Axios HTTP requests.
           setLoggedIn(true);
@@ -87,11 +99,11 @@ const LogIn = () => {
   return (
     <>
       <div className="bg-neutral-300 h-screen flex justify-center">
-        <div className="bg-[#F5F5F5] m-auto md:w-1/2 w-full mx-2 border-4 border-[#B1454A] rounded-lg mt-[70px]">
+        <div className="bg-[#F5F5F5] md:w-1/2 w-full mx-2 border-4 border-[#B1454A] rounded-lg mt-20 h-1/2">
           <h1 className="text-center p-4 text-xl font-bold">Log In</h1>
           <div className="py-2">
             <div className="flex">
-              <h1 className="text-[#F5F5F5] ml-1 md:ml-3 lg:ml-5">.</h1>
+              <h1 className="text-[#F5F5F5] ml-1 md:ml-3 lg:ml-5 mb-2">.</h1>
               <h1 className="lg:ml-12 ml-8 md:ml-8">Email</h1>
             </div>
             <div className="text-center">
@@ -114,7 +126,7 @@ const LogIn = () => {
           </div>
           <div className="py-2">
             <div className="flex">
-              <h1 className="text-[#F5F5F5] ml-1 md:ml-3 lg:ml-5">.</h1>
+              <h1 className="text-[#F5F5F5] ml-1 md:ml-3 lg:ml-5 mb-2">.</h1>
               <h1 className="lg:ml-12 ml-8 md:ml-8">Password</h1>
             </div>
             <div className="text-center">
@@ -142,8 +154,8 @@ const LogIn = () => {
               {passwordError}
             </div>
             <div className="flex">
-              <h1 className="text-[#F5F5F5] ml-1 md:ml-3 lg:ml-5">.</h1>
-              <button className="lg:ml-12 ml-4 md:ml-8 text-xs mt-2 underline-offset-0 underline button hover:text-sky-500 active:text-sky-800 ">
+              <h1 className="text-[#F5F5F5] md:ml-3 lg:ml-5">.</h1>
+              <button className="lg:ml-12 md:ml-8 ml-10 text-xs mt-2 underline-offset-0 underline button hover:text-sky-500 active:text-sky-800 ">
                 Forgot Password?
               </button>
             </div>

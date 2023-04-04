@@ -2,12 +2,13 @@ import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { BranchContext } from "../App";
 
-export const useFetchUserProfile = ({ token }) => {
+export const useFetchUserProfile = () => {
   const [myParty, setMyParty] = useState();
   const [joinParty, setJoinParty] = useState();
   const [memberId, setMemberId] = useState();
   const [status, setStatus] = useState("");
   const [partyId, setPartyId] = useState();
+  const [confirmDel, setConfirmDel] = useState(false);
 
   console.log("status :", status);
   console.log("memId :", memberId);
@@ -15,7 +16,9 @@ export const useFetchUserProfile = ({ token }) => {
 
   const { setUser } = useContext(BranchContext);
 
-  const idToken = token;
+  const savedToken = localStorage.getItem("SavedToken");
+
+  const idToken = savedToken;
 
   useEffect(() => {
     const getUserProfile = async () => {
@@ -89,13 +92,41 @@ export const useFetchUserProfile = ({ token }) => {
       }
     };
 
+    const updateStatusParty = async () => {
+      try {
+        const result = await axios.post(
+          "https://shabudule-api.vercel.app/function/updatePartyStatusAuthShabudule",
+          {
+            idToken: idToken,
+            partyId: partyId,
+          }
+        );
+        console.log("update party status:", result.data);
+      } catch (err) {
+        console.error("Failed to update status party:", err);
+      }
+    };
+
     getUserProfile();
     getJoinParty();
     getMyParty();
     if (memberId && status && partyId) {
       updateStatusMembers();
+      getMyParty();
     }
-  }, [idToken, memberId, status, partyId, setUser]);
+    if (confirmDel === true) {
+      updateStatusParty();
+      setConfirmDel(false);
+      getMyParty();
+    }
+  }, [idToken, memberId, status, partyId, setUser, confirmDel]);
 
-  return { myParty, joinParty, setMemberId, setStatus, setPartyId };
+  return {
+    myParty,
+    joinParty,
+    setMemberId,
+    setStatus,
+    setPartyId,
+    setConfirmDel,
+  };
 };
