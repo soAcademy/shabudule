@@ -23,6 +23,8 @@ export const Reservation = () => {
   const [partyId, setPartyId] = useState();
   const [fillOutToggle, setFillOutToggle] = useState(false);
   const [warningToggle, setWarningToggle] = useState(false);
+  const [bookingToggle, setBookingToggle] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   console.log("Branch ID", branchId);
   console.log("createParty By Date", createPartyByDate);
@@ -85,6 +87,7 @@ export const Reservation = () => {
   }, [time]);
 
   const createParty = () => {
+    setIsLoading(true);
     axios({
       method: "post",
       url: "https://shabudule-api.vercel.app/function/createPartyAuthShabudule",
@@ -116,8 +119,12 @@ export const Reservation = () => {
             }
           );
           console.log("addOwner :", result.data);
+          setIsLoading(false);
         } catch (e) {
           console.log("Error add owner to party:", e);
+        } finally {
+          setBookingToggle(true);
+          setTime();
         }
       };
       addOwnerParty();
@@ -158,6 +165,9 @@ export const Reservation = () => {
             createParty={createParty}
             warningToggle={warningToggle}
             setWarningToggle={setWarningToggle}
+            bookingToggle={bookingToggle}
+            setBookingToggle={setBookingToggle}
+            isLoading={isLoading}
           />
         </div>
       </div>

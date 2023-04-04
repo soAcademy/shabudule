@@ -19,6 +19,9 @@ export const TimeAndTable = ({
   createParty,
   warningToggle,
   setWarningToggle,
+  bookingToggle,
+  setBookingToggle,
+  isLoading,
 }) => {
   // console.log("test2 :", tableAndTime);
 
@@ -77,6 +80,36 @@ export const TimeAndTable = ({
                 }}
               >
                 ปิด
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isLoading && (
+        <div className="w-full h-screen left-0 top-0 z-50 fixed flex bg-gray-500/30 backdrop-blur-sm">
+          <div className="flex flex-col m-auto bg-background p-5 w-4/5 rounded-md">
+            <div className="mb-4 text-center">
+              <p className="font-bold text-xl">Loading...</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {bookingToggle === true && (
+        <div className="w-full h-screen left-0 top-0 z-50 fixed flex bg-gray-500/30 backdrop-blur-sm">
+          <div className="flex flex-col m-auto bg-background p-5 w-4/5 rounded-md">
+            <div className="mb-4 text-center">
+              <p className="font-bold text-xl">Booking Completed</p>
+            </div>
+            <div className="flex justify-center">
+              <button
+                className="bg-[#B1454A] text-white rounded-md p-1 mr-2 w-3/12 md:w-2/12"
+                onClick={() => {
+                  setBookingToggle(false);
+                }}
+              >
+                Close
               </button>
             </div>
           </div>
