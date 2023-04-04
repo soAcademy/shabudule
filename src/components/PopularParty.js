@@ -1,14 +1,29 @@
-import React from "react";
+import React, { useContext } from "react";
+import { BranchContext } from "../App";
 
 export const PopularParty = ({
   parties,
   setCurrentParty,
   setTogglePartyPopup,
 }) => {
+  const { user } = useContext(BranchContext);
+
   const handlePartyClick = (party) => {
     setCurrentParty(party);
     setTogglePartyPopup(true);
   };
+
+  const mapMailUser = user?.map((r) => r.userFirebaseEmail);
+
+  // console.log("user", user);
+  // console.log("mail", mapMailUser);
+
+  // console.log(
+  //   "test",
+  //   parties
+  //     ?.filter((r) => r.isFull === false && r.active === true)
+  //     .filter((k) => k.userFirebaseEmail !== mapMailUser[0])
+  // );
 
   const acceptedMembersCount = (party) =>
     party?.partyMembers?.filter((member) => member.status === "accept").length;
@@ -17,8 +32,8 @@ export const PopularParty = ({
     <>
       <div className="flex m-2 overflow-auto cursor-pointer">
         {parties
-          ?.sort((a, b) => b.partyMembers - a.partyMembers)
-          .filter((r) => r.isFull === false)
+          ?.filter((r) => r.isFull === false && r.active === true)
+          .filter((k) => k.userFirebaseEmail !== mapMailUser[0])
           .slice(0, 10)
           .map((party) => {
             // console.log("party.name", party.name);

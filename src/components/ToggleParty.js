@@ -15,7 +15,7 @@ export const ToggleParty = ({
   const savedToken = localStorage.getItem("SavedToken");
   const [toggleConfirmationPopup, setToggleConfirmationPopup] = useState(false);
   const { token } = useContext(BranchContext);
-
+  
   // console.log("savedToken", savedToken);
 
   const addPartyMember = async (token, partyId, savedToken) => {
