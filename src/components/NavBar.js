@@ -1,5 +1,5 @@
 import { GiHamburgerMenu } from "react-icons/gi";
-import { MdOutlineFoodBank } from "react-icons/md";
+// import { MdOutlineFoodBank } from "react-icons/md";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Box from "@mui/material/Box";
@@ -11,7 +11,7 @@ import { MenuItem } from "@mui/material";
 const NavBar = () => {
   const [toggle, setToggle] = useState(false);
   const routes = [
-    { name: "Shabu Restaurant", url: "shabu/store" },
+    { name: "Restaurant", url: "shabu/store" },
     { name: "Party", url: "shabu/party" },
     { name: "Register", url: "shabu/register" },
     { name: "Log In", url: "shabu/login" },
@@ -26,9 +26,11 @@ const NavBar = () => {
     <>
       <div className="w-full fixed top-0 z-50">
         <nav className="bg-[#B1454A] shadow-lg md:flex md:items-center md:justify-between p-1">
-          <h1 className="align-left font-bold text-[#F5F5F5] hidden md:block text-2xl ml-10">
-            SHABUDULE
-          </h1>
+          <Link to="shabu/home">
+            <h1 className="align-left font-bold text-[#F5F5F5] hidden md:block text-2xl ml-10">
+              SHABUDULE
+            </h1>
+          </Link>
 
           <div>
             <div className="flex">

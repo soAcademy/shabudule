@@ -39,15 +39,6 @@ const ShopBranch = () => {
 
         <div className="lg:flex lg:justify-evenly lg:w-full">
           <div className="lg:w-1/2">
-            <div className="mt-10 lg:w-full">
-              <Calendar
-                today={today}
-                setToday={setToday}
-                selectDate={selectDate}
-                setSelectDate={setSelectDate}
-                currentDate={currentDate}
-              />
-            </div>
             <div className="flex justify-end">
               <button
                 className="bg-primary text-white rounded-md p-2 font-semibold text-sm mt-4 mr-4 md:text-xl"
@@ -58,9 +49,18 @@ const ShopBranch = () => {
                 สร้างปาร์ตี้ !
               </button>
             </div>
+            <div className="mt-10 lg:w-full">
+              <MapLocation branch={branch} />
+            </div>
           </div>
-          <div className="mt-10 lg:w-1/2 lg:mx-4">
-            <MapLocation branch={branch} />
+          <div className="mt-10 lg:w-1/2 lg:mx-4 lg:mt-24">
+            <Calendar
+              today={today}
+              setToday={setToday}
+              selectDate={selectDate}
+              setSelectDate={setSelectDate}
+              currentDate={currentDate}
+            />
           </div>
         </div>
       </div>

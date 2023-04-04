@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { BranchContext } from "../App";
 
-export const useFetchUserProfile = () => {
+export const useFetchUserProfile = ({ token }) => {
   const [myParty, setMyParty] = useState();
   const [joinParty, setJoinParty] = useState();
   const [memberId, setMemberId] = useState();
@@ -19,6 +19,8 @@ export const useFetchUserProfile = () => {
   const savedToken = localStorage.getItem("SavedToken");
 
   const idToken = savedToken;
+
+  console.log("idToken :", idToken);
 
   useEffect(() => {
     const getUserProfile = async () => {

@@ -150,7 +150,9 @@ const PartyList = () => {
                     {party.table.branch.branchName}
                   </div>
                   <div className="p-2 text-xs text-white text-center rounded flex justify-center items-center md:w-1/3 md:text-lg">
-                    Party Start : {party.startDateTime.slice(9, 10)}/{party.startDateTime.slice(6, 7)}/{party.startDateTime.slice(2, 4)},{" "}
+                    Party Start : {party.startDateTime.slice(9, 10)}/
+                    {party.startDateTime.slice(6, 7)}/
+                    {party.startDateTime.slice(2, 4)},{" "}
                     {party.startDateTime.slice(11, 16)}
                   </div>
                 </div>
@@ -188,14 +190,10 @@ const PartyList = () => {
                           <div className="flex">
                             <div className="w-1/3">Date&Time:</div>
                             <div className="w-2/3">
-                              {new Date(party.startDateTime).toLocaleString(
-                                "en-US",
-                                {
-                                  dateStyle: "short",
-                                  timeStyle: "short",
-                                  hour12: true,
-                                }
-                              )}
+                              {party.startDateTime.slice(9, 10)}/
+                              {party.startDateTime.slice(6, 7)}/
+                              {party.startDateTime.slice(2, 4)},{" "}
+                              {party.startDateTime.slice(11, 16)}
                             </div>
                           </div>
                           <div className="flex">

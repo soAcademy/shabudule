@@ -86,7 +86,7 @@ const Home = () => {
           <div className="text-center text-[#B1454A] font-bold md:text-2xl">
             ร้านชาบูที่ร่วมกับเรา
           </div>
-          <div className="flex p-2 justify-center">
+          <div className="grid grid-cols-3 p-2 justify-items-center lg:flex lg:justify-center">
             {shops?.map((shop) => (
               <img
                 src={shop?.shopImage}
