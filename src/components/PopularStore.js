@@ -13,7 +13,7 @@ export const PopularStore = ({ shops }) => {
   };
 
   const shuffledShops = shuffleArray(shops);
-  console.log("shuffleArrayShops", shuffleArray(shops));
+  // console.log("shuffleArrayShops", shuffleArray(shops));
 
   let combinations = [];
 
