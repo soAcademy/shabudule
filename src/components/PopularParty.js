@@ -24,7 +24,7 @@ export const PopularParty = ({
             return (
               <div key={party.id}>
                 <div
-                  className="bg-neutral-200 h-52 w-44 rounded-lg button m-2 relative "
+                  className="bg-neutral-200 h-52 w-44 rounded-lg p-2 button m-2 relative "
                   onClick={() => handlePartyClick(party)}
                 >
                   <img
@@ -34,16 +34,14 @@ export const PopularParty = ({
                   />
                   <div className="flex w-full">
                     <div>
-                      <div className=" m-1 font-bold md:text-sm w-5/6 pt-2">
+                      <div className=" m-1 font-bold text-sm w-5/6 pt-2">
                         {party.name}
                       </div>
                       <div className="text-xs m-1">
-                        Date:{" "}
-                        {new Date(party.startDateTime).toLocaleString("en-US", {
-                          dateStyle: "short",
-                          timeStyle: "short",
-                          hour12: true,
-                        })}
+                        Date: {party.startDateTime.slice(9, 10)}/
+                        {party.startDateTime.slice(6, 7)}/
+                        {party.startDateTime.slice(2, 4)},{" "}
+                        {party.startDateTime.slice(11, 16)}
                       </div>
                     </div>
                     <div className="mx-1 font-bold my-auto bg-white rounded p-1">

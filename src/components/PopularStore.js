@@ -45,10 +45,10 @@ export const PopularStore = ({ shops }) => {
             <Link to="/shabu/shopBranch">
               <div
                 key={`${shop.id}-${branch.id}`}
-                className="bg-neutral-200 h-48 w-44 rounded-lg m-2"
+                className="bg-neutral-200 h-48 w-44 rounded-lg m-2 p-2"
                 onClick={() => {
                   setBranchId(branch.id);
-                  console.log(branch.id);
+                  // console.log(branch.id);
                 }}
               >
                 <img
@@ -60,11 +60,11 @@ export const PopularStore = ({ shops }) => {
                   <div className="m-2 font-bold md:text-sm text-center h-1/4">
                     {shop.name} {branch.branchName}
                   </div>
-                  <div className="">
-                    <button className="text-xs font-bold ml-1 button hover:text-[#B1454A] active:text-[#c95f64] h-1/3 mt-4">
+                  {/* <div className="flex justify-end -mt-1">
+                    <button className="text-xs font-bold ml-1 button hover:text-[#B1454A] active:text-[#c95f64] h-1/3">
                       see more details
                     </button>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </Link>
