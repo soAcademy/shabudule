@@ -163,7 +163,7 @@ const PartyList = () => {
               {toggles[index] && (
                 <Fade in={toggles}>
                   <div className="z-10">
-                    <div className="p-2 m-2  bg-neutral-300 rounded-lg">
+                    <div className="p-2 m-2 bg-neutral-300 rounded-lg">
                       <div className="flex">
                         <img
                           src={party.table.branch.shabuShop.shopImage}
