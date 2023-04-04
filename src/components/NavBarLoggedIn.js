@@ -1,29 +1,30 @@
+import React, { useState, useContext } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { MdOutlineFoodBank } from "react-icons/md";
+// import { MdOutlineFoodBank } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 // import { AiOutlineBell } from "react-icons/ai";
 import { HiBell } from "react-icons/hi";
-import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { MdOutlineLogout } from "react-icons/md";
 import IconButton from "@mui/material/IconButton";
 import Fade from "@mui/material/Fade";
 import { MenuItem } from "@mui/material";
 import Button from "@mui/material/Button";
-import { LoggedInNavBarContext } from "../App";
-import { BranchContext } from "../App";
-import axios from "axios";
+import { LoggedInNavBarContext, BranchContext } from "../App";
 // import ProfilePopup from "../components/ProfilePopup";
+import { useFetchUserProfile } from "../hooks";
 
 const NavBarLoggedIn = () => {
   const [toggle, setToggle] = useState(false);
   const [toggleProfilePopup, setToggleProfilePopup] = useState(false);
   const [toggleBellPopup, setToggleBellPopup] = useState(false);
   const { setLoggedIn } = useContext(LoggedInNavBarContext);
-  const { token, user, setUser } = useContext(BranchContext);
+  const { user } = useContext(BranchContext);
+  // const savedToken = localStorage.getItem("SavedToken");
+  const {} = useFetchUserProfile();
 
-  console.log("token nav login :", token);
-  console.log("user nav login :", user);
+  // console.log("token nav login :", token);
+  // console.log("user nav login :", user);
 
   const routes = [
     { name: "Home", url: "shabu/home" },
@@ -31,24 +32,6 @@ const NavBarLoggedIn = () => {
     { name: "Store", url: "shabu/store" },
     { name: "Party", url: "shabu/party" },
   ];
-
-  useEffect(() => {
-    const getUserProfile = async () => {
-      try {
-        const result = await axios.post(
-          "https://shabudule-api.vercel.app/function/getUserProfileAuthShabudule",
-          {
-            idToken: token,
-          }
-        );
-        console.log("user:", result.data);
-        setUser(result.data);
-      } catch (error) {
-        console.error("Failed to fetch user profile:", error);
-      }
-    };
-    getUserProfile();
-  }, [token]);
 
   const loggedOut = () => {
     localStorage.removeItem("SavedToken");

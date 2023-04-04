@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import { LoggedInNavBarContext } from "../App";
+import Button from "@mui/material/Button";
+
+// import { LoggedInNavBarContext } from "../App";
 
 const CreateUserProfile = () => {
   // const [imageFile, setImageFile] = useState(null);
@@ -17,17 +17,17 @@ const CreateUserProfile = () => {
     tel: "",
     bio: "",
   });
-  console.log("formdata", formData);
+  // console.log("formdata", formData);
   const navigate = useNavigate();
 
   const savedToken = localStorage.getItem("SavedToken");
-  console.log("savedToken1", savedToken);
+  // console.log("savedToken1", savedToken);
 
   const createUserDetail = async (idToken, name, tel, bio) => {
-    console.log("accessToken3", idToken);
+    // console.log("accessToken3", idToken);
     try {
       const result = await axios.post(
-        "https://shabudule-api.vercel.app/function/createUserProfileAuthShabudule",
+        "https://shabudule-webapp-api.vercel.app/function/createUserProfileAuthShabudule",
         {
           idToken: idToken,
           name: name,
@@ -36,9 +36,9 @@ const CreateUserProfile = () => {
         },
         { headers: { Authorization: localStorage.getItem("SavedToken") } }
       );
-      console.log("createUserDetail response:", result);
+      // console.log("createUserDetail response:", result.data);
       if (result.status === 200) {
-        console.log("result.data.createProfile:", result.data);
+        // console.log("result.data.createProfile:", result.data);
         return result.data;
       }
     } catch (error) {
@@ -67,7 +67,7 @@ const CreateUserProfile = () => {
   // };
 
   const createProfilePage = async (e) => {
-    console.log("token value2:", savedToken);
+    // console.log("token value2:", savedToken);
     e.preventDefault();
 
     const errors = {};
@@ -84,23 +84,23 @@ const CreateUserProfile = () => {
     setFormErrors(errors);
 
     if (Object.keys(errors).length === 0) {
-      console.log(
-        "createUserProfileAuthShabudule called with params:",
-        savedToken,
-        formData.name,
-        formData.tel,
-        formData.bio
-      );
-      console.log("token value3:", savedToken);
+      // console.log(
+      //   "createUserProfileAuthShabudule called with params:",
+      //   savedToken,
+      //   formData.name,
+      //   formData.tel,
+      //   formData.bio
+      // );
+      // console.log("token value3:", savedToken);
       const { name, tel, bio } = formData;
-      console.log("token value8:", savedToken);
-      console.log("name:", name);
-      console.log("tel:", tel);
-      console.log("bio:", bio);
+      // console.log("token value8:", savedToken);
+      // console.log("name:", name);
+      // console.log("tel:", tel);
+      // console.log("bio:", bio);
       try {
         const result = await createUserDetail(savedToken, name, tel, bio);
-        console.log("token value4:", savedToken);
-        console.log("createUserDetail result:", result);
+        // console.log("token value4:", savedToken);
+        // console.log("createUserDetail result:", result);
       } catch (error) {
         console.log("createUserDetail error:", error);
       }
@@ -209,7 +209,8 @@ const CreateUserProfile = () => {
                 variant="contained"
               >
                 confirm
-              </Button>..
+              </Button>
+              ..
             </div>
           </form>
         </div>

@@ -23,20 +23,20 @@ export const JoinParty = ({ joinParty, user }) => {
 
   const userEmail = user[0]?.userFirebaseEmail;
 
-  console.log("user", userEmail);
+  // console.log("user", userEmail);
   // console.log(
   //   "test filter",
   //   joinParty?.map((r) => r.partyMembers)
   //   // .filter((j) => j.status === "accept" && j.userFirebaseEmail === userEmail)
   // );
 
-  const partyMembers = joinParty?.flatMap((r) => r.partyMembers);
-  const filteredPartyMembers = partyMembers?.filter(
-    (k) => k.userFirebaseEmail === userEmail
-  );
+  // const partyMembers = joinParty?.flatMap((r) => r.partyMembers);
+  // const filteredPartyMembers = partyMembers?.filter(
+  //   (k) => k.userFirebaseEmail === userEmail
+  // );
 
-  console.log("partyMembers", partyMembers);
-  console.log("filteredPartyMembers", filteredPartyMembers);
+  // console.log("partyMembers", partyMembers);
+  // console.log("filteredPartyMembers", filteredPartyMembers);
 
   return (
     <div>

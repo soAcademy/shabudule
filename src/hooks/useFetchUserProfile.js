@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { BranchContext } from "../App";
 
-export const useFetchUserProfile = ({ token }) => {
+export const useFetchUserProfile = () => {
   const [myParty, setMyParty] = useState();
   const [joinParty, setJoinParty] = useState();
   const [memberId, setMemberId] = useState();
@@ -10,9 +10,9 @@ export const useFetchUserProfile = ({ token }) => {
   const [partyId, setPartyId] = useState();
   const [confirmDel, setConfirmDel] = useState(false);
 
-  console.log("status :", status);
-  console.log("memId :", memberId);
-  console.log("partyId :", partyId);
+  // console.log("status :", status);
+  // console.log("memId :", memberId);
+  // console.log("partyId :", partyId);
 
   const { setUser } = useContext(BranchContext);
 
@@ -20,18 +20,18 @@ export const useFetchUserProfile = ({ token }) => {
 
   const idToken = savedToken;
 
-  console.log("idToken :", idToken);
+  // console.log("idToken :", idToken);
 
   useEffect(() => {
     const getUserProfile = async () => {
       try {
         const result = await axios.post(
-          "https://shabudule-api.vercel.app/function/getUserProfileAuthShabudule",
+          "https://shabudule-webapp-api.vercel.app/function/getUserProfileAuthShabudule",
           {
             idToken: idToken,
           }
         );
-        console.log("user:", result.data);
+        // console.log("user:", result.data);
         setUser(result.data);
       } catch (error) {
         console.error("Failed to fetch user profile:", error);
@@ -41,12 +41,12 @@ export const useFetchUserProfile = ({ token }) => {
     const getMyParty = async () => {
       try {
         const result = await axios.post(
-          "https://shabudule-api.vercel.app/function/getMyPartyAuthShabudule",
+          "https://shabudule-webapp-api.vercel.app/function/getMyPartyAuthShabudule",
           {
             idToken: idToken,
           }
         );
-        console.log("getMyParty", result.data);
+        // console.log("getMyParty", result.data);
         setMyParty(result.data);
       } catch (error) {
         console.error("Failed to fetch my party:", error);
@@ -56,12 +56,12 @@ export const useFetchUserProfile = ({ token }) => {
     const getJoinParty = async () => {
       try {
         const result = await axios.post(
-          "https://shabudule-api.vercel.app/function/getMyJoinedPartyAuthShabudule",
+          "https://shabudule-webapp-api.vercel.app/function/getMyJoinedPartyAuthShabudule",
           {
             idToken: idToken,
           }
         );
-        console.log("getJoinParty", result.data);
+        // console.log("getJoinParty", result.data);
         setJoinParty(result.data);
       } catch (error) {
         console.error("Failed to fetch joined party:", error);
@@ -71,22 +71,22 @@ export const useFetchUserProfile = ({ token }) => {
     const updateStatusMembers = async () => {
       try {
         const result = await axios.post(
-          "https://shabudule-api.vercel.app/function/updatePartyMemberStatusAuthShabudule",
+          "https://shabudule-webapp-api.vercel.app/function/updatePartyMemberStatusAuthShabudule",
           {
             idToken: idToken,
             partyMemberId: memberId,
             status: status,
           }
         );
-        console.log("update party :", result.data);
+        // console.log("update party :", result.data);
 
         const checkIsFull = await axios.post(
-          "https://shabudule-api.vercel.app/function/checkIsFullShabudule",
+          "https://shabudule-webapp-api.vercel.app/function/checkIsFullShabudule",
           {
             partyId: partyId,
           }
         );
-        console.log("check Is Full :", checkIsFull.data);
+        // console.log("check Is Full :", checkIsFull.data);
         // Call getMyParty after updating the member status
         getMyParty();
       } catch (error) {
@@ -99,13 +99,13 @@ export const useFetchUserProfile = ({ token }) => {
     const delMemberParty = async () => {
       try {
         const result = await axios.post(
-          "https://shabudule-api.vercel.app/function/updatePartyStatusAuthShabudule",
+          "https://shabudule-webapp-api.vercel.app/function/updatePartyStatusAuthShabudule",
           {
             idToken: idToken,
             partyId: partyId,
           }
         );
-        console.log("update party status:", result.data);
+        // console.log("update party status:", result.data);
         getMyParty();
       } catch (err) {
         console.error("Failed to update status party:", err);

@@ -6,15 +6,15 @@ export const useFetchBranch = () => {
   const { branchId } = useContext(BranchContext);
   const [branch, setBranch] = useState();
 
-  console.log("branchId", branchId);
+  // console.log("branchId", branchId);
 
   useEffect(() => {
     const getBranch = async () => {
       const result = await axios.post(
-        "https://shabudule-api.vercel.app/function/getBranchShabudule",
+        "https://shabudule-webapp-api.vercel.app/function/getBranchShabudule",
         { branchId: branchId }
       );
-      console.log("getBranch", result.data);
+      // console.log("getBranch", result.data);
       setBranch(result.data);
     };
     getBranch();

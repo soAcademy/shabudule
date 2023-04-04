@@ -49,8 +49,8 @@ const LogIn = () => {
         .then((u) => {
           const accessToken = u.user.accessToken; // remove the "Bearer " prefix
           setToken(accessToken);
-          console.log(u);
-          console.log("accessToken", accessToken);
+          // console.log(u);
+          // console.log("accessToken", accessToken);
           localStorage.setItem("SavedToken", accessToken); //save token is the key, bearer is the type of token used, u.user.token is athe value
           // runLogoutTimer(dispatch, u.data.timer * 1000);
           axios.defaults.headers.common["Authorization"] = accessToken; //sets a default value for the "Authorization" header for all Axios HTTP requests.

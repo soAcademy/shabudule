@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
@@ -6,27 +6,27 @@ import { useNavigate } from "react-router-dom";
 
 const EditUserProfile = () => {
   const [name, setName] = useState("");
-  console.log("name", name);
+  // console.log("name", name);
 
   const navigate = useNavigate();
 
   const savedToken = localStorage.getItem("SavedToken");
-  console.log("savedToken", savedToken);
+  // console.log("savedToken", savedToken);
 
   const updateUserName = async (idToken, name) => {
     try {
       const result = await axios.post(
-        "https://shabudule-api.vercel.app/function/updateUserNameAuthShabudule",
+        "https://shabudule-webapp-api.vercel.app/function/updateUserNameAuthShabudule",
         {
           idToken: idToken,
           name: name,
         },
         { headers: { Authorization: localStorage.getItem("SavedToken") } }
       );
-      console.log("editUserDetail response:", result);
+      // console.log("editUserDetail response:", result.data);
       navigate("/shabu/userprofile");
       if (result.status === 200) {
-        console.log("result.data.editProfile:", result.data);
+        // console.log("result.data.editProfile:", result.data);
         return result.data;
       }
     } catch (error) {

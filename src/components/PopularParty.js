@@ -18,6 +18,7 @@ export const PopularParty = ({
       <div className="flex m-2 overflow-auto cursor-pointer">
         {parties
           ?.sort((a, b) => b.partyMembers - a.partyMembers)
+          .filter((r) => r.isFull === false)
           .slice(0, 10)
           .map((party) => {
             // console.log("party.name", party.name);
