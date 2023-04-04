@@ -15,7 +15,7 @@ export const ToggleParty = ({
   const savedToken = localStorage.getItem("SavedToken");
   const [toggleConfirmationPopup, setToggleConfirmationPopup] = useState(false);
   const { token } = useContext(BranchContext);
-  
+
   // console.log("savedToken", savedToken);
 
   const addPartyMember = async (token, partyId, savedToken) => {
@@ -107,10 +107,10 @@ export const ToggleParty = ({
                 <div className="flex">
                   <div className="w-1/3">Date&Time:</div>
                   <div className="w-2/3">
-                    {new Date(currentParty.startDateTime).toLocaleString(
-                      "en-US",
-                      { dateStyle: "short", timeStyle: "short", hour12: true }
-                    )}
+                    {currentParty.startDateTime.slice(9, 10)}/
+                    {currentParty.startDateTime.slice(6, 7)}/
+                    {currentParty.startDateTime.slice(2, 4)},{" "}
+                    {currentParty.startDateTime.slice(11, 16)}
                   </div>
                 </div>
                 <div className="flex">
