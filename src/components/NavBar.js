@@ -49,10 +49,13 @@ const NavBar = () => {
             </div>
             {toggle && (
               <div>
-                {routes?.map((route) => (
+                {routes?.map((route, idx) => (
                   <Link to={route.url} onClick={handleClick}>
                     <Fade in={toggle}>
-                      <MenuItem className=" font-bold text-[#F5F5F5] pl-6 md:hidden hover:bg-[#c95f64] z-50">
+                      <MenuItem
+                        key={idx}
+                        className=" font-bold text-[#F5F5F5] pl-6 md:hidden hover:bg-[#c95f64] z-50"
+                      >
                         {route.name}
                       </MenuItem>
                     </Fade>
@@ -63,9 +66,12 @@ const NavBar = () => {
           </div>
 
           <Box className=" md:flex md:items-center">
-            {routes.map((route) => (
+            {routes.map((route, idx) => (
               <Link to={route.url}>
-                <Button className="text-base font-bold text-[#F5F5F5]  md:mx-6  hidden md:block  hover:bg-[#c95f64] rounded-lg p-3">
+                <Button
+                  key={idx}
+                  className="text-base font-bold text-[#F5F5F5]  md:mx-6  hidden md:block  hover:bg-[#c95f64] rounded-lg p-3"
+                >
                   {route.name}
                 </Button>
               </Link>

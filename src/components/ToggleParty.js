@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
+import { BranchContext } from "../App";
 
 export const ToggleParty = ({
   togglePartyPopUp,
@@ -13,14 +14,17 @@ export const ToggleParty = ({
   const navigate = useNavigate();
   const savedToken = localStorage.getItem("SavedToken");
   const [toggleConfirmationPopup, setToggleConfirmationPopup] = useState(false);
-  console.log("savedToken", savedToken);
-  const addPartyMember = async (idToken, partyId) => {
-    console.log("partyId", partyId);
+  const { token } = useContext(BranchContext);
+
+  // console.log("savedToken", savedToken);
+
+  const addPartyMember = async (token, partyId, savedToken) => {
+    // console.log("partyId", partyId);
     const result = await axios
       .post(
-        "https://shabudule-api.vercel.app/function/addPartyMemberAuthShabudule",
+        "https://shabudule-webapp-api.vercel.app/function/addPartyMemberAuthShabudule",
         {
-          idToken: idToken,
+          idToken: token ?? savedToken,
           partyId: partyId,
         }
       )
@@ -28,11 +32,11 @@ export const ToggleParty = ({
         console.log("Error adding party member:", error.message)
       );
 
-    console.log("result:", result);
+    // console.log("result:", result.data);
   };
 
   const joinParty = () => {
-    if (savedToken) {
+    if (savedToken ?? token) {
       addPartyMember(savedToken, currentParty.id);
       setToggleConfirmationPopup(true);
     } else {

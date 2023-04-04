@@ -1,44 +1,36 @@
 // import { Disclosure, Transition } from "@headlessui/react";
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 // import { BsChevronUp } from "react-icons/bs";
 import axios from "axios";
 import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
+import { useFetchParties, useFetchUserProfile } from "../hooks";
+import { BranchContext } from "../App";
 
 const PartyList = () => {
-  const [parties, setParties] = useState([]);
+  const { parties } = useFetchParties();
+  const {} = useFetchUserProfile();
+  const { token } = useContext(BranchContext);
   const [toggleConfirmationPopup, setToggleConfirmationPopup] = useState(false);
   const [currentParty, setCurrentParty] = useState(null);
+  const navigate = useNavigate();
 
   const handlePartyClick = (party) => {
     setCurrentParty(party);
     setToggleConfirmationPopup(true);
   };
 
-  const getParties = async () => {
-    const result = await axios.post(
-      "https://shabudule-api.vercel.app/function/getPartyShabudule"
-    );
-    console.log("result", result);
-    setParties(result.data);
-  };
-
-  useEffect(() => {
-    getParties();
-  }, []); //empty dependency [] as only render once
-
-  const navigate = useNavigate();
-
   const savedToken = localStorage.getItem("SavedToken");
-  console.log("savedToken", savedToken);
-  const addPartyMember = async (idToken, partyId) => {
-    console.log("partyId", partyId);
+  // console.log("savedToken", savedToken);
+  const addPartyMember = async (token, partyId, savedToken) => {
+    // console.log("partyId", partyId);
+
     const result = await axios
       .post(
-        "https://shabudule-api.vercel.app/function/addPartyMemberAuthShabudule",
+        "https://shabudule-webapp-api.vercel.app/function/addPartyMemberAuthShabudule",
         {
-          idToken: idToken,
+          idToken: token ?? savedToken,
           partyId: partyId,
         }
       )
@@ -46,11 +38,11 @@ const PartyList = () => {
         console.log("Error adding party member:", error.message)
       );
 
-    console.log("result:", result);
+    // console.log("result:", result);
   };
 
   const joinParty = () => {
-    if (savedToken) {
+    if (savedToken ?? token) {
       addPartyMember(savedToken, currentParty.id);
     } else {
       navigate("/shabu/register");
@@ -60,20 +52,20 @@ const PartyList = () => {
   const acceptedMembersCount = (party) =>
     party?.partyMembers?.filter((member) => member.status === "accept").length;
 
-  console.log("acceptedMembersCount", acceptedMembersCount);
+  // console.log("acceptedMembersCount", acceptedMembersCount);
 
   const [toggles, setToggles] = useState(
     [...Array(parties.length)].map(() => false)
   );
   const updateToggleIndex = (index) => {
-    console.log("toggles", toggles);
+    // console.log("toggles", toggles);
     const newToggles = [...toggles];
-    console.log("newToggles1", newToggles);
+    // console.log("newToggles1", newToggles);
     //copy existing toggle
-    console.log("index", index);
+    // console.log("index", index);
     newToggles[index] = !newToggles[index];
     //set toggle to opposite state: if opened:close, if closed: open
-    console.log("newToggles2", newToggles);
+    // console.log("newToggles2", newToggles);
     setToggles(newToggles);
     //update current toggle state as determined by line 71
   };

@@ -1,64 +1,37 @@
-import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { Carousel } from "../components/Carousel";
-import { ToggleParty } from "../components/ToggleParty";
-import { PopularParty } from "../components/PopularParty";
-import { Search } from "../components/Search";
-import { PopularStore } from "../components/PopularStore";
+import {
+  Carousel,
+  ToggleParty,
+  PopularParty,
+  PopularStore,
+  Search,
+} from "../components";
 import { LoggedInNavBarContext } from "../App";
-import { BranchContext } from "../App";
 import Button from "@mui/material/Button";
+import {
+  useFetchParties,
+  useFetchShop,
+  useFetchPromotion,
+  useFetchUserProfile,
+} from "../hooks";
 
 const Home = () => {
   const [togglePartyPopUp, setTogglePartyPopup] = useState(false);
   const [currentParty, setCurrentParty] = useState(null);
-  const [parties, setParties] = useState([]);
-  const [promotion, setPromotion] = useState();
   const [search, setSearch] = useState();
   const [searchDatas, setSearchDatas] = useState([]);
-  const [shops, setShops] = useState([]);
   const { loggedIn } = useContext(LoggedInNavBarContext);
-  const { token } = useContext(BranchContext);
+  // const { token } = useContext(BranchContext);
+  const {} = useFetchUserProfile();
+  const { promotion } = useFetchPromotion();
+  const { parties } = useFetchParties();
+  const { shops } = useFetchShop();
 
-  console.log("token home :", token);
-
-  const getParties = async () => {
-    const result = await axios.post(
-      "https://shabudule-api.vercel.app/function/getPartyShabudule"
-    );
-    // console.log("result", result);
-    setParties(result.data);
-  };
-
-  useEffect(() => {
-    getParties();
-  }, []); //empty dependency [] as only render once
-
-  const getShops = async () => {
-    const result = await axios.post(
-      "https://shabudule-api.vercel.app/function/getShopShabudule"
-    );
-    // console.log("result", result);
-    setShops(result.data);
-  };
-
-  useEffect(() => {
-    getShops();
-  }, []); //empty dependency [] as only render once
+  // console.log("token home :", token);
+  // const savedToken = localStorage.getItem("SavedToken");
 
   // console.log("test", promotion?.length);
-
-  const getPromotion = async () => {
-    const result = await axios.post(
-      "https://shabudule-api.vercel.app/function/getPromotionShabudule"
-    );
-    // console.log("Promotion Api", result.data);
-    setPromotion(result.data);
-  };
-  useEffect(() => {
-    getPromotion();
-  }, []);
 
   return (
     <>

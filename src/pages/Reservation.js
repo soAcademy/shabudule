@@ -3,18 +3,23 @@ import dayjs from "dayjs";
 import axios from "axios";
 import { Calendar, TimeAndTable } from "../components";
 import { BranchContext } from "../App";
-import { useFetchBranch } from "../hooks";
+import { useFetchBranch, useFetchTime } from "../hooks";
 import "dayjs/locale/pt";
 import localeDe from "dayjs/locale/de"; // With a custom alias for the locale object
 
 export const Reservation = () => {
   const currentDate = dayjs();
 
-  const { branchId, createPartyByDate, user } = useContext(BranchContext);
-  const [today, setToday] = useState(currentDate);
+  const savedToken = localStorage.getItem("SavedToken");
   const [selectDate, setSelectDate] = useState(currentDate);
-  const [tableAndTime, setTableAndTime] = useState();
+  const [today, setToday] = useState(currentDate);
+  const { branchId, createPartyByDate, user } = useContext(BranchContext);
   const { branch } = useFetchBranch();
+  const { tableAndTime } = useFetchTime({
+    branchId,
+    createPartyByDate,
+    selectDate,
+  });
   const [partyName, setPartyName] = useState("");
   const [desc, setDesc] = useState("");
   const [partyType, setPartyType] = useState("public");
@@ -26,13 +31,11 @@ export const Reservation = () => {
   const [bookingToggle, setBookingToggle] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log("Branch ID", branchId);
-  console.log("createParty By Date", createPartyByDate);
-  console.log("select date", selectDate.locale(localeDe).format());
+  // console.log("Branch ID", branchId);
+  // console.log("createParty By Date", createPartyByDate);
+  // console.log("select date", selectDate.locale(localeDe).format());
   // console.log("test1 :", tableAndTime);
   // console.log("userToken :", token);
-
-  const savedToken = localStorage.getItem("SavedToken");
 
   const startDate = useCallback(() => {
     const current = selectDate.locale(localeDe).format();
@@ -45,39 +48,20 @@ export const Reservation = () => {
     const send = `${current.slice(0, 11)}${parseInt(time) + 1}:00:00`;
     return send;
   }, [selectDate, time]);
-  console.log("startDate :", startDate());
-  console.log("endDate :", endDate());
+  // console.log("startDate :", startDate());
+  // console.log("endDate :", endDate());
 
   useEffect(() => {
-    const getTimeAndTable = async () => {
-      try {
-        const result = await axios.post(
-          "https://shabudule-api.vercel.app/function/getAvailableSlotsShabudule",
-          {
-            branchId: branchId,
-            date: createPartyByDate ?? selectDate.locale(localeDe).format(),
-          }
-        );
-        console.log("get time and table :", result.data);
-        setTableAndTime(result.data);
-      } catch (error) {
-        console.log("Error fetching time and table:", error);
-      }
-    };
-    getTimeAndTable();
-  }, [branchId, createPartyByDate, selectDate]);
-
-  useEffect(() => {
-    console.log("selected date", selectDate);
+    // console.log("selected date", selectDate);
     axios({
       method: "post",
-      url: "https://shabudule-api.vercel.app/function/getMyBookedTimeAuthShabudule",
+      url: "https://shabudule-webapp-api.vercel.app/function/getMyBookedTimeAuthShabudule",
       data: {
         idToken: savedToken,
         date: startDate(),
       },
     }).then((res) => {
-      console.log("booked time slot", res.data);
+      // console.log("booked time slot", res.data);
       if (res.data.filter((r) => r === time).length > 0) {
         setWarningToggle(true);
       } else {
@@ -90,7 +74,7 @@ export const Reservation = () => {
     setIsLoading(true);
     axios({
       method: "post",
-      url: "https://shabudule-api.vercel.app/function/createPartyAuthShabudule",
+      url: "https://shabudule-webapp-api.vercel.app/function/createPartyAuthShabudule",
       data: {
         idToken: savedToken,
         name: partyName,
@@ -102,7 +86,7 @@ export const Reservation = () => {
       },
     }).then((res) => {
       setPartyId(res.data.id);
-      console.log("createParty resp", res.data);
+      // console.log("createParty resp", res.data);
     });
   };
 
@@ -111,14 +95,14 @@ export const Reservation = () => {
       const addOwnerParty = async () => {
         try {
           const result = await axios.post(
-            "https://shabudule-api.vercel.app/function/addPartyMemberAuthShabudule",
+            "https://shabudule-webapp-api.vercel.app/function/addPartyMemberAuthShabudule",
             {
               idToken: savedToken,
               status: "accept",
               partyId: partyId,
             }
           );
-          console.log("addOwner :", result.data);
+          // console.log("addOwner :", result.data);
           setIsLoading(false);
         } catch (e) {
           console.log("Error add owner to party:", e);

@@ -1,10 +1,9 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { fire } from "../fire";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
 import { LoggedInNavBarContext } from "../App";
 
 const Register = () => {
@@ -39,22 +38,9 @@ const Register = () => {
 
   const auth = getAuth(fire);
 
-  const createUser = async (accessToken) => {
-    console.log("accessToken", accessToken);
-    const result = await axios
-      .post(
-        "https://shabudule-api.vercel.app/function/createUserAuthShabudule",
-        {
-          idToken: accessToken,
-        }
-      )
-      .catch((error) => console.log(error));
-    console.log("result.data.token:", result.data);
-  };
-
   const registerPage = (e) => {
     e.preventDefault();
-    console.log("auth", auth);
+    // console.log("auth", auth);
 
     const isPasswordMatch = checkPassword();
 
@@ -74,11 +60,12 @@ const Register = () => {
     if (Object.keys(errors).length === 0 && isPasswordMatch === true) {
       createUserWithEmailAndPassword(auth, formData.email, formData.password)
         .then((u) => {
-          console.log(u);
-          createUser(u.user.accessToken);
-          console.log("accessTokenu", u.user.accessToken);
-          localStorage.setItem("SavedToken", u.user.accessToken); //save token is the key, bearer is the type of token used, u.user.token is athe value
-          axios.defaults.headers.common["Authorization"] = u.user.accessToken; //sets a default value for the "Authorization" header for all Axios HTTP requests.
+          const accessToken = u.user.accessToken;
+          // console.log(u);
+          createUser(accessToken);
+          // console.log("accessTokenu", u.user.accessToken);
+          localStorage.setItem("SavedToken", accessToken); //save token is the key, bearer is the type of token used, u.user.token is athe value
+          axios.defaults.headers.common["Authorization"] = accessToken; //sets a default value for the "Authorization" header for all Axios HTTP requests.
           setFormData({ email: "", password: "", confirmPassword: "" });
           setLoggedIn(true);
           navigate("/shabu/createuserprofile");
@@ -87,6 +74,19 @@ const Register = () => {
           alert(err);
         });
     }
+  };
+
+  const createUser = async (accessToken) => {
+    // console.log("accessToken", accessToken);
+    const result = await axios
+      .post(
+        "https://shabudule-webapp-api.vercel.app/function/createUserAuthShabudule",
+        {
+          idToken: accessToken,
+        }
+      )
+      .catch((error) => console.log(error));
+    // console.log("result.data.token:", result.data);
   };
 
   const handleInputChange = (event) => {

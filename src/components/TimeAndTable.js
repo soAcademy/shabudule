@@ -37,17 +37,17 @@ export const TimeAndTable = ({
   // console.log("party name :", partyName);
   // console.log("desc :", desc);
   // console.log("type :", partyType);
-  console.log("tableId :", tableId);
+  // console.log("tableId :", tableId);
   // console.log("Time Toggle :", selectTimeToggle);
-  console.log("Time :", time);
-  console.log("branch :", branch);
-  console.log("user :", user);
+  // console.log("Time :", time);
+  // console.log("branch :", branch);
+  // console.log("user :", user);
 
   const table4 = tableAndTime?.filter((r) => r.seatPerDesk === 4);
   const table2 = tableAndTime?.filter((r) => r.seatPerDesk === 2);
 
-  console.log("table4", table4);
-  console.log("table2", table2);
+  // console.log("table4", table4);
+  // console.log("table2", table2);
 
   const openToggleTime4Table = (idx) => {
     const newToggles = [...selectTime4Toggle];

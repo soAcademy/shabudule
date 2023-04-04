@@ -1,35 +1,24 @@
-import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
+import React, { useState, useContext } from "react";
 import { BranchContext } from "../App";
 import { Link } from "react-router-dom";
+import { useFetchShop } from "../hooks";
+
 const StoreList = () => {
-  const [shops, setShops] = useState([]);
+  const { shops } = useFetchShop();
   const { setBranchId } = useContext(BranchContext);
-
-  const getShops = async () => {
-    const result = await axios.post(
-      "https://shabudule-api.vercel.app/function/getShopShabudule"
-    );
-    console.log("result", result);
-    setShops(result.data);
-  };
-
-  useEffect(() => {
-    getShops();
-  }, []); //empty dependency [] as only render once
 
   const [toggles, setToggles] = useState(
     [...Array(shops.length)].map(() => false)
   );
   const updateToggleIndex = (index) => {
-    console.log("toggles", toggles);
+    // console.log("toggles", toggles);
     const newToggles = [...toggles];
-    console.log("newToggles1", newToggles);
+    // console.log("newToggles1", newToggles);
     //copy existing toggle
-    console.log("index", index);
+    // console.log("index", index);
     newToggles[index] = !newToggles[index];
     //set toggle to opposite state: if opened:close, if closed: open
-    console.log("newToggles2", newToggles);
+    // console.log("newToggles2", newToggles);
     setToggles(newToggles);
     //update current toggle state as determined by line 71
   };

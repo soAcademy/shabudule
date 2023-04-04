@@ -2,7 +2,7 @@ import React from "react";
 import dayjs from "dayjs";
 // Locales
 import "dayjs/locale/pt";
-import localeDe from "dayjs/locale/de"; // With a custom alias for the locale object
+// import localeDe from "dayjs/locale/de"; // With a custom alias for the locale object
 
 import cn from "./cn";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";

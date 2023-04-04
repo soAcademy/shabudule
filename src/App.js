@@ -29,7 +29,7 @@ function App() {
 
   useEffect(() => {
     const savedToken = localStorage.getItem("SavedToken");
-    console.log("savedToken2", savedToken);
+    // console.log("savedToken2", savedToken);
     if (savedToken) {  //check if savedToken is truthy
       axios.defaults.headers.common["Authorization"] = savedToken;
       setLoggedIn(true);

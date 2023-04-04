@@ -29,8 +29,8 @@ export const PopularStore = ({ shops }) => {
   }
   // Shuffle the array
   shuffleArray(combinations);
-  console.log("shuffleArrayComm", shuffleArray(combinations));
-  console.log("combinations", combinations);
+  // console.log("shuffleArrayComm", shuffleArray(combinations));
+  // console.log("combinations", combinations);
 
   return (
     <>

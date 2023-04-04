@@ -24,7 +24,7 @@ export const Search = ({
     });
     setSearchDatas(searchDatas);
   }, [search]);
-  console.log("searchDatas", searchDatas);
+  // console.log("searchDatas", searchDatas);
   return (
     <>
       <div className="text-center">
@@ -49,7 +49,7 @@ export const Search = ({
                     to="/shabu/shopBranch"
                     onClick={() => {
                       setBranchId(data.shabuShopBranchs[0].id);
-                      console.log("branchId2", data.shabuShopBranchs[0].id);
+                      // console.log("branchId2", data.shabuShopBranchs[0].id);
                     }} //need [0] as it is an array of objects (check console)
                   >
                     {String(data?.name)

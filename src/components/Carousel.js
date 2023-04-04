@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { RxDotFilled } from "react-icons/rx";
 
-export const Carousel = ({ promotion, slides, auto, interval }) => {
+export const Carousel = ({ promotion, auto, interval }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   // console.log("test 2", promotion?.length);
 

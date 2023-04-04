@@ -1,8 +1,7 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { MyParty, JoinParty, Profile, Search } from "../components";
 import { BranchContext } from "../App";
-import { useFetchUserProfile } from "../hooks";
-import axios from "axios";
+import { useFetchUserProfile, useFetchShop } from "../hooks";
 
 export const UserProfile = () => {
   const [searchToggle, setSearchToggle] = useState(false);
@@ -17,23 +16,11 @@ export const UserProfile = () => {
   } = useFetchUserProfile({ token });
   const [search, setSearch] = useState();
   const [searchDatas, setSearchDatas] = useState([]);
-  const [shops, setShops] = useState([]);
+  const { shops } = useFetchShop();
 
   // console.log("token userProfile:", token);
-  console.log("user :", user);
+  // console.log("user :", user);
   // console.log("test :", myParty);
-
-  const getShops = async () => {
-    const result = await axios.post(
-      "https://shabudule-api.vercel.app/function/getShopShabudule"
-    );
-    // console.log("result", result);
-    setShops(result.data);
-  };
-
-  useEffect(() => {
-    getShops();
-  }, []); //empty dependency [] as only render once
 
   return (
     <div className=" bg-background md:h-screen lg:h-auto w-full p-5 mt-14">

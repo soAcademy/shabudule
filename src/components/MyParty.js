@@ -18,10 +18,10 @@ export const MyParty = ({
     [...Array(myParty?.map((r) => r.partyMembers)?.length)].map(() => false)
   );
 
-  console.log("array :", myParty?.map((r) => r.partyMembers)?.length);
-  console.log("party map false", partyToggle);
-  console.log("memTog map false", memToggle);
-  console.log("delete map false", delToggle);
+  // console.log("array :", myParty?.map((r) => r.partyMembers)?.length);
+  // console.log("party map false", partyToggle);
+  // console.log("memTog map false", memToggle);
+  // console.log("delete map false", delToggle);
 
   const openToggleParty = (idx) => {
     const newToggles = [...partyToggle];
@@ -115,57 +115,6 @@ export const MyParty = ({
                   </div>
                 )}
 
-                {r.active === false && (
-                  <div>
-                    <div
-                      className="relative flex w-full bg-[#F4F4F4] opacity-30 rounded-md p-2 mb-2 space-x-1"
-                      key={idx}
-                    >
-                      <div className="flex w-3/12 items-center justify-center">
-                        <img
-                          src={r.table.branch.shabuShop.shopImage}
-                          alt="picParty"
-                          className="w-[70px] h-[70px] rounded-md"
-                        />
-                      </div>
-                      <div className="flex flex-col w-8/12 space-y-1">
-                        <p className="font-semibold">{r.name}</p>
-                        <div className="bg-white rounded-md font-medium pl-2 text-xs">
-                          {r.table.branch.shabuShop.name} :{" "}
-                          {r.table.branch.branchName}
-                        </div>
-                        <div className="bg-white rounded-md font-medium pl-2 text-xs">
-                          {r.startDateTime.slice(0, 10)},{" "}
-                          {r.startDateTime.slice(11, 16)} -{" "}
-                          {r.endDateTime.slice(11, 16)}
-                        </div>
-                      </div>
-
-                      {r.isFull === false ? (
-                        <div className="flex w-1/12 items-center justify-center">
-                          <p className="font-bold">
-                            {
-                              r.partyMembers.filter(
-                                (r) => r.status === "accept"
-                              ).length
-                            }
-                            /{r.table.seatPerDesk}
-                          </p>
-                        </div>
-                      ) : (
-                        r.isFull === true && (
-                          <div className="flex w-1/12 items-center justify-center">
-                            <p className="font-bold">Full</p>
-                          </div>
-                        )
-                      )}
-                    </div>
-                    <div className="flex justify-end -mt-5">
-                      <p className="font-semibold">ปาร์ตี้ถูกยกเลิก</p>
-                    </div>
-                  </div>
-                )}
-
                 {partyToggle[idx] && (
                   <div className="flex w-full -mt-2 rounded-b-md p-2 border-b-2 border-x-2 mb-2">
                     <div className="w-9/12 mt-3">
@@ -192,8 +141,8 @@ export const MyParty = ({
                 )}
 
                 {memToggle[r.id] && (
-                  <div className="w-full h-screen left-0 top-0 fixed flex bg-gray-500/30 backdrop-blur-sm">
-                    <div className="flex flex-col m-auto bg-[#F4F4F4] p-5 w-4/5 rounded-md">
+                  <div className="w-full h-screen left-0 top-0 fixed flex bg-gray-500/30 backdrop-blur-sm z-20">
+                    <div className="flex flex-col m-auto bg-[#F4F4F4] p-5 w-4/5 rounded-md z-30">
                       <div className="mb-4 flex justify-between">
                         <p className="font-bold">Member</p>
                         <button
@@ -289,9 +238,60 @@ export const MyParty = ({
                   </div>
                 )}
 
+                {r.active === false && (
+                  <div>
+                    <div
+                      className="flex w-full bg-[#F4F4F4] opacity-30 rounded-md p-2 mb-2 space-x-1 z-0"
+                      key={idx}
+                    >
+                      <div className="flex w-3/12 items-center justify-center">
+                        <img
+                          src={r.table.branch.shabuShop.shopImage}
+                          alt="picParty"
+                          className="w-[70px] h-[70px] rounded-md"
+                        />
+                      </div>
+                      <div className="flex flex-col w-8/12 space-y-1">
+                        <p className="font-semibold">{r.name}</p>
+                        <div className="bg-white rounded-md font-medium pl-2 text-xs">
+                          {r.table.branch.shabuShop.name} :{" "}
+                          {r.table.branch.branchName}
+                        </div>
+                        <div className="bg-white rounded-md font-medium pl-2 text-xs">
+                          {r.startDateTime.slice(0, 10)},{" "}
+                          {r.startDateTime.slice(11, 16)} -{" "}
+                          {r.endDateTime.slice(11, 16)}
+                        </div>
+                      </div>
+
+                      {r.isFull === false ? (
+                        <div className="flex w-1/12 items-center justify-center">
+                          <p className="font-bold">
+                            {
+                              r.partyMembers.filter(
+                                (r) => r.status === "accept"
+                              ).length
+                            }
+                            /{r.table.seatPerDesk}
+                          </p>
+                        </div>
+                      ) : (
+                        r.isFull === true && (
+                          <div className="flex w-1/12 items-center justify-center">
+                            <p className="font-bold">Full</p>
+                          </div>
+                        )
+                      )}
+                    </div>
+                    <div className="flex justify-end -mt-5">
+                      <p className="font-semibold">ปาร์ตี้ถูกยกเลิก</p>
+                    </div>
+                  </div>
+                )}
+
                 {delToggle[idx] && (
-                  <div className="w-full h-screen left-0 top-0 fixed flex bg-gray-500/30 backdrop-blur-sm">
-                    <div className="flex flex-col m-auto bg-[#F4F4F4] p-5 w-4/5 rounded-md">
+                  <div className="w-full h-screen left-0 top-0 fixed flex bg-gray-500/30 backdrop-blur-sm z-20">
+                    <div className="flex flex-col m-auto bg-[#F4F4F4] p-5 w-4/5 rounded-md z-30">
                       <div className="mb-4 flex justify-between">
                         <p className="font-bold">Delete Party</p>
                         <button
