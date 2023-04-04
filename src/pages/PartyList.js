@@ -145,7 +145,7 @@ const PartyList = () => {
                   <div className="pb-1 text-center md:w-1/3 md:my-auto md:text-xl">
                     {party.name}
                   </div>
-                  <div className="text-xs text-[#B1454A] bg-[#F5F5F5] rounded  p-2 flex justify-center items-center text-center md:w-1/3 md:text-lg">
+                  <div className="text-xs text-[#B1454A] bg-[#F5F5F5] rounded mx-2 p-2 flex justify-center items-center text-center md:w-1/3 md:text-lg">
                     {party.table.branch.shabuShop.name}{" "}
                     {party.table.branch.branchName}
                   </div>
@@ -156,14 +156,14 @@ const PartyList = () => {
                     {party.startDateTime.slice(11, 16)}
                   </div>
                 </div>
-                <div className="p-2 text-center bg-yellow-600 mr-2 h-1/3 w-10 my-auto">
+                <div className="p-2 text-center bg-yellow-600 mx-2 h-1/3 w-10 my-auto rounded-md">
                   {acceptedMembersCount(party)}/{party.table.seatPerDesk}
                 </div>
               </div>
               {toggles[index] && (
                 <Fade in={toggles}>
                   <div className="z-10">
-                    <div className="p-2 m-2 mt-0 bg-neutral-300 rounded-lg">
+                    <div className="p-2 m-2  bg-neutral-300 rounded-lg">
                       <div className="flex">
                         <img
                           src={party.table.branch.shabuShop.shopImage}
