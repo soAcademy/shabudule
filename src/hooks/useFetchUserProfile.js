@@ -88,13 +88,15 @@ export const useFetchUserProfile = ({ token }) => {
         );
         console.log("check Is Full :", checkIsFull.data);
         // Call getMyParty after updating the member status
-        setMyParty(getMyParty);
+        getMyParty();
       } catch (error) {
         console.log("Error updating party member status", error);
+      } finally {
+        getMyParty();
       }
     };
 
-    const updateStatusParty = async () => {
+    const delMemberParty = async () => {
       try {
         const result = await axios.post(
           "https://shabudule-api.vercel.app/function/updatePartyStatusAuthShabudule",
@@ -104,8 +106,11 @@ export const useFetchUserProfile = ({ token }) => {
           }
         );
         console.log("update party status:", result.data);
+        getMyParty();
       } catch (err) {
         console.error("Failed to update status party:", err);
+      } finally {
+        getMyParty();
       }
     };
 
@@ -117,7 +122,7 @@ export const useFetchUserProfile = ({ token }) => {
       getMyParty();
     }
     if (confirmDel === true) {
-      updateStatusParty();
+      delMemberParty();
       setConfirmDel(false);
       getMyParty();
     }

@@ -273,6 +273,7 @@ export const MyParty = ({
                                       onClick={() => {
                                         memberToggleByParty(idx);
                                         setMemberId(j.id);
+                                        setPartyId(r.id);
                                         setStatus("decline");
                                       }}
                                     >
