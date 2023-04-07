@@ -11,6 +11,7 @@ import { MenuItem } from "@mui/material";
 const NavBar = () => {
   const [toggle, setToggle] = useState(false);
   const routes = [
+    { name: "Home", url: "shabu/home" },
     { name: "Restaurant", url: "shabu/store" },
     { name: "Party", url: "shabu/party" },
     { name: "Register", url: "shabu/register" },
